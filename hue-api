@@ -1,0 +1,8 @@
+#! /bin/sh
+
+source ~/.hue/CONFIG
+ 
+curl --silent --request $1 http://$IP/api/$USERNAME/$2 | jq '.'
+ 
+exit 0
+

@@ -1,0 +1,8 @@
+#! /bin/sh
+
+source ~/.hue/CONFIG
+
+curl --silent --request GET http://$IP/api/$USERNAME/lights | jq '.'
+
+exit 0
+
