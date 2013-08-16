@@ -1,6 +1,4 @@
-#! /bin/sh
-
-source ~/.hue/CONFIG
+#! /bin/bash
 
 curl --silent --request GET http://$IP/api/$USERNAME/lights | jq '.'
 
