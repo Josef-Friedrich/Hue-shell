@@ -1,0 +1,90 @@
+#! /bin/sh
+
+source ~/.hue/CONFIG
+
+VALUES=()
+
+while getopts ":o:b:h:s:x:c:a:e:t:g:G:" OPT; do
+  case $OPT in
+    # on
+    o)
+      VALUES+=("\"on\":$OPTARG")
+      ;;
+    # bri
+    b)
+      VALUES+=("\"bri\":$OPTARG")
+      ;;
+    # hue
+    h)
+      VALUES+=("\"hue\":$OPTARG")
+      ;;
+    # sat
+    s)
+      VALUES+=("\"sat\":$OPTARG")
+      ;;
+    # xy
+    x)
+      VALUES+=("\"xy\":$OPTARG")
+      ;;
+    # ct
+    c)
+      VALUES+=("\"ct\":$OPTARG")
+      ;;
+    # alert
+    a)
+      VALUES+=("\"alert\":$OPTARG")
+      ;;
+    # effect
+    e)
+      VALUES+=("\"effect\":$OPTARG")
+      ;;
+    # transitiontime
+    t)
+      VALUES+=("\"transitiontime\":$OPTARG")
+      TRANSITIONTIME=$OPTARG
+      ;;
+    # controll groups instead of single lights
+    g)
+      GROUPS=1
+      ;;
+    # all lamps
+    G)
+      ALLGROUPS=1
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+STATE=$(printf ",%s" "${VALUES[@]}")
+STATE=${STATE:1}
+STATE="{$STATE}"
+
+shift $((OPTIND-1))
+
+for I in ${@:-1}; do
+
+  APPEND="lights/$I/state"
+
+  if [ -n $GROUPS ] ; then
+    APPEND="lights/$I/state"
+  fi
+
+  if [ -n $ALLGROUPS ]; then
+    APPEND="groups/0/action"
+  fi
+
+  curl --silent --request PUT --data $STATE http://$IP/api/$USERNAME/$APPEND | jq '.'
+done
+
+if [ -n TRANSITIONTIME ]; then
+  sleep $((TRANSITIONTIME/=10))
+fi
+
+exit 0

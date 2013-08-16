@@ -1,0 +1,11 @@
+#! /bin/bash
+
+PIDS_FILE="$HOME/.hue/PIDS"
+
+for PID in $(cat $PIDS_FILE); do
+  kill $PID > /dev/null
+done
+
+> $PIDS_FILE
+
+exit 0
