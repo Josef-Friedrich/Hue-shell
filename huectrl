@@ -1,0 +1,40 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          Philips Hue Control
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Control Philips Hue lamps.
+# Description:       Bash scripts to control Philips Hue lamps.
+### END INIT INFO
+
+# Author: Josef Friedrich <jos.friedrich@gmail.com>
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin:/root/bin:/root/hue
+DESC="Philips Hue Control"
+NAME=huectrl
+#DAEMON=/usr/sbin/$NAME
+#DAEMON_ARGS="--options args"
+#PIDFILE=/var/run/$NAME.pid
+SCRIPTNAME=/etc/init.d/$NAME
+
+case "$1" in
+  start)
+	date >> /var/log/hue-start.log
+	;;
+  stop)
+	date >> /var/log/hue-stop.log
+	;;
+  status)
+	;;
+  restart)
+	;;
+  *)
+	echo "Usage: $SCRIPTNAME {start|stop|status|restart}" >&2
+	exit 3
+	;;
+esac
+
+exit 0
+
