@@ -1,6 +1,4 @@
-#! /bin/sh
-
-source ~/.hue/CONFIG
+#! /bin/bash
 
 VALUES=()
 
@@ -80,7 +78,7 @@ for I in ${@:-1}; do
     APPEND="groups/0/action"
   fi
 
-  curl --silent --request PUT --data $STATE http://$IP/api/$USERNAME/$APPEND | jq '.'
+  hue-api PUT $APPEND $STATE
 done
 
 if [ -n TRANSITIONTIME ]; then

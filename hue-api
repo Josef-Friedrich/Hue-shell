@@ -1,8 +1,12 @@
 #! /bin/bash
 
 source "$HOME/.hue/CONFIG"
+
+if [ -n $3 ]; then
+  DATA="--data $3"
+fi
  
-curl --silent --request $1 http://$IP/api/$USERNAME/$2 | jq '.'
- 
+curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | jq '.'
+
 exit 0
 
