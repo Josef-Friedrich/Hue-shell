@@ -1,10 +1,15 @@
 #! /bin/bash
 
-LIGHT=$1
+# Numberic check.
+if [ "$1" -eq "$1" ] 2> /dev/null; then
+  LIGHT=$1
+else
+  LIGHT=$(hue-token-lights $*)
+fi
 
 shift
 
-STATE=$(hue-options $*)
+STATE=$(hue-options $(hue-token-colors $*))
 
 hue-api PUT lights/$LIGHT/state $STATE
 
