@@ -30,7 +30,7 @@ while getopts ":o:b:h:s:x:c:a:e:t:g:G:" OPT; do
       ;;
     # alert
     a)
-      VALUES+=("\"alert\":$OPTARG")
+      VALUES+=("\"alert\":\"$OPTARG\"")
       ;;
     # effect
     e)

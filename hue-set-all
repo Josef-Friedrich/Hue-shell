@@ -1,0 +1,5 @@
+#! /bin/bash
+
+hue-api PUT groups/0/action $(hue-options $*)
+
+exit 0

@@ -1,0 +1,11 @@
+#! /bin/bash
+
+LIGHT=$1
+
+shift
+
+STATE=$(hue-options $*)
+
+hue-api PUT lights/$LIGHT/state $STATE
+
+exit 0
