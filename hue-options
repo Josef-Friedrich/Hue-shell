@@ -1,6 +1,4 @@
-#! /bin/sh
-
-source ~/.hue/CONFIG
+#! /bin/bash
 
 VALUES=()
 
@@ -36,21 +34,13 @@ while getopts ":o:b:h:s:x:c:a:e:t:g:G:" OPT; do
       ;;
     # effect
     e)
-      VALUES+=("\"effect\":$OPTARG")
+      VALUES+=("\"effect\":\"$OPTARG\"")
       ;;
     # transitiontime
     t)
       VALUES+=("\"transitiontime\":$OPTARG")
-      TRANSITIONTIME=$OPTARG
       ;;
-    # controll groups instead of single lights
-    g)
-      GROUPS=1
-      ;;
-    # all lamps
-    G)
-      ALLGROUPS=1
-      ;;
+
     \?)
       echo "Invalid option: -$OPTARG" >&2
       exit 1
@@ -66,25 +56,8 @@ STATE=$(printf ",%s" "${VALUES[@]}")
 STATE=${STATE:1}
 STATE="{$STATE}"
 
-shift $((OPTIND-1))
+echo $STATE
 
-for I in ${@:-1}; do
-
-  APPEND="lights/$I/state"
-
-  if [ -n $GROUPS ] ; then
-    APPEND="lights/$I/state"
-  fi
-
-  if [ -n $ALLGROUPS ]; then
-    APPEND="groups/0/action"
-  fi
-
-  curl --silent --request PUT --data $STATE http://$IP/api/$USERNAME/$APPEND | jq '.'
-done
-
-if [ -n TRANSITIONTIME ]; then
-  sleep $((TRANSITIONTIME/=10))
-fi
+#echo $STATE | jq '.'
 
 exit 0
