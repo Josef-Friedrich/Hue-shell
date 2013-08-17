@@ -2,9 +2,12 @@
 
 source "$HOME/.hue/CONFIG"
 
-if [ -n $3 ]; then
+if [ -n "$3" ]; then
   DATA="--data $3"
 fi
+
+echo "IP: $IP"
+echo "API username: $USERNAME"
  
 curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | jq '.'
 
