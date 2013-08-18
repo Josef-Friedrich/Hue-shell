@@ -1,0 +1,15 @@
+#! /bin/bash
+
+PIDS_FILE="$HOME/.hue/PIDS"
+
+(
+  while true; do
+    hue-set-all rot
+    sleep 2
+    hue-set-all blau
+    sleep 2
+  done
+) &
+
+echo $! >> $PIDS_FILE
+
