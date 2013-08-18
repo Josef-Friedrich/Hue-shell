@@ -1,0 +1,32 @@
+#! /bin/bash
+
+function onoff {
+  hue set all -o true
+  sleep 2
+  hue set all -o false
+  sleep 2
+}
+
+function loop {
+  (
+    while true; do
+      eval "$*"
+    done
+  ) &
+  echo $! >> /var/run/hue.pids
+}
+
+##
+#
+##
+
+case "$1" in
+  onoff)
+    loop "onoff"
+    ;;
+
+  *)
+    loop "onoff"
+    ;;
+
+esac

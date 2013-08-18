@@ -1,6 +1,6 @@
 #! /bin/bash
 
-PIDS_FILE="$HOME/.hue/PIDS"
+PIDS_FILE="/var/run/hue.pids"
 
 for PID in $(cat $PIDS_FILE); do
   kill $PID > /dev/null
