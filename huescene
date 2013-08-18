@@ -16,17 +16,9 @@ function loop {
   echo $! >> /var/run/hue.pids
 }
 
-##
-#
-##
-
 case "$1" in
-  onoff)
-    loop onoff > /dev/null
-    ;;
-
-  bluered)
-    loop scene_bluered > /dev/null
+  stop)
+    hue stop
     ;;
 
   *)
