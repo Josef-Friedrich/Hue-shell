@@ -29,12 +29,6 @@ function call {
   curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | jq '.'
 }
 
-
-
-
-
-
-
 ##
 #
 ##
@@ -85,6 +79,19 @@ case "$1" in
 
     esac
     ;;
+
+  ping)
+    case "$2" in
+      all)
+        call PUT groups/0/action '{"alert":"select"}'
+        ;;
+
+      *)
+        call PUT lights/$2/state '{"alert":"select"}'
+        ;;
+
+      esac
+      ;;
 
   stop)
     stop
