@@ -15,9 +15,6 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/root/bin:/root/hue
 DESC="Philips Hue Control"
 NAME=huectrl
-#DAEMON=/usr/sbin/$NAME
-#DAEMON_ARGS="--options args"
-#PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
@@ -30,12 +27,9 @@ case "$1" in
     hue stop
     echo "Stoping hue ctrl ..."
     ;;
-  status)
-	;;
-  restart)
-	;;
+  
   *)
-	echo "Usage: $SCRIPTNAME {start|stop|status|restart}" >&2
+	echo "Usage: $SCRIPTNAME {start|stop}" >&2
 	exit 3
 	;;
 esac
