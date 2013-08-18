@@ -1,5 +1,0 @@
-#! /bin/bash
-
-hue-api PUT groups/0/action $(hue-options $(hue-token-colors $*))
-
-exit 0

@@ -1,6 +1,0 @@
-#! /bin/bash
-
-hue-api GET lights
-
-exit 0
-

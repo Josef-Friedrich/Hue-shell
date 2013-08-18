@@ -1,9 +1,0 @@
-#! /bin/bash
-
-CONFIG_FOLDER="$HOME/.hue/"
-
-if [ ! -d $CONFIG_FOLDER ]; then
-  mkdir $CONFIG_FOLDER
-fi
-
-exit 0
