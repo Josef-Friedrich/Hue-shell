@@ -21,11 +21,14 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
   start)
-	date >> /var/log/hue-start.log
-	;;
+    huescene > /dev/null    
+    echo "Starting hue ctrl ..."    
+    ;;
+
   stop)
-	date >> /var/log/hue-stop.log
-	;;
+    hue stop
+    echo "Stoping hue ctrl ..."
+    ;;
   status)
 	;;
   restart)
