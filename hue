@@ -1,0 +1,209 @@
+#! /bin/bash
+
+if [ -f /etc/hue.ini ]; then
+  source /etc/hue.ini
+else
+  echo "Create hue.ini file."
+fi
+
+##
+#
+##
+function help {
+  echo "Commands are:
+  - hue help
+  - hue set all
+  - hue set 1-?
+  - hue get all
+  - hue conf"
+}
+
+##
+#
+##
+function call {
+  if [ -n "$3" ]; then
+    DATA="--data $3"
+  fi
+
+  curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | jq '.'
+}
+
+##
+#
+##
+function options {
+  VALUES=()
+
+  while getopts ":o:b:h:s:x:c:a:e:t:g:G:" OPT; do
+    case $OPT in
+      # on
+      o)
+        VALUES+=("\"on\":$OPTARG")
+        ;;
+      # bri
+      b)
+        VALUES+=("\"bri\":$OPTARG")
+        ;;
+      # hue
+      h)
+        VALUES+=("\"hue\":$OPTARG")
+        ;;
+      # sat
+      s)
+        VALUES+=("\"sat\":$OPTARG")
+        ;;
+      # xy
+      x)
+        VALUES+=("\"xy\":$OPTARG")
+        ;;
+      # ct
+      c)
+        VALUES+=("\"ct\":$OPTARG")
+        ;;
+      # alert
+      a)
+        VALUES+=("\"alert\":\"$OPTARG\"")
+        ;;
+      # effect
+      e)
+        VALUES+=("\"effect\":\"$OPTARG\"")
+        ;;
+      # transitiontime
+      t)
+        VALUES+=("\"transitiontime\":$OPTARG")
+        ;;
+
+      \?)
+        echo "Invalid option: -$OPTARG" >&2
+        exit 1
+        ;;
+      :)
+        echo "Option -$OPTARG requires an argument." >&2
+        exit 1
+        ;;
+    esac
+  done
+
+  STATE=$(printf ",%s" "${VALUES[@]}")
+  STATE=${STATE:1}
+  STATE="{$STATE}"
+
+  echo $STATE
+
+  #echo $STATE | jq '.'
+
+  exit 0
+}
+
+##
+#
+##
+function colors {
+  case "$1" in
+    rot          ) echo "-h 0 -s 255";;
+    gelb         ) echo "-h 12750 -s 255";;
+    dunkel_gruen ) echo "-h 25500 -s 255";;
+    gruen        ) echo "-h 36210 -s 255";;
+    blau         ) echo "-h 46920 -s 255";;
+    lila         ) echo "-h 56100 -s 255";;
+    *            ) echo "Unbekannter Farben-Parameter";;
+  esac
+
+  exit 0
+}
+
+
+
+##
+#
+##
+function lights {
+  case "$1" in
+    wohnzimmer_haengelampe_1  | wohn_haenge_1 | wh1 ) echo 2;;
+    wohnzimmer_haengelampe_2  | wohn_haenge_2 | wh2 ) echo 1;;
+    wohnzimmer_haengelampe_3  | wohn_haenge_3 | wh3 ) echo 3;;
+    wohnzimmer_ecke_einzeln   | wohn_eck_einz | wee ) echo 9;;
+    wohnzimmer_schrank_links  | wschrank_li   | wsl ) echo 7;;
+    wohnzimmer_schrank_rechts | wschrank_re   | wsr ) echo 8;;
+    schlafzimmer_rechts_unten | schlaf_re_un  | sru ) echo 4;;
+    schlafzimmer_links_oben   | schlaf_li_ob  | slo ) echo 5;;
+    schlafzimmer_links_unten  | schlaf_li_un  | slu ) echo 6;;
+  esac
+
+  exit 0
+}
+
+##
+#
+##
+function is_numeric {
+  if [ "$1" -eq "$1" ] 2> /dev/null; then
+    echo $1
+  else
+    echo $(lights $1)
+  fi
+}
+
+##
+#
+##
+function stop {
+  PIDS_FILE="$HOME/.hue/PIDS"
+
+  for PID in $(cat $PIDS_FILE); do
+    kill $PID > /dev/null
+  done
+
+  > $PIDS_FILE
+
+  exit 0
+}
+
+function debug {
+  echo "IP: $IP"
+  echo "USERNAME: $USERNAME"
+}
+
+##
+#
+##
+
+case "$1" in
+  help) help;;
+
+  set)
+    case "$2" in
+      all)
+        shift 2
+        call PUT groups/0/action $(options $*)
+      ;;
+
+    esac
+    ;;
+
+  get)
+    case "$2" in
+      all)
+        call GET lights
+        ;;
+      *)
+        call GET lights/$(is_numeric $2)
+        ;;
+
+    esac
+    ;;
+
+  stop)
+    echo "stop"
+    ;;
+
+  debug)
+    debug
+  ;;
+
+  *)
+    help
+    ;;
+
+esac
