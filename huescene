@@ -1,10 +1,10 @@
 #! /bin/bash
 
-function onoff {
-  hue set all -o true
-  sleep 2
-  hue set all -o false
-  sleep 2
+function scene_light9 {
+  hue set 9 '{"hue":0,"sat":255,"transitiontime":30}'
+  sleep 4
+  hue set 9 '{"sat":100,"transitiontime":40}'
+  sleep 5
 }
 
 function loop {
@@ -22,11 +22,15 @@ function loop {
 
 case "$1" in
   onoff)
-    loop "onoff"
+    loop onoff > /dev/null
+    ;;
+
+  bluered)
+    loop scene_bluered > /dev/null
     ;;
 
   *)
-    loop "onoff"
+    loop scene_light9 > /dev/null
     ;;
 
 esac
