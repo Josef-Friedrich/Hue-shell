@@ -1,4 +1,5 @@
 #! /bin/sh
+
 ### BEGIN INIT INFO
 # Provides:          Philips Hue Control
 # Required-Start:    $remote_fs $syslog
@@ -21,8 +22,8 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
   start)
-    huescene > /dev/null    
-    echo "Starting hue ctrl ..."    
+    huescene > /dev/null
+    echo "Starting hue ctrl ..."
     ;;
 
   stop)

@@ -23,7 +23,7 @@ function help {
 ##
 function call {
   if [ -n "$3" ]; then
-    DATA="--data $3"
+    DATA="--data {$3}"
   fi
 
   curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | jq '.'
@@ -87,7 +87,6 @@ function options {
 
   STATE=$(printf ",%s" "${VALUES[@]}")
   STATE=${STATE:1}
-  STATE="{$STATE}"
 
   echo $STATE
 
@@ -113,23 +112,21 @@ function colors {
   exit 0
 }
 
-
-
 ##
 #
 ##
-function lights {
+function colors_json {
   case "$1" in
-    wohnzimmer_haengelampe_1  | wohn_haenge_1 | wh1 ) echo 2;;
-    wohnzimmer_haengelampe_2  | wohn_haenge_2 | wh2 ) echo 1;;
-    wohnzimmer_haengelampe_3  | wohn_haenge_3 | wh3 ) echo 3;;
-    wohnzimmer_ecke_einzeln   | wohn_eck_einz | wee ) echo 9;;
-    wohnzimmer_schrank_links  | wschrank_li   | wsl ) echo 7;;
-    wohnzimmer_schrank_rechts | wschrank_re   | wsr ) echo 8;;
-    schlafzimmer_rechts_unten | schlaf_re_un  | sru ) echo 4;;
-    schlafzimmer_links_oben   | schlaf_li_ob  | slo ) echo 5;;
-    schlafzimmer_links_unten  | schlaf_li_un  | slu ) echo 6;;
+    red)        OUTPUT='"hue":0,     "sat":255';;
+    yellow)     OUTPUT='"hue":12750, "sat":255';;
+    dark_green) OUTPUT='"hue":25500, "sat":255';;
+    green)      OUTPUT='"hue":36210, "sat":255';;
+    blue)       OUTPUT='"hue":46920, "sat":255';;
+    purple)     OUTPUT='"hue":56100, "sat":255';;
+    *)          OUTPUT="Unbekannter Farben-Parameter";;
   esac
+
+  echo $OUTPUT | tr -d [:space:]
 
   exit 0
 }
@@ -137,12 +134,24 @@ function lights {
 ##
 #
 ##
-function is_numeric {
+function get_lamp {
   if [ "$1" -eq "$1" ] 2> /dev/null; then
     echo $1
   else
-    echo $(lights $1)
+    case "$1" in
+      wohnzimmer_haengelampe_1  | wohn_haenge_1 | wh1 ) echo 2;;
+      wohnzimmer_haengelampe_2  | wohn_haenge_2 | wh2 ) echo 1;;
+      wohnzimmer_haengelampe_3  | wohn_haenge_3 | wh3 ) echo 3;;
+      wohnzimmer_ecke_einzeln   | wohn_eck_einz | wee ) echo 9;;
+      wohnzimmer_schrank_links  | wschrank_li   | wsl ) echo 7;;
+      wohnzimmer_schrank_rechts | wschrank_re   | wsr ) echo 8;;
+      schlafzimmer_rechts_unten | schlaf_re_un  | sru ) echo 4;;
+      schlafzimmer_links_oben   | schlaf_li_ob  | slo ) echo 5;;
+      schlafzimmer_links_unten  | schlaf_li_un  | slu ) echo 6;;
+    esac
   fi
+
+  exit 0
 }
 
 ##
@@ -158,9 +167,30 @@ function stop {
   > $PIDS_FILE
 }
 
+##
+#
+##
 function debug {
   echo "IP: $IP"
   echo "USERNAME: $USERNAME"
+}
+
+##
+#
+##
+function set_light_single {
+  LAMP=$(get_lamp $1)
+  DATA=$(colors_json $2)
+  if [ -n "$3" ]; then
+    let "TRANS_TIME = 10 * $3"
+    DATA=$DATA',"transitiontime":'$TRANS_TIME
+  fi
+
+  call PUT lights/$LAMP/state $DATA
+
+  if [ -n "$3" ]; then
+    sleep $3
+  fi
 }
 
 ##
@@ -174,9 +204,11 @@ case "$1" in
     case "$2" in
       all)
         shift 2
-        call PUT groups/0/action $(options $*)
+        call PUT groups/0/action $(colors_json $*)
       ;;
 
+      *)
+        set_light_single $2 $3 $4
     esac
     ;;
 
@@ -186,7 +218,7 @@ case "$1" in
         call GET lights
         ;;
       *)
-        call GET lights/$(is_numeric $2)
+        call GET lights/$(get_lamp $2)
         ;;
 
     esac
