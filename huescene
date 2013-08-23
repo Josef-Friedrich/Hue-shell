@@ -2,23 +2,23 @@
 
 function scene_light7 {
   hue set 7 '{"hue":0,"bri":255,"sat":255,"transitiontime":21}'
-  sleep 2.2
-  hue set 7 '{"bri":150,"transitiontime":21}'
-  sleep 2.2
+  sleep 2.1
+  hue set 7 '{"bri":80,"transitiontime":21}'
+  sleep 2.1
 }
 
 function scene_light8 {
-  hue set 8 '{"hue":10639,"bri":130,"sat":255,"transitiontime":15}'
-  sleep 1.6
+  hue set 8 '{"hue":10639,"bri":80,"sat":255,"transitiontime":15}'
+  sleep 1.5
   hue set 8 '{"bri":255,"transitiontime":15}'
-  sleep 1.6
+  sleep 1.5
 }
 
 function scene_light9 {
   hue set 9 '{"hue":5000,"bri":255,"sat":255,"transitiontime":18}'
-  sleep 2
-  hue set 9 '{"bri":180,"transitiontime":18}'
-  sleep 2
+  sleep 1.8
+  hue set 9 '{"bri":80,"transitiontime":18}'
+  sleep 1.8
 }
 
 function loop {
