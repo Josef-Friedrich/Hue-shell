@@ -2,3 +2,5 @@
 
 TITLE="Red"
 DESCRIPTION="Red scene"
+
+echo "Red scene"
