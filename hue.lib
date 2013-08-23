@@ -1,0 +1,10 @@
+#! /bin/bash
+
+function loop {
+  (
+    while true; do
+      eval "$*"
+    done
+  ) &
+  echo $! >> /var/run/hue.pids
+}

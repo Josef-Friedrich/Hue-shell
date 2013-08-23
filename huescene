@@ -1,25 +1,6 @@
 #! /bin/bash
 
-function scene_light7 {
-  hue set 7 '{"hue":0,"bri":255,"sat":255,"transitiontime":21}'
-  sleep 2.1
-  hue set 7 '{"bri":80,"transitiontime":21}'
-  sleep 2.1
-}
-
-function scene_light8 {
-  hue set 8 '{"hue":10639,"bri":80,"sat":255,"transitiontime":15}'
-  sleep 1.5
-  hue set 8 '{"bri":255,"transitiontime":15}'
-  sleep 1.5
-}
-
-function scene_light9 {
-  hue set 9 '{"hue":5000,"bri":255,"sat":255,"transitiontime":18}'
-  sleep 1.8
-  hue set 9 '{"bri":80,"transitiontime":18}'
-  sleep 1.8
-}
+SCENES_PATH="/root/hue/scenes"
 
 function loop {
   (
@@ -30,15 +11,41 @@ function loop {
   echo $! >> /var/run/hue.pids
 }
 
+function info {
+  for SCENE in $(find /root/hue/scenes -name "*.scene"); do
+    source $SCENE
+    TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
+    echo "  -> $TOKEN ($TITLE: $DESCRIPTION)"
+  done
+}
+
+function execute {
+  SCENE="$SCENES_PATH/$1.scene"
+  if [ -f "$SCENE" ]; then
+    $SCENE
+  else
+    DEFAULT_SCENE="$SCENES_PATH/default.scene"
+    if [ -f $DEFAULT_SCENE ]; then
+      $DEFAULT_SCENE
+    else
+      info
+    fi
+  fi
+}
+
 case "$1" in
+
+  info)
+    echo "Available scenes:"
+    info
+    ;;
+
   stop)
     hue stop
     ;;
 
   *)
-    loop scene_light7 > /dev/null
-    loop scene_light8 > /dev/null
-    loop scene_light9 > /dev/null
+    execute
     ;;
 
 esac
