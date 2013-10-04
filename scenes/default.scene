@@ -5,6 +5,27 @@ source /root/hue/hue.lib
 TITLE="Default"
 DESCRIPTION="Default scene"
 
+function scene_light1 {
+  hue set 1 '{"hue":2000,"bri":255,"sat":255,"transitiontime":38}'
+  sleep 3.8
+  hue set 1 '{"bri":40,"transitiontime":38}'
+  sleep 3.8
+}
+
+function scene_light2 {
+  hue set 2 '{"hue":8000,"bri":255,"sat":255,"transitiontime":16}'
+  sleep 1.6
+  hue set 2 '{"bri":80,"transitiontime":16}'
+  sleep 1.6
+}
+
+function scene_light3 {
+  hue set 3 '{"hue":12000,"bri":255,"sat":255,"transitiontime":28}'
+  sleep 2.8
+  hue set 3 '{"bri":60,"transitiontime":28}'
+  sleep 2.8
+}
+
 function scene_light7 {
   hue set 7 '{"hue":0,"bri":255,"sat":255,"transitiontime":21}'
   sleep 2.1
@@ -25,6 +46,10 @@ function scene_light9 {
   hue set 9 '{"bri":80,"transitiontime":18}'
   sleep 1.8
 }
+
+loop scene_light1
+loop scene_light2
+loop scene_light3
 
 loop scene_light7
 loop scene_light8
