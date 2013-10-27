@@ -1,6 +1,20 @@
+
+Hue-Bash is a collection of bash scripts to control the [Hue lamps from Philips](https://www.meethue.com).
+
 # Requirements
 * [curl](curl)
 * [jq](http://stedolan.github.io/jq/)
+
+# Installation
+
+Create a ini file in ```/etc/hue.ini```.
+
+Sample file:
+
+```
+IP="192.168.2.31"
+USERNAME="username"
+```
 
 # Commands
 
