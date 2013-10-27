@@ -3,7 +3,7 @@
 if [ -f /etc/hue.ini ]; then
   source /etc/hue.ini
 else
-  echo "Create hue.ini file."
+  echo "hue.ini file was not found. Create hue.ini file in /etc/hue.ini."
 fi
 
 ##
