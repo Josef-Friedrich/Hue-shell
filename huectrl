@@ -27,7 +27,7 @@ case "$1" in
     hue stop
     echo "Stoping hue ctrl ..."
     ;;
-  
+
   *)
 	echo "Usage: $SCRIPTNAME {start|stop}" >&2
 	exit 3
@@ -35,4 +35,3 @@ case "$1" in
 esac
 
 exit 0
-
