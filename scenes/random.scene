@@ -1,0 +1,21 @@
+#! /bin/bash
+
+source /root/hue/hue.lib
+
+TITLE="Random scene"
+DESCRIPTION="random scene"
+
+function random_light {
+
+  LAMP=$1
+  COLOR=$2
+
+  hue set $LAMP '{"hue":2000,"bri":255,"sat":255,"transitiontime":38}'
+  sleep 3.8
+  hue set $LAMP '{"bri":40,"transitiontime":38}'
+  sleep 3.8
+}
+
+for LAMP in 1 2 3 7 8 9; do
+  loop random_light $LAMP 20000
+done
