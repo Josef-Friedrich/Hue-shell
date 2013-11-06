@@ -26,7 +26,9 @@ function call {
     DATA="--data $3"
   fi
 
-  curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | jq '.'
+  #JQ="| jq '.'"
+
+  curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2
 }
 
 ##
@@ -119,21 +121,38 @@ function set_process {
   STATE=$(printf ",%s" "${VALUES[@]}")
   STATE=${STATE:1}
 
+  echo "{$STATE}"
+}
+
+function set {
+  LIGHTS="$1"
+  shift
+
+  JSON=$(set_process "$@")
+
+  if [ "$LIGHTS" == "all" ]; then
+
+    call PUT groups/0/action $JSON
+
+  else
+
+    LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+
+    for LIGHT in $LIGHTS; do
+      call PUT lights/$LIGHT/state "$JSON"
+    done
+  fi
 }
 
 case "$1" in
-  help) help;;
+  help)
+    help
+  ;;
 
   set)
-    case "$2" in
-      all)
-        call PUT groups/0/action $3
-      ;;
-
-      *)
-        call PUT lights/$2/state $3
-    esac
-    ;;
+    shift
+    set $@
+  ;;
 
   get)
     case "$2" in
