@@ -1,0 +1,67 @@
+#! /bin/bash
+
+while true ; do
+  case "$1" in
+
+    o|on)
+      VALUES+=("\"on\":true")
+      shift 1
+      ;;
+
+    of|off)
+      VALUES+=("\"on\":false")
+      shift 1
+      ;;
+
+    b|bri)
+      VALUES+=("\"bri\":$2")
+      shift 2
+      ;;
+
+    h|hue)
+      VALUES+=("\"hue\":$2")
+      shift 2
+      ;;
+
+    s|sat)
+      VALUES+=("\"sat\":$2")
+      shift 2
+      ;;
+
+    x|xy)
+      VALUES+=("\"xy\":$2")
+      shift 2
+      ;;
+
+    c|ct)
+      VALUES+=("\"ct\":$2")
+      shift 2
+      ;;
+
+    a|alert)
+      VALUES+=("\"alert\":\"$2\"")
+      shift 2
+      ;;
+
+    e|effect)
+      VALUES+=("\"effect\":\"$2\"")
+      shift 2
+      ;;
+
+    t|transitiontime)
+      VALUES+=("\"transitiontime\":$2")
+      shift 2
+      ;;
+
+    *)
+      break
+      ;;
+  esac
+done
+
+STATE=$(printf ",%s" "${VALUES[@]}")
+STATE=${STATE:1}
+
+echo $STATE
+
+
