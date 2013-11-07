@@ -1,0 +1,9 @@
+#! /bin/bash
+
+source /root/hue/hue.lib
+
+TITLE="Relax scene"
+DESCRIPTION="Default scene"
+COLOR=1000
+hue set all '{"hue":$COLOR,"bri":255,"sat":255}'
+

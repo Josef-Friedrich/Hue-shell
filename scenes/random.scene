@@ -6,16 +6,25 @@ TITLE="Random scene"
 DESCRIPTION="random scene"
 
 function random_light {
-
   LAMP=$1
   COLOR=$2
+  
+  # Color.
+  SPREAD=2000
+  START=$((COLOR - SPREAD))
+  END=$((COLOR + SPREAD))
 
-  hue set $LAMP '{"hue":2000,"bri":255,"sat":255,"transitiontime":38}'
-  sleep 3.8
-  hue set $LAMP '{"bri":40,"transitiontime":38}'
-  sleep 3.8
+  COLOR=$(range $START $END)
+
+  # Brightness
+  BRIGHTNESS=$(range 50 150)
+
+  hue set $LAMP '{"hue":'$COLOR',"bri":255,"sat":255,"transitiontime":20}'
+  sleep 2
+  hue set $LAMP '{"bri":'$BRIGHTNESS',"transitiontime":20}'
+  sleep 2
 }
 
 for LAMP in 1 2 3 7 8 9; do
-  loop random_light $LAMP 20000
+  loop random_light $LAMP 46920
 done
