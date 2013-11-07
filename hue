@@ -1,7 +1,9 @@
 #! /bin/bash
 
-if [ -f /etc/hue.ini ]; then
-  source /etc/hue.ini
+CONFIG_FILE="/etc/hue/hue.ini"
+
+if [ -f $CONFIG_FILE ]; then
+  source $CONFIG_FILE
 else
   echo "hue.ini file was not found. Create hue.ini file in /etc/hue.ini."
 fi
@@ -26,9 +28,10 @@ function call {
     DATA="--data $3"
   fi
 
-  #JQ="| jq '.'"
+  OUTPUT="jq '.'"
+  OUTPUT=""
 
-  curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2
+  curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | jq '.'
 }
 
 ##
@@ -141,6 +144,45 @@ function set {
     for LIGHT in $LIGHTS; do
       call PUT lights/$LIGHT/state "$JSON"
     done
+
+  fi
+}
+
+function get {
+  LIGHTS="$1"
+  shift
+
+  if [ "$LIGHTS" == "all" ]; then
+
+    call GET lights
+
+  else
+
+    LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+
+    for LIGHT in $LIGHTS; do
+      call GET lights/$LIGHT "$JSON"
+    done
+
+  fi
+}
+
+function alert {
+  LIGHTS="$1"
+  shift
+
+  if [ "$LIGHTS" == "all" ]; then
+
+    call PUT groups/0/action '{"alert":"select"}'
+
+  else
+
+    LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+
+    for LIGHT in $LIGHTS; do
+      call PUT lights/$LIGHT/state '{"alert":"select"}'
+    done
+
   fi
 }
 
@@ -155,33 +197,18 @@ case "$1" in
   ;;
 
   get)
-    case "$2" in
-      all)
-        call GET lights
-        ;;
-      *)
-        call GET lights/$2
-        ;;
+    shift
+    get $@
+  ;;
 
-    esac
-    ;;
-
-  ping)
-    case "$2" in
-      all)
-        call PUT groups/0/action '{"alert":"select"}'
-        ;;
-
-      *)
-        call PUT lights/$2/state '{"alert":"select"}'
-        ;;
-
-      esac
-      ;;
+  alert)
+    shift
+    alert $@
+  ;;
 
   stop)
     stop
-    ;;
+  ;;
 
   debug)
     debug
@@ -189,6 +216,6 @@ case "$1" in
 
   *)
     help
-    ;;
+  ;;
 
 esac
