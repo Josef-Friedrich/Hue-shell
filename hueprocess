@@ -1,0 +1,12 @@
+#! /bin/bash
+
+> csv
+
+for HUE in {0..10000}; do
+
+  #for SAT in {0..255}; do
+    hue set 7 hue $HUE sat 255 bri 255
+    hue -t get 7 >> csv
+  #done
+
+done
