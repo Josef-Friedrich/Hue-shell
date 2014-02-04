@@ -42,7 +42,7 @@ done
 shift $((OPTIND-1))
 
 ##
-#
+# Print out a short help text.
 ##
 function help {
   echo "Commands are:
@@ -54,7 +54,11 @@ function help {
 }
 
 ##
+# Execute the http call over curl.
 #
+# - $1 = Http request: PUT, GET
+# - $2 = path
+# - $3 = json output
 ##
 function call {
   if [ -n "$3" ]; then
@@ -65,7 +69,7 @@ function call {
 }
 
 ##
-#
+# Stop all hue processes.
 ##
 function stop {
   PIDS_FILE="/var/run/hue.pids"
@@ -78,7 +82,7 @@ function stop {
 }
 
 ##
-#
+# Print out the ip adresse and the hue username.
 ##
 function debug {
   echo "IP: $IP"
@@ -86,10 +90,8 @@ function debug {
 }
 
 ##
-#
+# Process the json string.
 ##
-
-
 function set_process {
 
   while true ; do
@@ -161,13 +163,16 @@ function set_process {
     VALUES+=("\"xy\":[$X,$Y]")
   fi
 
-
   STATE=$(printf ",%s" "${VALUES[@]}")
   STATE=${STATE:1}
 
   echo "{$STATE}"
 }
 
+##
+# $1 = Lights
+# $@ = Light attributes
+##
 function set {
   LIGHTS="$1"
   shift
@@ -189,9 +194,15 @@ function set {
   fi
 }
 
+##
+# $1 Lights
+##
 function get {
   LIGHTS="$1"
   shift
+
+  #DEBUG=1
+  JQDEBUG=1
 
   if [ "$LIGHTS" == "all" ]; then
 
@@ -208,6 +219,11 @@ function get {
   fi
 }
 
+##
+# Preform one breathe cycle.
+#
+# $1 = Lights
+##
 function alert {
   LIGHTS="$1"
   shift
@@ -227,6 +243,13 @@ function alert {
   fi
 }
 
+##
+# Print out debug output in three modes:
+#
+# - normal
+# - over jq
+# - formatted text output (not working yet)
+##
 function output {
   read OUTPUT
 
