@@ -19,7 +19,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
   start)
-    huescene > /dev/null
+    huescene execute > /dev/null
     echo "Starting hue ctrl ..."
     ;;
 

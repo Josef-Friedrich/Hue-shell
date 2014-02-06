@@ -25,6 +25,6 @@ function random_light {
   sleep 2
 }
 
-for LAMP in 7 8 ; do
+for LAMP in 7 8 9 1 2 3 ; do
   loop random_light $LAMP 46920
 done

@@ -34,10 +34,12 @@ function _info {
 function _execute {
   SCENE="$SCENES_PATH/$1.scene"
 
+  hue stop
+
   if [ -f "$SCENE" ]; then
     $SCENE
   else
-    DEFAULT_SCENE="$SCENES_PATH/default.scene"
+    DEFAULT_SCENE="$SCENES_PATH/$DEFAULT_SCENE.scene"
 
     if [ -f $DEFAULT_SCENE ]; then
       $DEFAULT_SCENE
@@ -51,7 +53,7 @@ function _execute {
 case "$1" in
 
   execute)
-    _execute $1
+    _execute $2
     ;;
 
   info)
@@ -60,6 +62,10 @@ case "$1" in
 
   stop)
     hue stop
+    ;;
+
+  reset)
+    hue reset
     ;;
 
   help)

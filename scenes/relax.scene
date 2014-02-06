@@ -4,6 +4,7 @@ source /etc/hue/hue.ini
 
 TITLE="Relax scene"
 DESCRIPTION="Default scene"
+
 COLOR=1000
 hue set all hue $COLOR bri 255 sat 255
 

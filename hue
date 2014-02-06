@@ -96,7 +96,7 @@ function _stop {
 ##
 function _reset {
   _stop
-  _set all $DEFAULT
+  _set all $_DEFAULT
 }
 
 ##
