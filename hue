@@ -1,5 +1,7 @@
 #! /bin/bash
 
+
+
 CONFIG_FILE="/etc/hue/hue.ini"
 
 if [ -f $CONFIG_FILE ]; then
@@ -90,6 +92,14 @@ function _stop {
 }
 
 ##
+# Stop all hue processes and reset to default color.
+##
+function _reset {
+  _stop
+  _set all $DEFAULT
+}
+
+##
 # Print out the ip adresse and the hue username.
 ##
 function _debug {
@@ -177,6 +187,8 @@ function _set_process {
 }
 
 ##
+# Set light state.
+#
 # $1 = Lights
 # $@ = Light attributes
 ##
@@ -202,6 +214,21 @@ function _set {
 }
 
 ##
+# Set light state.
+#
+# $1 = Lights
+# $@ = Light attributes
+##
+function _set_template {
+  LIGHTS="$1"
+  TEMPLATE="$2"
+
+  _set $LIGHTS ${!TEMPLATE}
+}
+
+##
+# Get the state of the lights.
+#
 # $1 Lights
 ##
 function _get {
@@ -297,6 +324,11 @@ case "$1" in
     _set $@
   ;;
 
+  sett)
+    shift
+    _set_template $@
+  ;;
+
   get)
     shift
     _get $@
@@ -305,6 +337,10 @@ case "$1" in
   alert)
     shift
     _alert $@
+  ;;
+
+  reset)
+    _reset
   ;;
 
   stop)
