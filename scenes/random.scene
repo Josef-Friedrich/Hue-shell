@@ -19,12 +19,12 @@ function random_light {
   # Brightness
   BRIGHTNESS=$(range 50 150)
 
-  hue set $LAMP '{"hue":'$COLOR',"bri":255,"sat":255,"transitiontime":20}'
+  hue set $LAMP hue $COLOR bri 255 sat 255 transitiontime 20
   sleep 2
-  hue set $LAMP '{"bri":'$BRIGHTNESS',"transitiontime":20}'
+  hue set $LAMP bri $BRIGHTNESS transitiontime 20
   sleep 2
 }
 
-for LAMP in 1 2 3 7 8 9; do
+for LAMP in 7 8 ; do
   loop random_light $LAMP 46920
 done

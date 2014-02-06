@@ -5,52 +5,19 @@ source /etc/hue/hue.ini
 TITLE="Default"
 DESCRIPTION="Default scene"
 
-function scene_light1 {
-  hue set 1 '{"hue":2000,"bri":255,"sat":255,"transitiontime":38}'
-  sleep 3.8
-  hue set 1 '{"bri":40,"transitiontime":38}'
-  sleep 3.8
-}
-
-function scene_light2 {
-  hue set 2 '{"hue":8000,"bri":255,"sat":255,"transitiontime":16}'
-  sleep 1.6
-  hue set 2 '{"bri":80,"transitiontime":16}'
-  sleep 1.6
-}
-
-function scene_light3 {
-  hue set 3 '{"hue":12000,"bri":255,"sat":255,"transitiontime":28}'
-  sleep 2.8
-  hue set 3 '{"bri":60,"transitiontime":28}'
-  sleep 2.8
-}
-
-function scene_light7 {
-  hue set 7 '{"hue":0,"bri":255,"sat":255,"transitiontime":21}'
+function _light7 {
+  hue set 7 hue 0 bri 255 sat 255 transitiontime 21
   sleep 2.1
-  hue set 7 '{"bri":80,"transitiontime":21}'
+  hue set 7 bri 80 transitiontime 21
   sleep 2.1
 }
 
-function scene_light8 {
-  hue set 8 '{"hue":10639,"bri":80,"sat":255,"transitiontime":15}'
+function _light8 {
+  hue set 8 hue 10639 bri 80 sat 255 transitiontime 15
   sleep 1.5
-  hue set 8 '{"bri":255,"transitiontime":15}'
+  hue set 8 bri 255 transitiontime 15
   sleep 1.5
 }
 
-function scene_light9 {
-  hue set 9 '{"hue":5000,"bri":255,"sat":255,"transitiontime":18}'
-  sleep 1.8
-  hue set 9 '{"bri":80,"transitiontime":18}'
-  sleep 1.8
-}
-
-loop scene_light1
-loop scene_light2
-loop scene_light3
-
-loop scene_light7
-loop scene_light8
-loop scene_light9
+loop _light7
+loop _light8
