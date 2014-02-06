@@ -110,17 +110,17 @@ function _debug {
 ##
 # Process the json string.
 ##
-function _set_process {
+function _process_json {
 
   while true ; do
     case "$1" in
 
-      o|on)
+      on)
         VALUES+=("\"on\":true")
         shift 1
         ;;
 
-      of|off)
+      off)
         VALUES+=("\"on\":false")
         shift 1
         ;;
@@ -196,7 +196,7 @@ function _set {
   LIGHTS="$1"
   shift
 
-  JSON=$(_set_process "$@")
+  JSON=$(_process_json "$@")
 
   if [ "$LIGHTS" == "all" ]; then
 
@@ -214,16 +214,16 @@ function _set {
 }
 
 ##
-# Set light state.
+# Set light state with tokens.
 #
 # $1 = Lights
-# $@ = Light attributes
+# $2 = Token
 ##
-function _set_template {
+function _set_token {
   LIGHTS="$1"
-  TEMPLATE="$2"
+  TOKEN="$2"
 
-  _set $LIGHTS ${!TEMPLATE}
+  _set $LIGHTS ${!TOKEN}
 }
 
 ##
@@ -247,14 +247,14 @@ function _get {
     LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
     for LIGHT in $LIGHTS; do
-      _call GET lights/$LIGHT "$JSON"
+      _call GET lights/$LIGHT
     done
 
   fi
 }
 
 ##
-# Preform one breathe cycle.
+# Perform one breathe cycle.
 #
 # $1 = Lights
 ##
@@ -324,9 +324,9 @@ case "$1" in
     _set $@
   ;;
 
-  sett)
+  token)
     shift
-    _set_template $@
+    _set_token $@
   ;;
 
   get)
