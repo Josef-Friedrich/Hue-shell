@@ -1,6 +1,6 @@
 #! /bin/bash
 
-source /root/hue/hue.lib
+source /etc/hue/hue.ini
 
 TITLE="Random scene"
 DESCRIPTION="random scene"
@@ -8,7 +8,7 @@ DESCRIPTION="random scene"
 function random_light {
   LAMP=$1
   COLOR=$2
-  
+
   # Color.
   SPREAD=2000
   START=$((COLOR - SPREAD))

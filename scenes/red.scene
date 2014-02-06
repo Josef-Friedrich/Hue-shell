@@ -1,6 +1,6 @@
 #! /bin/bash
 
+source /etc/hue/hue.ini
+
 TITLE="Red"
 DESCRIPTION="Red scene"
-
-echo "Red scene"

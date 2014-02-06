@@ -1,14 +1,23 @@
 #! /bin/bash
 
+##
+# Loop function.
+##
 function loop {
   (
     while true; do
       eval "$*"
     done
   ) &
-  echo $! >> /var/run/hue.pids
+  echo $! >> $PIDFILE
 }
 
+##
+# Random range function.
+#
+# $1 START
+# $2 END
+##
 function range {
   START=$1
   END=$2
@@ -24,4 +33,3 @@ function range {
 
   echo $((NUMBER_IN_RANGE + START))
 }
-

@@ -10,7 +10,7 @@
 # Description:       Bash scripts to control Philips Hue lamps.
 ### END INIT INFO
 
-# Author: Josef Friedrich <jos.friedrich@gmail.com>
+# Author: Josef Friedrich <jf@josef-friedrich.de>
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/root/bin:/root/hue
 DESC="Philips Hue Control"

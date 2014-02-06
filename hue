@@ -5,10 +5,10 @@ CONFIG_FILE="/etc/hue/hue.ini"
 if [ -f $CONFIG_FILE ]; then
   source $CONFIG_FILE
 else
-  echo "hue.ini file was not found. Create hue.ini file in /etc/hue.ini."
+  echo "hue.ini file was not found. Create hue.ini file in /etc/hue/hue.ini."
 fi
 
-while getopts ":djt" OPT; do
+while getopts ":djts" OPT; do
 
   case $OPT in
     d)
@@ -24,6 +24,11 @@ while getopts ":djt" OPT; do
     t)
       TEXTDEBUG=1
       echo "debug mode with text" >&2
+      ;;
+
+    s)
+      JSONDEBUG=1
+      echo "json debug mode" >&2
       ;;
 
     \?)
@@ -44,13 +49,12 @@ shift $((OPTIND-1))
 ##
 # Print out a short help text.
 ##
-function help {
-  echo "Commands are:
-  - hue help
-  - hue set all
-  - hue set 1-?
-  - hue get all
-  - hue conf"
+function _help {
+  echo "Usage: hue
+  - help
+  - set <lights> <attributes>
+  - get <lights>
+  - alert <lights>"
 }
 
 ##
@@ -60,18 +64,22 @@ function help {
 # - $2 = path
 # - $3 = json output
 ##
-function call {
+function _call {
   if [ -n "$3" ]; then
     DATA="--data $3"
+
+    if [ $JSONDEBUG ]; then
+      echo $3
+    fi
   fi
 
-  curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | output
+  curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | _output
 }
 
 ##
 # Stop all hue processes.
 ##
-function stop {
+function _stop {
   PIDS_FILE="/var/run/hue.pids"
 
   for PID in $(cat $PIDS_FILE); do
@@ -84,7 +92,7 @@ function stop {
 ##
 # Print out the ip adresse and the hue username.
 ##
-function debug {
+function _debug {
   echo "IP: $IP"
   echo "USERNAME: $USERNAME"
 }
@@ -92,7 +100,7 @@ function debug {
 ##
 # Process the json string.
 ##
-function set_process {
+function _set_process {
 
   while true ; do
     case "$1" in
@@ -158,7 +166,6 @@ function set_process {
     esac
   done
 
-
   if [ $X ] && [ $Y ]; then
     VALUES+=("\"xy\":[$X,$Y]")
   fi
@@ -173,22 +180,22 @@ function set_process {
 # $1 = Lights
 # $@ = Light attributes
 ##
-function set {
+function _set {
   LIGHTS="$1"
   shift
 
-  JSON=$(set_process "$@")
+  JSON=$(_set_process "$@")
 
   if [ "$LIGHTS" == "all" ]; then
 
-    call PUT groups/0/action $JSON
+    _call PUT groups/0/action $JSON
 
   else
 
     LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
     for LIGHT in $LIGHTS; do
-      call PUT lights/$LIGHT/state "$JSON"
+      _call PUT lights/$LIGHT/state "$JSON"
     done
 
   fi
@@ -197,7 +204,7 @@ function set {
 ##
 # $1 Lights
 ##
-function get {
+function _get {
   LIGHTS="$1"
   shift
 
@@ -206,14 +213,14 @@ function get {
 
   if [ "$LIGHTS" == "all" ]; then
 
-    call GET lights
+    _call GET lights
 
   else
 
     LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
     for LIGHT in $LIGHTS; do
-      call GET lights/$LIGHT "$JSON"
+      _call GET lights/$LIGHT "$JSON"
     done
 
   fi
@@ -224,20 +231,20 @@ function get {
 #
 # $1 = Lights
 ##
-function alert {
+function _alert {
   LIGHTS="$1"
   shift
 
   if [ "$LIGHTS" == "all" ]; then
 
-    call PUT groups/0/action '{"alert":"select"}'
+    _call PUT groups/0/action '{"alert":"select"}'
 
   else
 
     LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
     for LIGHT in $LIGHTS; do
-      call PUT lights/$LIGHT/state '{"alert":"select"}'
+      _call PUT lights/$LIGHT/state '{"alert":"select"}'
     done
 
   fi
@@ -250,7 +257,7 @@ function alert {
 # - over jq
 # - formatted text output (not working yet)
 ##
-function output {
+function _output {
   read OUTPUT
 
   if [ $DEBUG ]; then
@@ -282,34 +289,34 @@ function output {
 
 case "$1" in
   help)
-    help
+    _help
   ;;
 
   set)
     shift
-    set $@
+    _set $@
   ;;
 
   get)
     shift
-    get $@
+    _get $@
   ;;
 
   alert)
     shift
-    alert $@
+    _alert $@
   ;;
 
   stop)
-    stop
+    _stop
   ;;
 
   debug)
-    debug
+    _debug
   ;;
 
   *)
-    help
+    _help
   ;;
 
 esac

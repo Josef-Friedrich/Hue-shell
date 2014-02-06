@@ -1,51 +1,73 @@
 #! /bin/bash
 
-SCENES_PATH="/root/hue/scenes"
+source /etc/hue/hue.ini
 
-function loop {
-  (
-    while true; do
-      eval "$*"
-    done
-  ) &
-  echo $! >> /var/run/hue.pids
+##
+# Show usage help text.
+##
+function _usage {
+  echo "Usage: huescene
+  - execute <scene>: Execute scene
+  - info: Show available scenes
+  - stop: Stop scene
+  - help: Show this help"
 }
 
-function info {
-  for SCENE in $(find /root/hue/scenes -name "*.scene"); do
+##
+# Show available scenes.
+##
+function _info {
+  echo "Available scenes:"
+
+  for SCENE in $(find $SCENES_PATH -name "*.scene"); do
+
     source $SCENE
     TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
     echo "  -> $TOKEN ($TITLE: $DESCRIPTION)"
+
   done
 }
 
-function execute {
+##
+# Execute scene.
+##
+function _execute {
   SCENE="$SCENES_PATH/$1.scene"
+
   if [ -f "$SCENE" ]; then
     $SCENE
   else
     DEFAULT_SCENE="$SCENES_PATH/default.scene"
+
     if [ -f $DEFAULT_SCENE ]; then
       $DEFAULT_SCENE
     else
       info
     fi
+
   fi
 }
 
 case "$1" in
 
+  execute)
+    _execute $1
+    ;;
+
   info)
-    echo "Available scenes:"
-    info
+    _info
     ;;
 
   stop)
     hue stop
     ;;
 
+  help)
+    _usage
+    ;;
+
   *)
-    execute $1
+    _usage
     ;;
 
 esac

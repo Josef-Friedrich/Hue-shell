@@ -1,6 +1,6 @@
 #! /bin/bash
 
-source /root/hue/hue.lib
+source /etc/hue/hue.ini
 
 TITLE="Default"
 DESCRIPTION="Default scene"
