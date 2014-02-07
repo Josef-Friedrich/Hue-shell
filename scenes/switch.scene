@@ -1,23 +1,20 @@
 #! /bin/bash
 
-source /etc/hue/hue.ini
-
-TITLE="Switch"
-DESCRIPTION="Switch between colors"
+source /usr/local/bin/hue
 
 COLOR1=$_RED
 COLOR2=$_YELLOW
 
-hue set all sat 255
-hue set all bri 10hue
+hue_set all sat 255
+hue_set all bri 10
 
 function switch_colors {
-  hue set 7,2,1 $COLOR1 t 1
-  hue set 9,8,3 $COLOR2 t 1
+  hue_set 7,2,1 $COLOR1 t 1
+  hue_set 9,8,3 $COLOR2 t 1
   sleep .2
-  hue set 7,2,1 $COLOR2 t 1
-  hue set 9,8,3 $COLOR1 t 1
+  hue_set 7,2,1 $COLOR2 t 1
+  hue_set 9,8,3 $COLOR1 t 1
   sleep .2
 }
 
-loop switch_colors
+hue_loop switch_colors

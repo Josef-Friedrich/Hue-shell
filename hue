@@ -51,6 +51,7 @@ _READING="ct 346 bri 240"
 # Groups
 
 _BEDROOM="1,2,3"
+
 _LIVING="6,7,8"
 
 ################################################################################
@@ -157,9 +158,8 @@ function hue_scene_info {
 
   for SCENE in $(find $SCENES_PATH -name "*.scene"); do
 
-    source $SCENE
     TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
-    echo "  -> $TOKEN ($TITLE: $DESCRIPTION)"
+    echo "  -> $TOKEN"
 
   done
 }
@@ -170,22 +170,20 @@ function hue_scene_info {
 function hue_scene_execute {
   SCENE="$SCENES_PATH/$1.scene"
 
-  hue stop
+  hue_stop
 
   if [ -f "$SCENE" ]; then
     $SCENE
   else
     DEFAULT_SCENE="$SCENES_PATH/$DEFAULT_SCENE.scene"
 
-    if [ -f $DEFAULT_SCENE ]; then
-      $DEFAULT_SCENE
-    else
-      hue_scene_info
-    fi
-
+    $DEFAULT_SCENE
   fi
 }
 
+##
+# Switch for scene functions.
+##
 function hue_scene_switch {
   case "$1" in
 
@@ -243,7 +241,7 @@ function hue_call {
     fi
   fi
 
-  curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | _output
+  curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | hue_output
 }
 
 ##
@@ -363,7 +361,7 @@ function hue_set {
   LIGHTS="$1"
   shift
 
-  JSON=$(_process_json "$@")
+  JSON=$(hue_process_json "$@")
 
   if [ "$LIGHTS" == "all" ]; then
 
@@ -398,7 +396,7 @@ function hue_set_token {
 #
 # $1 Lights
 ##
-function _get {
+function hue_get {
   LIGHTS="$1"
   shift
 

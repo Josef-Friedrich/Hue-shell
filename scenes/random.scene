@@ -1,9 +1,6 @@
 #! /bin/bash
 
-source /etc/hue/hue.ini
-
-TITLE="Random scene"
-DESCRIPTION="random scene"
+source /usr/local/bin/hue
 
 function random_light {
   LAMP=$1
@@ -14,17 +11,17 @@ function random_light {
   START=$((COLOR - SPREAD))
   END=$((COLOR + SPREAD))
 
-  COLOR=$(range $START $END)
+  COLOR=$(hue_range $START $END)
 
   # Brightness
-  BRIGHTNESS=$(range 50 150)
+  BRIGHTNESS=$(hue_range 50 150)
 
-  hue set $LAMP hue $COLOR bri 255 sat 255 transitiontime 20
+  hue_set $LAMP hue $COLOR bri 255 sat 255 transitiontime 20
   sleep 2
-  hue set $LAMP bri $BRIGHTNESS transitiontime 20
+  hue_set $LAMP bri $BRIGHTNESS transitiontime 20
   sleep 2
 }
 
 for LAMP in 7 8 9 1 2 3 ; do
-  loop random_light $LAMP 46920
+  hue_loop random_light $LAMP 46920
 done

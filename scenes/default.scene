@@ -1,23 +1,20 @@
 #! /bin/bash
 
-source /etc/hue/hue.ini
-
-TITLE="Default"
-DESCRIPTION="Default scene"
+source /usr/local/bin/hue
 
 function _light7 {
-  hue set 7 hue 0 bri 255 sat 255 transitiontime 21
+  hue_set 7 hue 0 bri 255 sat 255 transitiontime 21
   sleep 2.1
-  hue set 7 bri 80 transitiontime 21
+  hue_set 7 bri 80 transitiontime 21
   sleep 2.1
 }
 
 function _light8 {
-  hue set 8 hue 10639 bri 80 sat 255 transitiontime 15
+  hue_set 8 hue 10639 bri 80 sat 255 transitiontime 15
   sleep 1.5
-  hue set 8 bri 255 transitiontime 15
+  hue_set 8 bri 255 transitiontime 15
   sleep 1.5
 }
 
-loop _light7
-loop _light8
+hue_loop _light7
+hue_loop _light8
