@@ -1,6 +1,6 @@
 #! /bin/bash
 
-source /usr/local/bin/hue
+source /usr/local/bin/hue > /dev/null
 
 COLOR1=$_RED
 COLOR2=$_YELLOW

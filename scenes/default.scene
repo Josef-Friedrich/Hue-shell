@@ -1,6 +1,6 @@
 #! /bin/bash
 
-source /usr/local/bin/hue
+source /usr/local/bin/hue > /dev/null
 
 function _light7 {
   hue_set 7 hue 0 bri 255 sat 255 transitiontime 21

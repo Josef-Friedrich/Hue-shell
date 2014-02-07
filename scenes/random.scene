@@ -1,6 +1,6 @@
 #! /bin/bash
 
-source /usr/local/bin/hue
+source /usr/local/bin/hue > /dev/null
 
 function random_light {
   LAMP=$1

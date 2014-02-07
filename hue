@@ -185,7 +185,10 @@ function hue_scene_execute {
 # Switch for scene functions.
 ##
 function hue_scene_switch {
+
   case "$1" in
+
+
 
     execute)
       hue_scene_execute $2
