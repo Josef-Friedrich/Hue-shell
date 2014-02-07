@@ -33,3 +33,13 @@ function range {
 
   echo $((NUMBER_IN_RANGE + START))
 }
+
+##
+# Sleep as long as transitiontime.
+# TIME=$1
+##
+function huesleep {
+  TIME=$1
+
+  sleep ${TIME%?}.${TIME: -1}
+}

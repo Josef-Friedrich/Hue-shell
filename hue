@@ -82,13 +82,12 @@ function _call {
 # Stop all hue processes.
 ##
 function _stop {
-  PIDS_FILE="/var/run/hue.pids"
 
-  for PID in $(cat $PIDS_FILE); do
+  for PID in $(cat $PIDFILE); do
     kill $PID > /dev/null
   done
 
-  > $PIDS_FILE
+  > $PIDFILE
 }
 
 ##
