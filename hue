@@ -1,14 +1,61 @@
 #! /bin/bash
 
+################################################################################
+# Configuration
+################################################################################
 
+IP="192.168.2.31"
 
-CONFIG_FILE="/etc/hue/hue.ini"
+USERNAME="joseffriedrich"
 
-if [ -f $CONFIG_FILE ]; then
-  source $CONFIG_FILE
-else
-  echo "hue.ini file was not found. Create hue.ini file in /etc/hue/hue.ini."
-fi
+INSTALLATION_PATH="/Users/jf/git-respositories/Hue-Bash"
+
+PIDFILE="$INSTALLATION_PATH/var/run/hue.pids"
+
+SCENES_PATH="$INSTALLATION_PATH/scenes"
+
+DEFAULT_SCENE="random"
+
+##
+# Hue Colors
+##
+
+_RED="hue 0"
+
+_YELLOW="hue 12750"
+
+_GREEN="hue 25500"
+
+_WHITE="hue 36210"
+
+_BLUE="hue 46920"
+
+_CYAN="hue 56100"
+
+_RED2="hue 65535"
+
+##
+# Light recipes
+##
+
+_DEFAULT="ct 369 bri 254"
+
+_RELAX="ct 443 bri 173"
+
+_CONCENTRATE="ct 233 bri 219"
+
+_ENERGIZE="ct 156 bri 203"
+
+_READING="ct 346 bri 240"
+
+# Groups
+
+_BEDROOM="1,2,3"
+_LIVING="6,7,8"
+
+################################################################################
+# Options
+################################################################################
 
 while getopts ":djts" OPT; do
 
@@ -48,15 +95,136 @@ done
 
 shift $((OPTIND-1))
 
+################################################################################
+# Library functions
+################################################################################
+
+##
+# Loop function.
+##
+function hue_loop {
+  (
+    while true; do
+      eval "$*"
+    done
+  ) &
+  echo $! >> $PIDFILE
+}
+
+##
+# Random range function.
+#
+# $1 START
+# $2 END
+##
+function hue_range {
+  START=$1
+  END=$2
+
+  END=$((END + 1))
+
+  RANGE=$((END - START))
+
+  # $RANDOM is a number between 0 and 32767
+  BIG_RANDOM=$((RANDOM * 4 + RANDOM % 4))
+
+  NUMBER_IN_RANGE=$((BIG_RANDOM % RANGE))
+
+  echo $((NUMBER_IN_RANGE + START))
+}
+
+##
+# Sleep as long as transitiontime.
+# TIME=$1
+##
+function hue_sleep {
+  TIME=$1
+
+  # ${TIME%?}: Remove last charakter
+  # ${TIME: -1}: Last charakter of a string
+  sleep ${TIME%?}.${TIME: -1}
+}
+
+################################################################################
+# Scene functions
+################################################################################
+
+##
+# Show available scenes.
+##
+function hue_scene_info {
+  echo "Available scenes:"
+
+  for SCENE in $(find $SCENES_PATH -name "*.scene"); do
+
+    source $SCENE
+    TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
+    echo "  -> $TOKEN ($TITLE: $DESCRIPTION)"
+
+  done
+}
+
+##
+# Execute scene.
+##
+function hue_scene_execute {
+  SCENE="$SCENES_PATH/$1.scene"
+
+  hue stop
+
+  if [ -f "$SCENE" ]; then
+    $SCENE
+  else
+    DEFAULT_SCENE="$SCENES_PATH/$DEFAULT_SCENE.scene"
+
+    if [ -f $DEFAULT_SCENE ]; then
+      $DEFAULT_SCENE
+    else
+      hue_scene_info
+    fi
+
+  fi
+}
+
+function hue_scene_switch {
+  case "$1" in
+
+    execute)
+      hue_scene_execute $2
+      ;;
+
+    info)
+      hue_scene_info
+      ;;
+
+    stop)
+      hue_stop
+      ;;
+
+    reset)
+      hue_reset
+      ;;
+
+    *)
+      hue_help
+      ;;
+
+  esac
+}
+
 ##
 # Print out a short help text.
 ##
-function _help {
+function hue_help {
   echo "Usage: hue
   - help
   - set <lights> <attributes>
   - get <lights>
-  - alert <lights>"
+  - alert <lights>
+  - scene
+    - execute <scene>: Execute scene
+    - info: Show available scenes
+    - stop: Stop scene"
 }
 
 ##
@@ -66,7 +234,7 @@ function _help {
 # - $2 = path
 # - $3 = json output
 ##
-function _call {
+function hue_call {
   if [ -n "$3" ]; then
     DATA="--data $3"
 
@@ -81,7 +249,7 @@ function _call {
 ##
 # Stop all hue processes.
 ##
-function _stop {
+function hue_stop {
 
   for PID in $(cat $PIDFILE); do
     kill $PID > /dev/null
@@ -93,15 +261,15 @@ function _stop {
 ##
 # Stop all hue processes and reset to default color.
 ##
-function _reset {
-  _stop
-  _set all $_DEFAULT
+function hue_reset {
+  hue_stop
+  hue_set all $_DEFAULT
 }
 
 ##
 # Print out the ip adresse and the hue username.
 ##
-function _debug {
+function hue_debug {
   echo "IP: $IP"
   echo "USERNAME: $USERNAME"
 }
@@ -109,7 +277,7 @@ function _debug {
 ##
 # Process the json string.
 ##
-function _process_json {
+function hue_process_json {
 
   while true ; do
     case "$1" in
@@ -191,7 +359,7 @@ function _process_json {
 # $1 = Lights
 # $@ = Light attributes
 ##
-function _set {
+function hue_set {
   LIGHTS="$1"
   shift
 
@@ -199,14 +367,14 @@ function _set {
 
   if [ "$LIGHTS" == "all" ]; then
 
-    _call PUT groups/0/action $JSON
+    hue_call PUT groups/0/action $JSON
 
   else
 
     LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
     for LIGHT in $LIGHTS; do
-      _call PUT lights/$LIGHT/state "$JSON"
+      hue_call PUT lights/$LIGHT/state "$JSON"
     done
 
   fi
@@ -218,11 +386,11 @@ function _set {
 # $1 = Lights
 # $2 = Token
 ##
-function _set_token {
+function hue_set_token {
   LIGHTS="$1"
   TOKEN="$2"
 
-  _set $LIGHTS ${!TOKEN}
+  hue_set $LIGHTS ${!TOKEN}
 }
 
 ##
@@ -239,14 +407,14 @@ function _get {
 
   if [ "$LIGHTS" == "all" ]; then
 
-    _call GET lights
+    hue_call GET lights
 
   else
 
     LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
     for LIGHT in $LIGHTS; do
-      _call GET lights/$LIGHT
+      hue_call GET lights/$LIGHT
     done
 
   fi
@@ -257,20 +425,20 @@ function _get {
 #
 # $1 = Lights
 ##
-function _alert {
+function hue_alert {
   LIGHTS="$1"
   shift
 
   if [ "$LIGHTS" == "all" ]; then
 
-    _call PUT groups/0/action '{"alert":"select"}'
+    hue_call PUT groups/0/action '{"alert":"select"}'
 
   else
 
     LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
     for LIGHT in $LIGHTS; do
-      _call PUT lights/$LIGHT/state '{"alert":"select"}'
+      hue_call PUT lights/$LIGHT/state '{"alert":"select"}'
     done
 
   fi
@@ -283,7 +451,7 @@ function _alert {
 # - over jq
 # - formatted text output (not working yet)
 ##
-function _output {
+function hue_output {
   read OUTPUT
 
   if [ $DEBUG ]; then
@@ -315,43 +483,48 @@ function _output {
 
 case "$1" in
   help)
-    _help
+    hue_help
   ;;
 
   set)
     shift
-    _set $@
+    hue_set $@
+  ;;
+
+  scene)
+    shift
+    hue_scene_switch $@
   ;;
 
   token)
     shift
-    _set_token $@
+    hue_set_token $@
   ;;
 
   get)
     shift
-    _get $@
+    hue_get $@
   ;;
 
   alert)
     shift
-    _alert $@
+    hue_alert $@
   ;;
 
   reset)
-    _reset
+    hue_reset
   ;;
 
   stop)
-    _stop
+    hue_stop
   ;;
 
   debug)
-    _debug
+    hue_debug
   ;;
 
   *)
-    _help
+    hue_help
   ;;
 
 esac
