@@ -1,0 +1,24 @@
+#! /bin/bash
+
+source /usr/local/bin/hue > /dev/null
+
+TRANS="t 10 "
+SLEEP="10"
+
+function all_color {
+  hue_set all sat 255 bri 150
+
+  hue_set all hue 0 $TRANS
+  sleep $SLEEP
+
+  hue_set all hue 47000 $TRANS
+  sleep $SLEEP
+
+  hue_set all hue 15000 $TRANS
+  sleep $SLEEP
+
+  hue_set all hue 53000 $TRANS
+  sleep $SLEEP
+}
+
+hue_loop all_color

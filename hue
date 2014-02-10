@@ -395,6 +395,21 @@ function hue_set_token {
 }
 
 ##
+# Set light state with transistion time an sleep.
+#
+# $1 = Lights
+# $2 = Transistiontime 1 = 1/10s, 10 = 1s
+##
+function hue_set_transit {
+  LIGHTS="$1"
+  TRANSITIONTIME="$2"
+  shift 2
+
+  hue_set $LIGHTS transitiontime $TRANSITIONTIME $@
+  hue_sleep $TRANSITIONTIME
+}
+
+##
 # Get the state of the lights.
 #
 # $1 Lights
@@ -492,14 +507,20 @@ case "$1" in
     hue_set $@
   ;;
 
-  scene)
-    shift
-    hue_scene_switch $@
-  ;;
-
   token)
     shift
     hue_set_token $@
+  ;;
+
+
+  transit)
+    shift
+    hue_set_transit $@
+  ;;
+
+  scene)
+    shift
+    hue_scene_switch $@
   ;;
 
   get)
