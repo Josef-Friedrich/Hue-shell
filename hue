@@ -119,17 +119,17 @@ function hue_loop {
 # $2 END
 ##
 function hue_range {
-  START=$1
-  END=$2
+  local START=$1
+  local END=$2
 
-  END=$((END + 1))
+  local END=$((END + 1))
 
-  RANGE=$((END - START))
+  local RANGE=$((END - START))
 
   # $RANDOM is a number between 0 and 32767
-  BIG_RANDOM=$((RANDOM * 4 + RANDOM % 4))
+  local BIG_RANDOM=$((RANDOM * 4 + RANDOM % 4))
 
-  NUMBER_IN_RANGE=$((BIG_RANDOM % RANGE))
+  local NUMBER_IN_RANGE=$((BIG_RANDOM % RANGE))
 
   echo $((NUMBER_IN_RANGE + START))
 }
@@ -139,11 +139,56 @@ function hue_range {
 # TIME=$1
 ##
 function hue_sleep {
-  TIME=$1
+  local TIME=$1
 
   # ${TIME%?}: Remove last charakter
   # ${TIME: -1}: Last charakter of a string
   sleep ${TIME%?}.${TIME: -1}
+}
+
+################################################################################
+# Scenes
+################################################################################
+
+##
+# Helper function for random breath scene.
+##
+function _hue_scene_random_breath {
+  local LIGHT=$1
+  local COLOR=$2
+  local SPREAD=$3
+
+  local START=$((COLOR - SPREAD))
+  local END=$((COLOR + SPREAD))
+
+  local COLOR=$(hue_range $START $END)
+
+  # Brightness
+  local BRIGHTNESS=$(hue_range 50 150)
+
+  local TRANSTIME=$(hue_range 15 25)
+
+  hue_set_transit $LIGHT $TRANSTIME hue $COLOR bri 255 sat 255
+  hue_set_transit $LIGHT $TRANSTIME bri $BRIGHTNESS
+}
+
+##
+# Scene: Random breath.
+#
+# - LIGHTS: comma separates lights numbers, e. g. 1,2,3,4.
+# - COLOR: hue color value.
+# - SPREAD:
+##
+function hue_scene_random_breath {
+  local LIGHTS=$1
+  local COLOR=$2
+  local SPREAD=$3
+
+  local LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+
+  for LIGHT in $LIGHTS ; do
+    hue_loop _hue_scene_random_breath $LIGHT $COLOR $SPREAD
+  done
 }
 
 ################################################################################
@@ -158,7 +203,7 @@ function hue_scene_info {
 
   for SCENE in $(find $SCENES_PATH -name "*.scene"); do
 
-    TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
+    local TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
     echo "  -> $TOKEN"
 
   done
@@ -168,14 +213,14 @@ function hue_scene_info {
 # Execute scene.
 ##
 function hue_scene_execute {
-  SCENE="$SCENES_PATH/$1.scene"
+  local SCENE="$SCENES_PATH/$1.scene"
 
   hue_stop
 
   if [ -f "$SCENE" ]; then
     $SCENE
   else
-    DEFAULT_SCENE="$SCENES_PATH/$DEFAULT_SCENE.scene"
+    local DEFAULT_SCENE="$SCENES_PATH/$DEFAULT_SCENE.scene"
 
     $DEFAULT_SCENE
   fi
@@ -187,8 +232,6 @@ function hue_scene_execute {
 function hue_scene_switch {
 
   case "$1" in
-
-
 
     execute)
       hue_scene_execute $2
@@ -237,7 +280,7 @@ function hue_help {
 ##
 function hue_call {
   if [ -n "$3" ]; then
-    DATA="--data $3"
+    local DATA="--data $3"
 
     if [ $JSONDEBUG ]; then
       echo $3
@@ -309,12 +352,12 @@ function hue_process_json {
         ;;
 
       x)
-        X=$2
+        local X=$2
         shift 2
         ;;
 
       y)
-        Y=$2
+        local Y=$2
         shift 2
         ;;
 
@@ -348,8 +391,8 @@ function hue_process_json {
     VALUES+=("\"xy\":[$X,$Y]")
   fi
 
-  STATE=$(printf ",%s" "${VALUES[@]}")
-  STATE=${STATE:1}
+  local STATE=$(printf ",%s" "${VALUES[@]}")
+  local STATE=${STATE:1}
 
   echo "{$STATE}"
 }
@@ -361,10 +404,10 @@ function hue_process_json {
 # $@ = Light attributes
 ##
 function hue_set {
-  LIGHTS="$1"
+  local LIGHTS="$1"
   shift
 
-  JSON=$(hue_process_json "$@")
+  local JSON=$(hue_process_json "$@")
 
   if [ "$LIGHTS" == "all" ]; then
 
@@ -372,7 +415,7 @@ function hue_set {
 
   else
 
-    LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+    local LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
     for LIGHT in $LIGHTS; do
       hue_call PUT lights/$LIGHT/state "$JSON"
@@ -388,8 +431,8 @@ function hue_set {
 # $2 = Token
 ##
 function hue_set_token {
-  LIGHTS="$1"
-  TOKEN="$2"
+  local LIGHTS="$1"
+  local TOKEN="$2"
 
   hue_set $LIGHTS ${!TOKEN}
 }
@@ -401,8 +444,8 @@ function hue_set_token {
 # $2 = Transistiontime 1 = 1/10s, 10 = 1s
 ##
 function hue_set_transit {
-  LIGHTS="$1"
-  TRANSITIONTIME="$2"
+  local LIGHTS="$1"
+  local TRANSITIONTIME="$2"
   shift 2
 
   hue_set $LIGHTS transitiontime $TRANSITIONTIME $@
@@ -415,7 +458,7 @@ function hue_set_transit {
 # $1 Lights
 ##
 function hue_get {
-  LIGHTS="$1"
+  local LIGHTS="$1"
   shift
 
   #DEBUG=1
@@ -427,7 +470,7 @@ function hue_get {
 
   else
 
-    LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+    local LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
     for LIGHT in $LIGHTS; do
       hue_call GET lights/$LIGHT
@@ -442,7 +485,7 @@ function hue_get {
 # $1 = Lights
 ##
 function hue_alert {
-  LIGHTS="$1"
+  local LIGHTS="$1"
   shift
 
   if [ "$LIGHTS" == "all" ]; then
@@ -451,7 +494,7 @@ function hue_alert {
 
   else
 
-    LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+    local LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
     for LIGHT in $LIGHTS; do
       hue_call PUT lights/$LIGHT/state '{"alert":"select"}'
@@ -481,17 +524,17 @@ function hue_output {
   if [ $TEXTDEBUG ]; then
 
     # Hue and Saturation
-    HUE=$(echo $OUTPUT | jq '.state.hue')
-    SATURATION=$(echo $OUTPUT | jq '.state.sat')
+    local HUE=$(echo $OUTPUT | jq '.state.hue')
+    local SATURATION=$(echo $OUTPUT | jq '.state.sat')
 
     # XY
-    X=$(echo $OUTPUT | jq '.state.xy[0]')
-    Y=$(echo $OUTPUT | jq '.state.xy[1]')
+    local X=$(echo $OUTPUT | jq '.state.xy[0]')
+    local Y=$(echo $OUTPUT | jq '.state.xy[1]')
 
     # COLORTEMPERATURE
-    COLORTEMPERATURE=$(echo $OUTPUT | jq '.state.ct')
+    local COLORTEMPERATURE=$(echo $OUTPUT | jq '.state.ct')
 
-    BRIGHTNESS=$(echo $OUTPUT | jq '.state.bri')
+    local BRIGHTNESS=$(echo $OUTPUT | jq '.state.bri')
 
     echo "$HUE;$SATURATION;$X;$Y;$COLORTEMPERATURE"
   fi
@@ -511,7 +554,6 @@ case "$1" in
     shift
     hue_set_token $@
   ;;
-
 
   transit)
     shift

@@ -2,28 +2,4 @@
 
 source /usr/local/bin/hue > /dev/null
 
-##
-# $1 = Lamp
-# $2 = Color
-##
-function random_light {
-  LAMP=$1
-  COLOR=$2
-
-  # Color.
-  SPREAD=2000
-  START=$((COLOR - SPREAD))
-  END=$((COLOR + SPREAD))
-
-  COLOR=$(hue_range $START $END)
-
-  # Brightness
-  BRIGHTNESS=$(hue_range 50 150)
-
-  hue_set_transit $LAMP 20 hue $COLOR bri 255 sat 255
-  hue_set_transit $LAMP 20 bri $BRIGHTNESS
-}
-
-for LAMP in 7 8 9 1 2 3 ; do
-  hue_loop random_light $LAMP 46920
-done
+hue_scene_random_breath 1,2,3,7,8,9 60000 3000

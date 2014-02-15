@@ -1,7 +1,0 @@
-#! /bin/bash
-
-source /usr/local/bin/hue
-
-COLOR=1000
-hue_set all hue $COLOR bri 255 sat 255
-
