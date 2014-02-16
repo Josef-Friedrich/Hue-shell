@@ -10,7 +10,7 @@ USERNAME="joseffriedrich"
 
 INSTALLATION_PATH="/Users/jf/git-respositories/Hue-Bash"
 
-PIDFILE="$INSTALLATION_PATH/var/run/hue.pids"
+PIDFILE="$HOME/.hue-bash_temp"
 
 SCENES_PATH="$INSTALLATION_PATH/scenes"
 
@@ -53,6 +53,10 @@ _READING="--ct 346 --bri 240"
 _BEDROOM="1,2,3"
 
 _LIVING="6,7,8"
+
+if [ ! -f $PIDFILE ]; then
+  touch $PIDFILE
+fi
 
 ################################################################################
 # Options
@@ -115,8 +119,8 @@ function hue_loop {
 ##
 # Random range function.
 #
-# $1 START
-# $2 END
+# - $1 = START
+# - $2 = END
 ##
 function hue_range {
   local START=$1
@@ -136,14 +140,13 @@ function hue_range {
 
 ##
 # Sleep as long as transitiontime.
-# TIME=$1
+#
+# - $1 = TIME
 ##
 function hue_sleep {
-  local TIME=$1
-
-  # ${TIME%?}: Remove last charakter
-  # ${TIME: -1}: Last charakter of a string
-  sleep ${TIME%?}.${TIME: -1}
+  # ${1%?}: Remove last charakter
+  # ${1: -1}: Last charakter of a string
+  sleep ${1%?}.${1: -1}
 }
 
 ################################################################################
@@ -151,33 +154,7 @@ function hue_sleep {
 ################################################################################
 
 ##
-# Helper function for random breath scene.
-##
-function _hue_scene_random_breath {
-  local LIGHT=$1
-  local COLOR=$2
-  local SPREAD=$3
-
-  local START=$((COLOR - SPREAD))
-  local END=$((COLOR + SPREAD))
-
-  local COLOR=$(hue_range $START $END)
-
-  # Brightness
-  local BRIGHTNESS=$(hue_range 50 150)
-
-  local TRANSTIME=$(hue_range 15 25)
-
-  hue_set_transit $LIGHT $TRANSTIME --hue $COLOR --bri 255 --sat 255
-  hue_set_transit $LIGHT $TRANSTIME --bri $BRIGHTNESS
-}
-
-##
 # Scene: Random breath.
-#
-# - LIGHTS: comma separates lights numbers, e. g. 1,2,3,4.
-# - COLOR: hue color value.
-# - SPREAD:
 ##
 function hue_scene_random_breath {
 
@@ -207,6 +184,22 @@ function hue_scene_random_breath {
     esac
   done
 
+  #
+  # Default values.
+  #
+  if [ -z $LIGHTS ]; then
+    echo "Usage: hue random-breath --lights 1,2,3 --hue 55000 --spread 3000"
+    exit 1
+  fi
+
+  if [ -z $HUE ]; then
+    local HUE='55000'
+  fi
+
+  if [ -z $SPREAD ]; then
+    local SPREAD='3000'
+  fi
+
   local LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
   for LIGHT in $LIGHTS ; do
@@ -214,21 +207,24 @@ function hue_scene_random_breath {
   done
 }
 
-################################################################################
-
 ##
-# - $1: HUESEQUENCE
-# - $2: SLEEPTIME
-# - $3: TRANSITIONTIME
+# Helper function for random breath scene.
+#
+# - $1 = LIGHT
+# - $2 = HUE
+# - $3 = SPREAD
 ##
-function _hue_scene_color_sequence {
-  local HUE_SEQUENCE=$(echo $1 | tr "," "\n")
+function _hue_scene_random_breath {
+  local START=$(($2 - $3))
+  local END=$(($2 + $3))
 
-  for HUE in $HUE_SEQUENCE ; do
-      hue_set all --sat 255 --hue $HUE -t $3
-      hue_sleep $2
-  done
+  local TRANSTIME=$(hue_range 15 25)
+
+  hue_set_transit $1 $TRANSTIME --hue $(hue_range $START $END) --bri 255 --sat 255
+  hue_set_transit $1 $TRANSTIME --bri $(hue_range 50 150)
 }
+
+################################################################################
 
 ##
 #
@@ -241,17 +237,22 @@ function hue_scene_color_sequence {
     case "$1" in
 
       -h|--hues|--huesequence)
-        local HUESEQUENCE=$2
+        local HUE_SEQUENCE=$2
         shift 2
         ;;
 
       -s|--sleeptime)
-        local SLEEPTIME=$2
+        local SLEEP_TIME=$2
         shift 2
         ;;
 
       -t|--transitiontime)
-        local TRANSITIONTIME=$2
+        local TRANSITION_TIME=$2
+        shift 2
+        ;;
+
+      -b|--bri|--brightness)
+        local BRIGHTNESS=$2
         shift 2
         ;;
 
@@ -264,19 +265,38 @@ function hue_scene_color_sequence {
   #
   # Default values.
   #
-  if [ -z $HUESEQUENCE ]; then
-    local HUESEQUENCE='0,10000,50000'
+  if [ -z $HUE_SEQUENCE ]; then
+    local HUE_SEQUENCE='0,12750,25500,46920,56100'
   fi
 
-  if [ -z $SLEEPTIME ]; then
-    local SLEEPTIME='50'
+  if [ -z $SLEEP_TIME ]; then
+    local SLEEP_TIME='50'
   fi
 
-  if [ -z $TRANSITIONTIME ]; then
-    local TRANSITIONTIME='5'
+  if [ -z $TRANSITION_TIME ]; then
+    local TRANSITION_TIME='5'
   fi
 
-  hue_loop _hue_scene_color_sequence $HUESEQUENCE $SLEEPTIME $TRANSITIONTIME
+  if [ -z $BRIGHTNESS ]; then
+    local BRIGHTNESS='255'
+  fi
+
+  hue_loop _hue_scene_color_sequence $HUE_SEQUENCE $SLEEP_TIME $TRANSITION_TIME $BRIGHTNESS
+}
+
+##
+# - $1 = HUE_SEQUENCE
+# - $2 = SLEEP_TIME
+# - $3 = TRANSITION_TIME
+# - $4 = BRIGHTNESS
+##
+function _hue_scene_color_sequence {
+  local HUE_SEQUENCE=$(echo $1 | tr "," "\n")
+
+  for HUE in $HUE_SEQUENCE ; do
+    hue_set all --sat 255 --hue $HUE -t $3 --bri $4
+    hue_sleep $2
+  done
 }
 
 ################################################################################
@@ -299,6 +319,8 @@ function hue_scene_info {
 
 ##
 # Execute scene.
+#
+# - $1 = SCENE_TOKEN
 ##
 function hue_scene_execute {
   local SCENE="$SCENES_PATH/$1.scene"
@@ -362,9 +384,9 @@ function hue_help {
 ##
 # Execute the http call over curl.
 #
-# - $1 = Http request: PUT, GET
-# - $2 = path
-# - $3 = json output
+# - $1 = HTTP_REQUEST: PUT, GET
+# - $2 = PATH:
+# - $3 = JSON:
 ##
 function hue_call {
   if [ -n "$3" ]; then
@@ -488,8 +510,8 @@ function hue_process_json {
 ##
 # Set light state.
 #
-# $1 = Lights
-# $@ = Light attributes
+# - $1 = LIGHTS
+# - $@ = LIGHT_ATTRIBUTES
 ##
 function hue_set {
   local LIGHTS="$1"
@@ -515,8 +537,8 @@ function hue_set {
 ##
 # Set light state with tokens.
 #
-# $1 = Lights
-# $2 = Token
+# - $1 = LIGHTS
+# - $2 = TOKEN
 ##
 function hue_set_token {
   local LIGHTS="$1"
@@ -528,22 +550,22 @@ function hue_set_token {
 ##
 # Set light state with transistion time an sleep.
 #
-# $1 = Lights
-# $2 = Transistiontime 1 = 1/10s, 10 = 1s
+# $1 = LIGHTS:
+# $2 = TRANSITIONTIME: 1 = 1/10s, 10 = 1s
 ##
 function hue_set_transit {
   local LIGHTS="$1"
   local TRANSITIONTIME="$2"
   shift 2
 
-  hue_set $LIGHTS transitiontime $TRANSITIONTIME $@
+  hue_set $LIGHTS --transitiontime $TRANSITIONTIME $@
   hue_sleep $TRANSITIONTIME
 }
 
 ##
 # Get the state of the lights.
 #
-# $1 Lights
+# - $1 = LIGHTS
 ##
 function hue_get {
   local LIGHTS="$1"
@@ -570,7 +592,7 @@ function hue_get {
 ##
 # Perform one breathe cycle.
 #
-# $1 = Lights
+# - $1 = LIGHTS
 ##
 function hue_alert {
   local LIGHTS="$1"
@@ -629,9 +651,10 @@ function hue_output {
 }
 
 case "$1" in
-  help)
-    hue_help
-  ;;
+
+  #
+  # Set
+  #
 
   set)
     shift
@@ -648,25 +671,50 @@ case "$1" in
     hue_set_transit $@
   ;;
 
+  #
+  # Scene
+  #
+
   scene)
     shift
     hue_scene_switch $@
   ;;
+
+  #
+  # Scenes
+  #
 
   color-sequence)
     shift
     hue_scene_color_sequence $@
   ;;
 
+  random-breath)
+    shift
+    hue_scene_random_breath $@
+  ;;
+
+  #
+  # Info / debug
+  #
+
   get)
     shift
     hue_get $@
+  ;;
+
+  debug)
+    hue_debug
   ;;
 
   alert)
     shift
     hue_alert $@
   ;;
+
+  #
+  # Stop
+  #
 
   reset)
     hue_reset
@@ -676,8 +724,12 @@ case "$1" in
     hue_stop
   ;;
 
-  debug)
-    hue_debug
+  #
+  # Help
+  #
+
+  help)
+    hue_help
   ;;
 
   *)
