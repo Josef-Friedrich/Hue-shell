@@ -20,33 +20,33 @@ DEFAULT_SCENE="random"
 # Hue Colors
 ##
 
-_RED="hue 0"
+_RED="--hue 0"
 
-_YELLOW="hue 12750"
+_YELLOW="--hue 12750"
 
-_GREEN="hue 25500"
+_GREEN="--hue 25500"
 
-_WHITE="hue 36210"
+_WHITE="--hue 36210"
 
-_BLUE="hue 46920"
+_BLUE="--hue 46920"
 
-_CYAN="hue 56100"
+_CYAN="--hue 56100"
 
-_RED2="hue 65535"
+_RED2="--hue 65535"
 
 ##
 # Light recipes
 ##
 
-_DEFAULT="ct 369 bri 254"
+_DEFAULT="--ct 369 --bri 254"
 
-_RELAX="ct 443 bri 173"
+_RELAX="--ct 443 --bri 173"
 
-_CONCENTRATE="ct 233 bri 219"
+_CONCENTRATE="--ct 233 --bri 219"
 
-_ENERGIZE="ct 156 bri 203"
+_ENERGIZE="--ct 156 --bri 203"
 
-_READING="ct 346 bri 240"
+_READING="--ct 346 --bri 240"
 
 # Groups
 
@@ -168,8 +168,8 @@ function _hue_scene_random_breath {
 
   local TRANSTIME=$(hue_range 15 25)
 
-  hue_set_transit $LIGHT $TRANSTIME hue $COLOR bri 255 sat 255
-  hue_set_transit $LIGHT $TRANSTIME bri $BRIGHTNESS
+  hue_set_transit $LIGHT $TRANSTIME --hue $COLOR --bri 255 --sat 255
+  hue_set_transit $LIGHT $TRANSTIME --bri $BRIGHTNESS
 }
 
 ##
@@ -180,15 +180,103 @@ function _hue_scene_random_breath {
 # - SPREAD:
 ##
 function hue_scene_random_breath {
-  local LIGHTS=$1
-  local COLOR=$2
-  local SPREAD=$3
+
+  hue_stop
+
+  while true ; do
+    case "$1" in
+
+      -l|--lights)
+        local LIGHTS=$2
+        shift 2
+        ;;
+
+      -h|--hue)
+        local HUE=$2
+        shift 2
+        ;;
+
+      -s|--spread)
+        local SPREAD=$2
+        shift 2
+        ;;
+
+      *)
+        break
+        ;;
+    esac
+  done
 
   local LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
   for LIGHT in $LIGHTS ; do
-    hue_loop _hue_scene_random_breath $LIGHT $COLOR $SPREAD
+    hue_loop _hue_scene_random_breath $LIGHT $HUE $SPREAD
   done
+}
+
+################################################################################
+
+##
+# - $1: HUESEQUENCE
+# - $2: SLEEPTIME
+# - $3: TRANSITIONTIME
+##
+function _hue_scene_color_sequence {
+  local HUE_SEQUENCE=$(echo $1 | tr "," "\n")
+
+  for HUE in $HUE_SEQUENCE ; do
+      hue_set all --sat 255 --hue $HUE -t $3
+      hue_sleep $2
+  done
+}
+
+##
+#
+##
+function hue_scene_color_sequence {
+
+  hue_stop
+
+  while true ; do
+    case "$1" in
+
+      -h|--hues|--huesequence)
+        local HUESEQUENCE=$2
+        shift 2
+        ;;
+
+      -s|--sleeptime)
+        local SLEEPTIME=$2
+        shift 2
+        ;;
+
+      -t|--transitiontime)
+        local TRANSITIONTIME=$2
+        shift 2
+        ;;
+
+      *)
+        break
+        ;;
+    esac
+  done
+
+  #
+  # Default values.
+  #
+  if [ -z $HUESEQUENCE ]; then
+    local HUESEQUENCE='0,10000,50000'
+  fi
+
+  if [ -z $SLEEPTIME ]; then
+    local SLEEPTIME='50'
+  fi
+
+  if [ -z $TRANSITIONTIME ]; then
+    local TRANSITIONTIME='5'
+  fi
+
+  hue_loop _hue_scene_color_sequence $HUESEQUENCE $SLEEPTIME $TRANSITIONTIME
 }
 
 ################################################################################
@@ -326,57 +414,57 @@ function hue_process_json {
   while true ; do
     case "$1" in
 
-      on)
+      --on)
         VALUES+=("\"on\":true")
         shift 1
         ;;
 
-      off)
+      --off)
         VALUES+=("\"on\":false")
         shift 1
         ;;
 
-      b|bri)
+      -b|--bri)
         VALUES+=("\"bri\":$2")
         shift 2
         ;;
 
-      h|hue)
+      -h|--hue)
         VALUES+=("\"hue\":$2")
         shift 2
         ;;
 
-      s|sat)
+      -s|--sat)
         VALUES+=("\"sat\":$2")
         shift 2
         ;;
 
-      x)
+      -x)
         local X=$2
         shift 2
         ;;
 
-      y)
+      -y)
         local Y=$2
         shift 2
         ;;
 
-      c|ct)
+      -c|--ct)
         VALUES+=("\"ct\":$2")
         shift 2
         ;;
 
-      a|alert)
+      -a|--alert)
         VALUES+=("\"alert\":\"$2\"")
         shift 2
         ;;
 
-      e|effect)
+      -e|--effect)
         VALUES+=("\"effect\":\"$2\"")
         shift 2
         ;;
 
-      t|transitiontime)
+      -t|--transitiontime)
         VALUES+=("\"transitiontime\":$2")
         shift 2
         ;;
@@ -563,6 +651,11 @@ case "$1" in
   scene)
     shift
     hue_scene_switch $@
+  ;;
+
+  color-sequence)
+    shift
+    hue_scene_color_sequence $@
   ;;
 
   get)
