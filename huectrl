@@ -19,13 +19,13 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
   start)
-    huescene execute > /dev/null
+    hue color-sequence > /dev/null
     echo "Starting hue ctrl ..."
     ;;
 
   stop)
-    hue stop
-    echo "Stoping hue ctrl ..."
+    hue reset
+    echo "Stopping hue ctrl ..."
     ;;
 
   *)
@@ -35,3 +35,4 @@ case "$1" in
 esac
 
 exit 0
+
