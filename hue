@@ -54,6 +54,10 @@ _BEDROOM="1,2,3"
 
 _LIVING="6,7,8"
 
+################################################################################
+# Checks
+################################################################################
+
 if [ ! -f $PIDFILE ]; then
   touch $PIDFILE
 fi
@@ -227,7 +231,7 @@ function _hue_scene_random_breath {
 ################################################################################
 
 ##
-#
+# Scene: All lights change at the same time the color in a given sequence.
 ##
 function hue_scene_color_sequence {
 
@@ -297,6 +301,93 @@ function _hue_scene_color_sequence {
     hue_set all --sat 255 --hue $HUE -t $3 --bri $4
     hue_sleep $2
   done
+}
+
+################################################################################
+
+##
+# Scene: Switch between two colors.
+##
+function hue_scene_two_color_switch {
+
+  hue_stop
+
+  while true ; do
+    case "$1" in
+
+      -l1|--lights1)
+        local LIGHTS1=$2
+        shift 2
+        ;;
+
+      -l2|--lights2)
+        local LIGHTS2=$2
+        shift 2
+        ;;
+
+      -c1|color1)
+        local COLOR1=$2
+        shift 2
+        ;;
+
+      -c2|color2)
+        local COLOR2=$2
+        shift 2
+        ;;
+
+      -s|switchtime)
+        local SWITCH_TIME=$2
+        shift 2
+        ;;
+
+      *)
+        break
+        ;;
+    esac
+  done
+
+  #
+  # Default values.
+  #
+  if [ -z $LIGHTS1 ] || [ -z $LIGHTS2 ] ; then
+    echo "Usage: hue two-color-switch --lights1 1,2 --lights2 3,4"
+    exit 1
+  fi
+
+  if [ -z $COLOR1 ]; then
+    local COLOR1='0'
+  fi
+
+  if [ -z $COLOR2 ]; then
+    local COLOR2='46920'
+  fi
+
+  if [ -z $SWITCH_TIME ]; then
+    local SWITCH_TIME='20'
+  fi
+
+  hue_set all sat 255
+  hue_set all bri 255
+
+  hue_loop _hue_scene_two_color_switch $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME
+}
+
+##
+# - 1$ = LIGHTS1
+# - 2$ = LIGHTS2
+# - 3$ = COLOR1
+# - 4$ = COLOR2
+# - 5$ = SWITCH_TIME
+##
+function _hue_scene_two_color_switch {
+
+  hue_set $1 --hue $3 -t 5
+  hue_set $2 --hue $4 -t 5
+  hue_sleep $5
+
+  hue_set $2 --hue $3 -t 5
+  hue_set $1 --hue $4 -t 5
+  hue_sleep $5
 }
 
 ################################################################################
@@ -692,6 +783,11 @@ case "$1" in
   random-breath)
     shift
     hue_scene_random_breath $@
+  ;;
+
+  tcs|two-color-switch)
+    shift
+    hue_scene_two_color_switch $@
   ;;
 
   #
