@@ -79,11 +79,6 @@ while getopts ":djts" OPT; do
       echo "debug mode with jq" >&2
       ;;
 
-    t)
-      TEXTDEBUG=1
-      echo "debug mode with text" >&2
-      ;;
-
     s)
       JSONDEBUG=1
       echo "json debug mode" >&2
@@ -720,24 +715,6 @@ function hue_output {
 
   if [ $JQDEBUG ]; then
     echo $OUTPUT | jq '.'
-  fi
-
-  if [ $TEXTDEBUG ]; then
-
-    # Hue and Saturation
-    local HUE=$(echo $OUTPUT | jq '.state.hue')
-    local SATURATION=$(echo $OUTPUT | jq '.state.sat')
-
-    # XY
-    local X=$(echo $OUTPUT | jq '.state.xy[0]')
-    local Y=$(echo $OUTPUT | jq '.state.xy[1]')
-
-    # COLORTEMPERATURE
-    local COLORTEMPERATURE=$(echo $OUTPUT | jq '.state.ct')
-
-    local BRIGHTNESS=$(echo $OUTPUT | jq '.state.bri')
-
-    echo "$HUE;$SATURATION;$X;$Y;$COLORTEMPERATURE"
   fi
 }
 
