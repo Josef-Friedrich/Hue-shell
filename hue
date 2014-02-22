@@ -154,6 +154,18 @@ function hue_sleep {
 ################################################################################
 
 ##
+# Scene: One color.
+#
+# - $1 = HUE
+##
+function hue_scene_one_color {
+  hue_stop
+  hue_set all --hue $1 --sat 255 --bri 255
+}
+
+################################################################################
+
+##
 # Scene: Random breath.
 ##
 function hue_scene_random_breath {
@@ -752,6 +764,11 @@ case "$1" in
   #
   # Scenes
   #
+
+  one-color)
+    shift
+    hue_scene_one_color $1
+  ;;
 
   color-sequence)
     shift
