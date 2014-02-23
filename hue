@@ -197,9 +197,13 @@ function hue_scene_recipe {
         shift
         ;;
 
-      -d|--default|*)
+      -d|--default)
         hue set all --ct 369 --bri 254
         shift
+        ;;
+
+      *)
+        break
         ;;
 
     esac
