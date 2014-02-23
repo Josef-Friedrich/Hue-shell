@@ -587,6 +587,14 @@ function hue_stop {
 }
 
 ##
+# Kill all hue process.
+##
+function hue_kill {
+  hue_reset
+  pkill hue
+}
+
+##
 # Stop all hue processes and reset to default color.
 ##
 function hue_reset {
@@ -815,17 +823,17 @@ case "$1" in
   set)
     shift
     hue_set $@
-  ;;
+    ;;
 
   token)
     shift
     hue_set_token $@
-  ;;
+    ;;
 
   transit)
     shift
     hue_set_transit $@
-  ;;
+    ;;
 
   #
   # Scene
@@ -834,7 +842,7 @@ case "$1" in
   scene)
     shift
     hue_scene_switch $@
-  ;;
+    ;;
 
   random-scene)
     shift
@@ -848,27 +856,27 @@ case "$1" in
   one-color)
     shift
     hue_scene_one_color $1
-  ;;
+    ;;
 
   recipe)
     shift
     hue_scene_recipe $1
-  ;;
+    ;;
 
   color-sequence)
     shift
     hue_scene_color_sequence $@
-  ;;
+    ;;
 
   random-breath)
     shift
     hue_scene_random_breath $@
-  ;;
+    ;;
 
   tcs|two-color-switch)
     shift
     hue_scene_two_color_switch $@
-  ;;
+    ;;
 
   #
   # Info / debug
@@ -877,16 +885,16 @@ case "$1" in
   get)
     shift
     hue_get $@
-  ;;
+    ;;
 
   debug)
     hue_debug
-  ;;
+    ;;
 
   alert)
     shift
     hue_alert $@
-  ;;
+    ;;
 
   #
   # Stop
@@ -894,11 +902,15 @@ case "$1" in
 
   reset)
     hue_reset
-  ;;
+    ;;
 
   stop)
     hue_stop
-  ;;
+    ;;
+
+  kill)
+    hue_kill
+    ;;
 
   #
   # Help
@@ -906,10 +918,10 @@ case "$1" in
 
   help)
     hue_help
-  ;;
+    ;;
 
   *)
     hue_help
-  ;;
+    ;;
 
 esac
