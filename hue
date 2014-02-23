@@ -466,6 +466,15 @@ function _hue_scene_two_color_switch {
 # Scene functions
 ################################################################################
 
+function _hue_scene_get_random {
+  cat random-scenes.conf | grep -v '^$' | grep -v '#' | sort -R | head -n 1 
+}
+
+function hue_scene_random {
+  hue_stop
+  eval $(_hue_scene_get_random)
+}
+
 ##
 # Show available scenes.
 ##
@@ -826,6 +835,11 @@ case "$1" in
     shift
     hue_scene_switch $@
   ;;
+
+  random-scene)
+    shift
+    hue_scene_random
+    ;;
 
   #
   # Scenes
