@@ -291,9 +291,11 @@ function hue_scene_random_breath {
 ##
 function _hue_scene_random_breath {
   local TRANSTIME=$(hue_range $3)
+  local BRI_START=${4%%:*}
+  local BRI_END=${4#*:}
 
-  hue_set_transit $1 $TRANSTIME --hue $(hue_range $2) --bri 255 --sat 255
-  hue_set_transit $1 $TRANSTIME --bri $(hue_range $4)
+  hue_set_transit $1 $TRANSTIME --hue $(hue_range $2) --bri $BRI_END --sat 255
+  hue_set_transit $1 $TRANSTIME --bri $BRI_START
 }
 
 ################################################################################
@@ -569,6 +571,8 @@ function hue_stop {
   done
 
   > $PIDFILE
+
+  #pkill hue
 }
 
 ##
