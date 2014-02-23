@@ -176,21 +176,35 @@ function hue_scene_recipe {
 
   while true ; do
     case "$1" in
-    
+
+      -r|--relax)
+        hue set all --ct 443 --bri 173
+        ;;
+
+      -c|--concentrate)
+        hue set all --ct 233 --bri 219
+                ;;
+
+      -e|--energize)
+        hue set all --ct 156 --bri 203
+        ;;
+
+      -R|--reading)
+        hue set all --ct 346 --bri 240
+        ;;
+
+      -d|--default|*)
+        hue set all --ct 369 --bri 254
+        ;;
+
     esac
   done
 
 
-_DEFAULT="--ct 369 --bri 254"
 
-_RELAX="--ct 443 --bri 173"
-
-_CONCENTRATE="--ct 233 --bri 219"
-
-_ENERGIZE="--ct 156 --bri 203"
-
-_READING="--ct 346 --bri 240"
 }
+
+################################################################################
 
 ##
 # Scene: Random breath.
