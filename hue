@@ -16,6 +16,8 @@ SCENES_PATH="$INSTALLATION_PATH/scenes"
 
 DEFAULT_SCENE="random"
 
+ALL_LIGHTS="1,2,3,7,8,9"
+
 ##
 # Hue Colors
 ##
@@ -247,8 +249,13 @@ function hue_scene_random_breath {
   # Default values.
   #
   if [ -z $LIGHTS ]; then
-    echo "Usage: hue random-breath --lights 1,2,3 --hue 55000 --spread 3000"
-    exit 1
+
+    if [ -n $ALL_LIGHTS ]; then
+      LIGHTS=$ALL_LIGHTS
+    else
+      echo "Usage: hue random-breath --lights 1,2,3 --hue 55000 --spread 3000"
+      exit 1    
+    fi
   fi
 
   if [ -z $HUE ]; then
