@@ -811,6 +811,11 @@ case "$1" in
     hue_scene_one_color $1
   ;;
 
+  recipe)
+    shift
+    hue_scene_recipe $1
+  ;;
+
   color-sequence)
     shift
     hue_scene_color_sequence $@
