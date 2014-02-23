@@ -179,29 +179,31 @@ function hue_scene_recipe {
 
       -r|--relax)
         hue set all --ct 443 --bri 173
+        shift
         ;;
 
       -c|--concentrate)
         hue set all --ct 233 --bri 219
-                ;;
+        shift
+        ;;
 
       -e|--energize)
         hue set all --ct 156 --bri 203
+        shift
         ;;
 
       -R|--reading)
         hue set all --ct 346 --bri 240
+        shift
         ;;
 
       -d|--default|*)
         hue set all --ct 369 --bri 254
+        shift
         ;;
 
     esac
   done
-
-
-
 }
 
 ################################################################################
