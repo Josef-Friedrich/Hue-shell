@@ -166,6 +166,33 @@ function hue_scene_one_color {
 ################################################################################
 
 ##
+# Scene: Recipe
+#
+# - $1 = RECIPE
+##
+function hue_scene_recipe {
+  
+  hue_stop
+
+  while true ; do
+    case "$1" in
+    
+    esac
+  done
+
+
+_DEFAULT="--ct 369 --bri 254"
+
+_RELAX="--ct 443 --bri 173"
+
+_CONCENTRATE="--ct 233 --bri 219"
+
+_ENERGIZE="--ct 156 --bri 203"
+
+_READING="--ct 346 --bri 240"
+}
+
+##
 # Scene: Random breath.
 ##
 function hue_scene_random_breath {
