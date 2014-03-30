@@ -19,13 +19,19 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
   start)
-    hue color-sequence > /dev/null
-    echo "Starting hue ctrl ..."
+    hue random-scene
+    echo "Starting hue daemon ..."
+    ;;
+
+  restart)
+    hue reset
+    hue random-scene
+    echo "Starting hue daemon ..."
     ;;
 
   stop)
     hue reset
-    echo "Stopping hue ctrl ..."
+    echo "Stopping hue daemon ..."
     ;;
 
   *)

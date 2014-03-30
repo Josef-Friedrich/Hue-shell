@@ -8,7 +8,7 @@ IP="192.168.2.31"
 
 USERNAME="joseffriedrich"
 
-INSTALLATION_PATH="/Users/jf/git-respositories/Hue-Bash"
+INSTALLATION_PATH="/root/hue"
 
 PIDFILE="$HOME/.hue-bash_temp"
 
@@ -467,7 +467,7 @@ function _hue_scene_two_color_switch {
 ################################################################################
 
 function _hue_scene_get_random {
-  cat random-scenes.conf | grep -v '^$' | grep -v '#' | sort -R | head -n 1 
+  cat $INSTALLATION_PATH/random-scenes.conf | grep -v '^$' | grep -v '#' | sort -R | head -n 1 
 }
 
 function hue_scene_random {
