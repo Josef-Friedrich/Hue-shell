@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
 ################################################################################
 # Configuration
@@ -109,7 +109,7 @@ shift $((OPTIND-1))
 ##
 # Loop function.
 ##
-function hue_loop {
+hue_loop() {
   (
     while true; do
       eval "$*"
@@ -123,7 +123,7 @@ function hue_loop {
 #
 # - $1 = RANGE (3:7)
 ##
-function hue_range {
+hue_range() {
   local START=${1%%:*}
   local END=${1#*:}
 
@@ -144,7 +144,7 @@ function hue_range {
 #
 # - $1 = TIME
 ##
-function hue_sleep {
+hue_sleep() {
   # ${1%?}: Remove last charakter
   # ${1: -1}: Last charakter of a string
   sleep ${1%?}.${1: -1}
@@ -159,7 +159,7 @@ function hue_sleep {
 #
 # - $1 = HUE
 ##
-function hue_scene_one_color {
+hue_scene_one_color() {
   hue_stop
   hue_set all --hue $1 --sat 255 --bri 255
 }
@@ -171,7 +171,7 @@ function hue_scene_one_color {
 #
 # - $1 = RECIPE
 ##
-function hue_scene_recipe {
+hue_scene_recipe() {
   
   hue_stop
 
@@ -216,7 +216,7 @@ function hue_scene_recipe {
 ##
 # Scene: Random breath.
 ##
-function hue_scene_random_breath {
+hue_scene_random_breath() {
 
   hue_stop
 
@@ -289,7 +289,7 @@ function hue_scene_random_breath {
 # - $3 = TIME_RANGE
 # - $4 = BRI_RANGE
 ##
-function _hue_scene_random_breath {
+_hue_scene_random_breath() {
   local TRANSTIME=$(hue_range $3)
   local BRI_START=${4%%:*}
   local BRI_END=${4#*:}
@@ -305,7 +305,7 @@ function _hue_scene_random_breath {
 ##
 # Scene: All lights change at the same time the color in a given sequence.
 ##
-function hue_scene_color_sequence {
+hue_scene_color_sequence() {
 
   hue_stop
 
@@ -366,7 +366,7 @@ function hue_scene_color_sequence {
 # - $3 = TRANSITION_TIME
 # - $4 = BRIGHTNESS
 ##
-function _hue_scene_color_sequence {
+_hue_scene_color_sequence() {
   local HUE_SEQUENCE=$(echo $1 | tr "," "\n")
 
   for HUE in $HUE_SEQUENCE ; do
@@ -380,7 +380,7 @@ function _hue_scene_color_sequence {
 ##
 # Scene: Switch between two colors.
 ##
-function hue_scene_two_color_switch {
+hue_scene_two_color_switch() {
 
   hue_stop
 
@@ -451,7 +451,7 @@ function hue_scene_two_color_switch {
 # - 4$ = COLOR2
 # - 5$ = SWITCH_TIME
 ##
-function _hue_scene_two_color_switch {
+_hue_scene_two_color_switch() {
 
   hue_set $1 --hue $3 -t 5
   hue_set $2 --hue $4 -t 5
@@ -466,11 +466,11 @@ function _hue_scene_two_color_switch {
 # Scene functions
 ################################################################################
 
-function _hue_scene_get_random {
+_hue_scene_get_random() {
   cat $INSTALLATION_PATH/random-scenes.conf | grep -v '^$' | grep -v '#' | sort -R | head -n 1 
 }
 
-function hue_scene_random {
+hue_scene_random() {
   hue_stop
   eval $(_hue_scene_get_random)
 }
@@ -478,7 +478,7 @@ function hue_scene_random {
 ##
 # Show available scenes.
 ##
-function hue_scene_info {
+hue_scene_info() {
   echo "Available scenes:"
 
   for SCENE in $(find $SCENES_PATH -name "*.scene"); do
@@ -494,7 +494,7 @@ function hue_scene_info {
 #
 # - $1 = SCENE_TOKEN
 ##
-function hue_scene_execute {
+hue_scene_execute() {
   local SCENE="$SCENES_PATH/$1.scene"
 
   hue_stop
@@ -511,7 +511,7 @@ function hue_scene_execute {
 ##
 # Switch for scene functions.
 ##
-function hue_scene_switch {
+hue_scene_switch() {
 
   case "$1" in
 
@@ -541,7 +541,7 @@ function hue_scene_switch {
 ##
 # Print out a short help text.
 ##
-function hue_help {
+hue_help() {
   echo "Usage: hue
   - help
   - set <lights> <attributes>
@@ -560,7 +560,7 @@ function hue_help {
 # - $2 = PATH:
 # - $3 = JSON:
 ##
-function hue_call {
+hue_call() {
   if [ -n "$3" ]; then
     local DATA="--data $3"
 
@@ -575,7 +575,7 @@ function hue_call {
 ##
 # Stop all hue processes.
 ##
-function hue_stop {
+hue_stop() {
 
   for PID in $(cat $PIDFILE); do
     kill $PID > /dev/null
@@ -589,7 +589,7 @@ function hue_stop {
 ##
 # Kill all hue process.
 ##
-function hue_kill {
+hue_kill() {
   hue_reset
   pkill hue
 }
@@ -597,7 +597,7 @@ function hue_kill {
 ##
 # Stop all hue processes and reset to default color.
 ##
-function hue_reset {
+hue_reset() {
   hue_stop
   hue_set all $_DEFAULT
 }
@@ -605,7 +605,7 @@ function hue_reset {
 ##
 # Print out the ip adresse and the hue username.
 ##
-function hue_debug {
+hue_debug() {
   echo "IP: $IP"
   echo "USERNAME: $USERNAME"
 }
@@ -613,13 +613,15 @@ function hue_debug {
 ##
 # Process the json string.
 ##
-function hue_process_json {
+hue_process_json() {
+  
+  VALUES=""
 
   while true ; do
     case "$1" in
 
       --on)
-        VALUES+=("\"on\":true")
+        VALUES="$VALUES,\"on\":true"
         shift 1
         ;;
 
@@ -695,7 +697,7 @@ function hue_process_json {
 # - $1 = LIGHTS
 # - $@ = LIGHT_ATTRIBUTES
 ##
-function hue_set {
+hue_set() {
   local LIGHTS="$1"
   shift
 
@@ -722,7 +724,7 @@ function hue_set {
 # - $1 = LIGHTS
 # - $2 = TOKEN
 ##
-function hue_set_token {
+hue_set_token() {
   local LIGHTS="$1"
   local TOKEN="$2"
 
@@ -735,7 +737,7 @@ function hue_set_token {
 # $1 = LIGHTS:
 # $2 = TRANSITIONTIME: 1 = 1/10s, 10 = 1s
 ##
-function hue_set_transit {
+hue_set_transit() {
   local LIGHTS="$1"
   local TRANSITIONTIME="$2"
   shift 2
@@ -749,7 +751,7 @@ function hue_set_transit {
 #
 # - $1 = LIGHTS
 ##
-function hue_get {
+hue_get() {
   local LIGHTS="$1"
   shift
 
@@ -776,7 +778,7 @@ function hue_get {
 #
 # - $1 = LIGHTS
 ##
-function hue_alert {
+hue_alert() {
   local LIGHTS="$1"
   shift
 
@@ -802,7 +804,7 @@ function hue_alert {
 # - over jq
 # - formatted text output (not working yet)
 ##
-function hue_output {
+hue_output() {
   read OUTPUT
 
   if [ $DEBUG ]; then

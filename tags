@@ -1,0 +1,35 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+_hue_scene_color_sequence	hue	/^function _hue_scene_color_sequence {$/;"	f
+_hue_scene_get_random	hue	/^function _hue_scene_get_random {$/;"	f
+_hue_scene_random_breath	hue	/^function _hue_scene_random_breath {$/;"	f
+_hue_scene_two_color_switch	hue	/^function _hue_scene_two_color_switch {$/;"	f
+hue_alert	hue	/^function hue_alert {$/;"	f
+hue_call	hue	/^function hue_call {$/;"	f
+hue_debug	hue	/^function hue_debug {$/;"	f
+hue_get	hue	/^function hue_get {$/;"	f
+hue_help	hue	/^function hue_help {$/;"	f
+hue_kill	hue	/^function hue_kill {$/;"	f
+hue_loop	hue	/^function hue_loop {$/;"	f
+hue_output	hue	/^function hue_output {$/;"	f
+hue_process_json	hue	/^function hue_process_json {$/;"	f
+hue_range	hue	/^function hue_range {$/;"	f
+hue_reset	hue	/^function hue_reset {$/;"	f
+hue_scene_color_sequence	hue	/^function hue_scene_color_sequence {$/;"	f
+hue_scene_execute	hue	/^function hue_scene_execute {$/;"	f
+hue_scene_info	hue	/^function hue_scene_info {$/;"	f
+hue_scene_one_color	hue	/^function hue_scene_one_color {$/;"	f
+hue_scene_random	hue	/^function hue_scene_random {$/;"	f
+hue_scene_random_breath	hue	/^function hue_scene_random_breath {$/;"	f
+hue_scene_recipe	hue	/^function hue_scene_recipe {$/;"	f
+hue_scene_switch	hue	/^function hue_scene_switch {$/;"	f
+hue_scene_two_color_switch	hue	/^function hue_scene_two_color_switch {$/;"	f
+hue_set	hue	/^function hue_set {$/;"	f
+hue_set_token	hue	/^function hue_set_token {$/;"	f
+hue_set_transit	hue	/^function hue_set_transit {$/;"	f
+hue_sleep	hue	/^function hue_sleep {$/;"	f
+hue_stop	hue	/^function hue_stop {$/;"	f
