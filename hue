@@ -626,22 +626,22 @@ hue_process_json() {
         ;;
 
       --off)
-        VALUES+=("\"on\":false")
+        VALUES="$VALUES,\"on\":false"
         shift 1
         ;;
 
       -b|--bri)
-        VALUES+=("\"bri\":$2")
+        VALUES="$VALUES,\"bri\":$2"
         shift 2
         ;;
 
       -h|--hue)
-        VALUES+=("\"hue\":$2")
+        VALUES="$VALUES,\"hue\":$2"
         shift 2
         ;;
 
       -s|--sat)
-        VALUES+=("\"sat\":$2")
+        VALUES="$VALUES,\"sat\":$2"
         shift 2
         ;;
 
@@ -656,22 +656,22 @@ hue_process_json() {
         ;;
 
       -c|--ct)
-        VALUES+=("\"ct\":$2")
+        VALUES="$VALUES,\"ct\":$2"
         shift 2
         ;;
 
       -a|--alert)
-        VALUES+=("\"alert\":\"$2\"")
+        VALUES="$VALUES,\"alert\":\"$2\""
         shift 2
         ;;
 
       -e|--effect)
-        VALUES+=("\"effect\":\"$2\"")
+        VALUES="$VALUES,\"effect\":\"$2\""
         shift 2
         ;;
 
       -t|--transitiontime)
-        VALUES+=("\"transitiontime\":$2")
+        VALUES="$VALUES,\"transitiontime\":$2"
         shift 2
         ;;
 
@@ -682,13 +682,12 @@ hue_process_json() {
   done
 
   if [ $X ] && [ $Y ]; then
-    VALUES+=("\"xy\":[$X,$Y]")
+    VALUES="$VALUES,\"xy\":[$X,$Y]"
   fi
 
-  local STATE=$(printf ",%s" "${VALUES[@]}")
-  local STATE=${STATE:1}
+  local VALUES=${VALUES:1}
 
-  echo "{$STATE}"
+  echo "{$VALUES}"
 }
 
 ##
