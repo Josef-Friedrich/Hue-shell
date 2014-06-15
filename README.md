@@ -1,3 +1,6 @@
+# Warning! Experimental code!
+
+----------------------------------------
 
 Hue-Bash is a collection of bash scripts to control the [Hue lamps from Philips](https://www.meethue.com).
 
