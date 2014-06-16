@@ -685,7 +685,7 @@ hue_process_json() {
     VALUES="$VALUES,\"xy\":[$X,$Y]"
   fi
 
-  local VALUES=${VALUES:1}
+  VALUES=$(echo -n $VALUES | tail -c +2)
 
   echo "{$VALUES}"
 }
@@ -702,7 +702,7 @@ hue_set() {
 
   local JSON=$(hue_process_json "$@")
 
-  if [ "$LIGHTS" == "all" ]; then
+  if [ "$LIGHTS" = "all" ]; then
 
     hue_call PUT groups/0/action $JSON
 
@@ -757,7 +757,7 @@ hue_get() {
   #DEBUG=1
   JQDEBUG=1
 
-  if [ "$LIGHTS" == "all" ]; then
+  if [ "$LIGHTS" = "all" ]; then
 
     hue_call GET lights
 
@@ -781,7 +781,7 @@ hue_alert() {
   local LIGHTS="$1"
   shift
 
-  if [ "$LIGHTS" == "all" ]; then
+  if [ "$LIGHTS" = "all" ]; then
 
     hue_call PUT groups/0/action '{"alert":"select"}'
 
