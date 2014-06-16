@@ -274,7 +274,7 @@ hue_scene_random_breath() {
     local BRI_RANGE='50:255'
   fi
 
-  local LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+  LIGHTS=$(echo $LIGHTS | tr "," "\n")
 
   for LIGHT in $LIGHTS ; do
     hue_loop _hue_scene_random_breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
