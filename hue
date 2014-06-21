@@ -145,9 +145,10 @@ hue_range() {
 # - $1 = TIME
 ##
 hue_sleep() {
-  # ${1%?}: Remove last charakter
-  # ${1: -1}: Last charakter of a string
-  sleep ${1%?}.${1: -1}
+  local TIME=$1
+  INTEGER=$(echo -n $TIME | head -c -1 )
+  COMMA=$(echo -n $TIME | tail -c -1 )
+  sleep "$INTEGER.$COMMA"
 }
 
 ########################################################################
