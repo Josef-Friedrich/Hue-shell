@@ -131,10 +131,9 @@ hue_range() {
 
   local RANGE=$((END - START))
 
-  # $RANDOM is a number between 0 and 32767
-  local BIG_RANDOM=$((RANDOM * 4 + RANDOM % 4))
+  local RANDOM=$(tr -cd 0-9 < /dev/urandom | head -c 6)
 
-  local NUMBER_IN_RANGE=$((BIG_RANDOM % RANGE))
+  local NUMBER_IN_RANGE=$((RANDOM % RANGE))
 
   echo $((NUMBER_IN_RANGE + START))
 }
