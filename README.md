@@ -2,11 +2,12 @@
 
 ----------------------------------------
 
-Hue-Bash is a collection of bash scripts to control the [Hue lamps from Philips](https://www.meethue.com).
+Hue-Shell is a shell script to control the
+[Hue lamps from Philips](https://www.meethue.com).
 
 # Requirements
+
 * [curl](curl)
-* [jq](http://stedolan.github.io/jq/)
 
 # Installation
 
@@ -40,7 +41,7 @@ hue set <lamp> <json>
 ### hue get
 
 ```
-hue get <lamp> 
+hue get <lamp>
 ```
 ```<lamp>```: Lamp number or 'all'.
 ### hue ping

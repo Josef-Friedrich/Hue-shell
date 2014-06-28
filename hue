@@ -727,7 +727,7 @@ hue_set_token() {
   local LIGHTS="$1"
   local TOKEN="$2"
 
-  hue_set $LIGHTS ${!TOKEN}
+  hue_set $LIGHTS $TOKEN
 }
 
 ##
