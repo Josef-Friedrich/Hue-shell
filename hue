@@ -367,7 +367,7 @@ hue_scene_color_sequence() {
 # - $4 = BRIGHTNESS
 ##
 _hue_scene_color_sequence() {
-  local HUE_SEQUENCE=$(echo $1 | tr "," "\n")
+  HUE_SEQUENCE=$(echo $1 | tr "," "\n")
 
   for HUE in $HUE_SEQUENCE ; do
     hue_set all --sat 255 --hue $HUE -t $3 --bri $4
@@ -578,7 +578,7 @@ hue_call() {
 hue_stop() {
 
   for PID in $(cat $PIDFILE); do
-    kill $PID > /dev/null
+    kill $PID > /dev/null 2>&1
   done
 
   > $PIDFILE
