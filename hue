@@ -228,7 +228,7 @@ The options are (only one option is possible):
   -R  --reading
   -r  --relax
 
-This scene command shows white colors in differnt color temperatures.
+This scene command shows white colors in different color temperatures.
 All lights displaying the same color temperature.
 
 | COLD ->
