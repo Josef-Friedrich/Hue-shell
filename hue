@@ -178,37 +178,69 @@ hue_scene_recipe() {
   while true ; do
     case "$1" in
 
-      -r|--relax)
-        hue set all --ct 443 --bri 173
-        shift
-        ;;
-
       -c|--concentrate)
-        hue set all --ct 233 --bri 219
-        shift
-        ;;
-
-      -e|--energize)
-        hue set all --ct 156 --bri 203
-        shift
-        ;;
-
-      -R|--reading)
-        hue set all --ct 346 --bri 240
-        shift
+        hue_set all --ct 233 --bri 219
+        break
         ;;
 
       -d|--default)
-        hue set all --ct 369 --bri 254
-        shift
+        hue_set all --ct 369 --bri 254
+        break
+        ;;
+
+      -e|--energize)
+        hue_set all --ct 156 --bri 203
+        break
+        ;;
+
+      -h|--help)
+        hue_scene_recipe_help
+        break
+        ;;
+
+      -R|--reading)
+        hue_set all --ct 346 --bri 240
+        break
+        ;;
+
+      -r|--relax)
+        hue_set all --ct 443 --bri 173
+        break
         ;;
 
       *)
+        hue_scene_recipe_help
         break
         ;;
 
     esac
   done
+}
+
+hue_scene_recipe_help() {
+  echo "Usage: hue recipe <option>
+
+The options are (only one option is possible):
+  -c  --concentrate
+  -d  --default
+  -e  --energize
+  -h  --help
+  -R  --reading
+  -r  --relax
+
+This scene command shows white colors in differnt color temperatures.
+All lights displaying the same color temperature.
+
+| COLD ->
+  -> energize (156)
+  -> concentrate (233)
+  -> reading (346)
+  -> default (369)
+  -> relax (443)
+-> WARM |
+
+The numbers in parentheses are Mired color temperature values.
+"
 }
 
 ########################################################################
@@ -542,7 +574,7 @@ hue_scene_switch() {
 # Print out a short help text.
 ##
 hue_help() {
-  echo "Usage: hue
+  echo "Usage: hue <command>
   - help
   - set <lights> <attributes>
   - get <lights>
@@ -550,7 +582,21 @@ hue_help() {
   - scene
     - execute <scene>: Execute scene
     - info: Show available scenes
-    - stop: Stop scene"
+    - stop: Stop scene
+
+
+One color scenes:
+
+  one-color
+  recipe
+
+Multi color scenes:
+
+  color-sequence
+  random-breath
+  two-color-switch
+
+ "
 }
 
 ##
@@ -851,30 +897,34 @@ case "$1" in
     ;;
 
   #
-  # Scenes
+  # One color scenes
   #
 
-  one-color)
+  one-color|oc)
     shift
     hue_scene_one_color $1
     ;;
 
-  recipe)
+  recipe|r)
     shift
     hue_scene_recipe $1
     ;;
 
-  color-sequence)
+  #
+  # Multi color scenes
+  #
+
+  color-sequence|cs)
     shift
     hue_scene_color_sequence $@
     ;;
 
-  random-breath)
+  random-breath|rb)
     shift
     hue_scene_random_breath $@
     ;;
 
-  tcs|two-color-switch)
+  two-color-switch|tcs)
     shift
     hue_scene_two_color_switch $@
     ;;
