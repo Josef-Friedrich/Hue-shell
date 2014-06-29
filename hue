@@ -234,7 +234,7 @@ All lights displaying the same color temperature.
 | COLD ->
   -> energize (156)
   -> concentrate (233)
-  -> reading (346)
+  -> readintg (346)
   -> default (369)
   -> relax (443)
 -> WARM |
@@ -573,17 +573,16 @@ hue_scene_switch() {
 ##
 # Print out a short help text.
 ##
-hue_help() {
+hue_help_short() {
   echo "Usage: hue <command>
-  - help
-  - set <lights> <attributes>
-  - get <lights>
-  - alert <lights>
-  - scene
-    - execute <scene>: Execute scene
-    - info: Show available scenes
-    - stop: Stop scene
-
+  help
+  set <lights> <attributes>
+  get <lights>
+  alert <lights>
+  scene
+    execute <scene>: Execute scene
+    info: Show available scenes
+    stop: Stop scene
 
 One color scenes:
 
@@ -597,6 +596,45 @@ Multi color scenes:
   two-color-switch
 
  "
+}
+
+hue_help_long() {
+
+  echo "
+Warning! Experimental code!
+
+NAME
+        hue - control the Hue lights from Philips using a unix shell.
+
+SYNOPSIS
+        hue <command> <options>
+
+DESCRIPTION
+        Hue-Shell is a shell script to control the Hue lamps from
+        Philips (https://www.meethue.com).
+
+REQUIREMENTS
+        curl
+
+INSTALLATION
+        Create a ini file in /etc/hue.ini.
+
+Sample file:
+
+```
+IP="192.168.2.31"
+USERNAME="username"
+```
+
+
+
+
+"
+
+  hue_set_help
+
+  hue_scene_recipe_help
+
 }
 
 ##
@@ -981,11 +1019,11 @@ case "$1" in
   #
 
   help)
-    hue_help
+    hue_help_long
     ;;
 
   *)
-    hue_help
+    hue_help_short
     ;;
 
 esac
