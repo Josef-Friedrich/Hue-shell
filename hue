@@ -657,9 +657,14 @@ hue_debug() {
 }
 
 ##
-# Process the json string.
+# Set light state.
+#
+# - $1 = LIGHTS
+# - $@ = LIGHT_ATTRIBUTES
 ##
-hue_process_json() {
+hue_set() {
+  local LIGHTS="$1"
+  shift
 
   VALUES=""
 
@@ -722,6 +727,7 @@ hue_process_json() {
         ;;
 
       *)
+        hue_set_help
         break
         ;;
     esac
@@ -733,20 +739,7 @@ hue_process_json() {
 
   VALUES=$(echo -n $VALUES | tail -c +2)
 
-  echo "{$VALUES}"
-}
-
-##
-# Set light state.
-#
-# - $1 = LIGHTS
-# - $@ = LIGHT_ATTRIBUTES
-##
-hue_set() {
-  local LIGHTS="$1"
-  shift
-
-  local JSON=$(hue_process_json "$@")
+  local JSON="{$VALUES}"
 
   if [ "$LIGHTS" = "all" ]; then
 
@@ -761,6 +754,26 @@ hue_set() {
     done
 
   fi
+}
+
+hue_set_help() {
+  echo "Usage: hue set <options>
+
+      --on                On state of the light.
+      --off               Off state of the light.
+  -b  --bri               The brightness value to set the light to.
+  -h  --hue               The hue value to set light to.
+  -s  --sat               Saturation of the light.
+  -x                      The x coordinates in CIE color space.
+  -y                      The y coordinates in CIE color space.
+  -c  --ct                The Mired Color temperature of the light.
+  -a  --alert             The alert effect, is a temporary change to the
+                          bulb’s state.
+  -e  --effect            The dynamic effect of the light. Currently
+                          “none” and “colorloop” are supported.
+  -t  --transitiontime    The duration of the transition from the
+                          light’s current state to the new state.
+"
 }
 
 ##
