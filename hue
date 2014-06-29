@@ -18,44 +18,6 @@ DEFAULT_SCENE="random"
 
 ALL_LIGHTS="1,2,3,7,8,9"
 
-##
-# Hue Colors
-##
-
-_RED="--hue 0"
-
-_YELLOW="--hue 12750"
-
-_GREEN="--hue 25500"
-
-_WHITE="--hue 36210"
-
-_BLUE="--hue 46920"
-
-_CYAN="--hue 56100"
-
-_RED2="--hue 65535"
-
-##
-# Light recipes
-##
-
-_DEFAULT="--ct 369 --bri 254"
-
-_RELAX="--ct 443 --bri 173"
-
-_CONCENTRATE="--ct 233 --bri 219"
-
-_ENERGIZE="--ct 156 --bri 203"
-
-_READING="--ct 346 --bri 240"
-
-# Groups
-
-_BEDROOM="1,2,3"
-
-_LIVING="6,7,8"
-
 ########################################################################
 # Checks
 ########################################################################
@@ -164,6 +126,55 @@ hue_scene_one_color() {
   hue_set all --hue $1 --sat 255 --bri 255
 }
 
+##
+# Scene: Default color.
+##
+hue_scene_default_color() {
+
+  hue_stop
+
+  while true ; do
+    case "$1" in
+
+      -b|--blue)
+        hue_set all --hue 46920 --bri 255 --sat 255
+        break
+        ;;
+
+      -c|--cyan)
+        hue_set all --hue 56100 --bri 255 --sat 255
+        break
+        ;;
+
+      -g|--green)
+        hue_set all --hue 25500 --bri 255 --sat 255
+        break
+        ;;
+
+      -r|--red)
+        hue_set all --hue 0 --bri 255 --sat 255
+        break
+        ;;
+
+      -w|--white)
+        hue_set all --hue 36210 --bri 255 --sat 255
+        break
+        ;;
+
+      -y|--yellow)
+        hue_set all --hue 12750 --bri 255 --sat 255
+        break
+        ;;
+
+      *)
+        break
+        ;;
+
+    esac
+  done
+
+}
+
 ########################################################################
 
 ##
@@ -256,7 +267,7 @@ The options are (only one option is possible):
   -> relax (443)
 -> WARM |
 
-The numbers in parentheses are Mired color temperature values.
+The numbers in parentheses are Mired color temperature JSON.
 "
 }
 
@@ -299,7 +310,7 @@ hue_scene_random_breath() {
   done
 
   #
-  # Default values.
+  # Default JSON.
   #
   if [ -z $LIGHTS ]; then
 
@@ -388,7 +399,7 @@ hue_scene_color_sequence() {
   done
 
   #
-  # Default values.
+  # Default JSON.
   #
   if [ -z $HUE_SEQUENCE ]; then
     local HUE_SEQUENCE='0,12750,25500,46920,56100'
@@ -468,7 +479,7 @@ hue_scene_two_color_switch() {
   done
 
   #
-  # Default values.
+  # Default JSON.
   #
   if [ -z $LIGHTS1 ] || [ -z $LIGHTS2 ] ; then
     echo "Usage: hue two-color-switch --lights1 1,2 --lights2 3,4"
@@ -704,14 +715,6 @@ hue_reset() {
 }
 
 ##
-# Print out the ip adresse and the hue username.
-##
-hue_debug() {
-  echo "IP: $IP"
-  echo "USERNAME: $USERNAME"
-}
-
-##
 # Set light state.
 #
 # - $1 = LIGHTS
@@ -721,33 +724,33 @@ hue_set() {
   local LIGHTS="$1"
   shift
 
-  VALUES=""
+  local JSON=""
 
   while true ; do
     case "$1" in
 
       --on)
-        VALUES="$VALUES,\"on\":true"
+        JSON="$JSON,\"on\":true"
         shift 1
         ;;
 
       --off)
-        VALUES="$VALUES,\"on\":false"
+        JSON="$JSON,\"on\":false"
         shift 1
         ;;
 
       -b|--bri)
-        VALUES="$VALUES,\"bri\":$2"
+        JSON="$JSON,\"bri\":$2"
         shift 2
         ;;
 
       -h|--hue)
-        VALUES="$VALUES,\"hue\":$2"
+        JSON="$JSON,\"hue\":$2"
         shift 2
         ;;
 
       -s|--sat)
-        VALUES="$VALUES,\"sat\":$2"
+        JSON="$JSON,\"sat\":$2"
         shift 2
         ;;
 
@@ -762,22 +765,22 @@ hue_set() {
         ;;
 
       -c|--ct)
-        VALUES="$VALUES,\"ct\":$2"
+        JSON="$JSON,\"ct\":$2"
         shift 2
         ;;
 
       -a|--alert)
-        VALUES="$VALUES,\"alert\":\"$2\""
+        JSON="$JSON,\"alert\":\"$2\""
         shift 2
         ;;
 
       -e|--effect)
-        VALUES="$VALUES,\"effect\":\"$2\""
+        JSON="$JSON,\"effect\":\"$2\""
         shift 2
         ;;
 
       -t|--transitiontime)
-        VALUES="$VALUES,\"transitiontime\":$2"
+        JSON="$JSON,\"transitiontime\":$2"
         shift 2
         ;;
 
@@ -789,12 +792,12 @@ hue_set() {
   done
 
   if [ $X ] && [ $Y ]; then
-    VALUES="$VALUES,\"xy\":[$X,$Y]"
+    JSON="$JSON,\"xy\":[$X,$Y]"
   fi
 
-  VALUES=$(echo -n $VALUES | tail -c +2)
+  JSON=$(echo -n $JSON | tail -c +2)
 
-  local JSON="{$VALUES}"
+  JSON="{$JSON}"
 
   if [ "$LIGHTS" = "all" ]; then
 
@@ -968,6 +971,11 @@ case "$1" in
   # One color scenes
   #
 
+  default-color|dc)
+    shift
+    hue_scene_default_color $1
+    ;;
+
   one-color|oc)
     shift
     hue_scene_one_color $1
@@ -1004,10 +1012,6 @@ case "$1" in
   get)
     shift
     hue_get $@
-    ;;
-
-  debug)
-    hue_debug
     ;;
 
   alert)
