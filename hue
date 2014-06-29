@@ -785,7 +785,9 @@ hue_set() {
         ;;
 
       *)
-        hue_set_help
+        if [ -n "$1" ]; then
+          hue_set_help
+        fi
         break
         ;;
     esac
@@ -817,20 +819,41 @@ hue_set() {
 hue_set_help() {
   echo "Usage: hue set <options>
 
-      --on                On state of the light.
-      --off               Off state of the light.
-  -b  --bri               The brightness value to set the light to.
-  -h  --hue               The hue value to set light to.
-  -s  --sat               Saturation of the light.
-  -x                      The x coordinates in CIE color space.
-  -y                      The y coordinates in CIE color space.
-  -c  --ct                The Mired Color temperature of the light.
-  -a  --alert             The alert effect, is a temporary change to the
-                          bulb’s state.
-  -e  --effect            The dynamic effect of the light. Currently
-                          “none” and “colorloop” are supported.
-  -t  --transitiontime    The duration of the transition from the
-                          light’s current state to the new state.
+      --on
+              On state of the light.
+
+      --off
+              Off state of the light.
+
+      -b, --bri
+              The brightness value to set the light to.
+
+      -h, --hue
+              The hue value to set light to.
+
+      -s, --sat
+              Saturation of the light.
+
+      -x
+              The x coordinates in CIE color space.
+
+      -y
+              The y coordinates in CIE color space.
+
+      -c, --ct
+              The Mired Color temperature of the light.
+
+      -a, --alert
+              The alert effect, is a temporary change to the bulb’s
+              state.
+
+      -e, --effect
+              The dynamic effect of the light. Currently “none” and
+              “colorloop” are supported.
+
+      -t, --transitiontime
+              The duration of the transition from the light’s current
+              state to the new state.
 "
 }
 
