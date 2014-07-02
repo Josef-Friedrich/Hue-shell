@@ -8,6 +8,8 @@ IP="192.168.2.31"
 
 USERNAME="joseffriedrich"
 
+ALL_LIGHTS="1,2,3,7,8,9"
+
 INSTALLATION_PATH="/root/hue"
 
 PIDFILE="$HOME/.hue-bash_temp"
@@ -15,8 +17,6 @@ PIDFILE="$HOME/.hue-bash_temp"
 SCENES_PATH="$INSTALLATION_PATH/scenes"
 
 DEFAULT_SCENE="random"
-
-ALL_LIGHTS="1,2,3,7,8,9"
 
 ########################################################################
 # Checks
@@ -95,21 +95,11 @@ hue_range() {
 
   local RANDOM=$(tr -cd 0-9 < /dev/urandom | head -c 6)
 
+  RANDOM="1$RANDOM"
+
   local NUMBER_IN_RANGE=$((RANDOM % RANGE))
 
   echo $((NUMBER_IN_RANGE + START))
-}
-
-##
-# Sleep as long as transitiontime.
-#
-# - $1 = TIME
-##
-hue_sleep() {
-  local TIME=$1
-  INTEGER=$(echo -n $TIME | head -c -1 )
-  COMMA=$(echo -n $TIME | tail -c -1 )
-  sleep "$INTEGER.$COMMA"
 }
 
 ########################################################################
@@ -328,7 +318,7 @@ hue_scene_random_breath() {
   fi
 
   if [ -z $TIME_RANGE ]; then
-    local TIME_RANGE='15:25'
+    local TIME_RANGE='2:4'
   fi
 
   if [ -z $BRI_RANGE ]; then
@@ -356,9 +346,7 @@ _hue_scene_random_breath() {
   local BRI_END=${4#*:}
 
   hue_set_transit $1 $TRANSTIME --hue $(hue_range $2) --bri $BRI_END --sat 255
-  sleep 0.2
   hue_set_transit $1 $TRANSTIME --bri $BRI_START
-  sleep 0.2
 }
 
 ########################################################################
@@ -407,11 +395,11 @@ hue_scene_color_sequence() {
   fi
 
   if [ -z $SLEEP_TIME ]; then
-    local SLEEP_TIME='50'
+    local SLEEP_TIME='5'
   fi
 
   if [ -z $TRANSITION_TIME ]; then
-    local TRANSITION_TIME='5'
+    local TRANSITION_TIME='1'
   fi
 
   if [ -z $BRIGHTNESS ]; then
@@ -431,8 +419,8 @@ _hue_scene_color_sequence() {
   HUE_SEQUENCE=$(echo $1 | tr "," "\n")
 
   for HUE in $HUE_SEQUENCE ; do
-    hue_set all --sat 255 --hue $HUE -t $3 --bri $4
-    hue_sleep $2
+    hue_set all --sat 255 --hue $HUE -t $(($3 * 10)) --bri $4
+    sleep $2
   done
 }
 
@@ -496,11 +484,10 @@ hue_scene_two_color_switch() {
   fi
 
   if [ -z $SWITCH_TIME ]; then
-    local SWITCH_TIME='20'
+    local SWITCH_TIME='2'
   fi
 
-  hue_set all sat 255
-  hue_set all bri 255
+  hue_set all --sat 255 --bri 255
 
   hue_loop _hue_scene_two_color_switch $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME
 }
@@ -516,11 +503,11 @@ _hue_scene_two_color_switch() {
 
   hue_set $1 --hue $3 -t 5
   hue_set $2 --hue $4 -t 5
-  hue_sleep $5
+  sleep $5
 
   hue_set $2 --hue $3 -t 5
   hue_set $1 --hue $4 -t 5
-  hue_sleep $5
+  sleep $5
 }
 
 ########################################################################
@@ -713,8 +700,6 @@ hue_stop() {
   done
 
   > $PIDFILE
-
-  #pkill hue
 }
 
 ##
@@ -730,7 +715,7 @@ hue_kill() {
 ##
 hue_reset() {
   hue_stop
-  hue_set all $_DEFAULT
+  hue_set all --ct 369 --bri 254
 }
 
 ##
@@ -831,7 +816,7 @@ hue_set() {
 
   else
 
-    local LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+    LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
 
     for LIGHT in $LIGHTS; do
       hue_call PUT lights/$LIGHT/state "$JSON"
@@ -926,15 +911,15 @@ hue_set_token() {
 # Set light state with transistion time an sleep.
 #
 # $1 = LIGHTS:
-# $2 = TRANSITIONTIME: 1 = 1/10s, 10 = 1s
+# $2 = TRANSITIONTIME: in seconds
 ##
 hue_set_transit() {
   local LIGHTS="$1"
   local TRANSITIONTIME="$2"
   shift 2
 
-  hue_set $LIGHTS --transitiontime $TRANSITIONTIME $@
-  hue_sleep $TRANSITIONTIME
+  hue_set $LIGHTS --transitiontime $(($TRANSITIONTIME * 10)) $@
+  sleep $TRANSITIONTIME
 }
 
 ##
