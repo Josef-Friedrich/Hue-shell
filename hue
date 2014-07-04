@@ -620,7 +620,8 @@ hue_help_long() {
 Warning! Experimental code!
 
 NAME
-        hue - control the Hue lights from Philips using a unix shell.
+        hue - control the Hue lights from Philips using a minimal unix
+        shell.
 
 SYNOPSIS
         hue <command> <options>
@@ -633,7 +634,12 @@ REQUIREMENTS
         curl
 
 INSTALLATION
-        Hue shell needsCreate a ini file in /etc/hue.ini.
+        You need a working Philips Hue setup, the IP address of your
+        bridge and a username to access the bridge. Please read
+        http://developers.meethue.com/gettingstarted.html for more
+        informations to achieve that. Than edit the file 'hue' and fill
+        in the values for IP and USERNAME.
+
 
 "
   hue_help_heading1 "HUE SET"
@@ -713,7 +719,7 @@ hue_kill() {
 
   # Alternatives:
   # - pkill (not on openwrt, busybox)
-  # - ps w | grep "hue" | awk '{print $1}' |
+  # - ps -w | grep "hue" | awk '{print $1}'
 
   killall hue
 }
@@ -939,8 +945,8 @@ hue_get() {
   local LIGHTS="$1"
   shift
 
-  #DEBUG=1
-  JQDEBUG=1
+  DEBUG=1
+  #JQDEBUG=1
 
   if [ "$LIGHTS" = "all" ]; then
 
