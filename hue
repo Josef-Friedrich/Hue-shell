@@ -704,10 +704,18 @@ hue_stop() {
 
 ##
 # Kill all hue process.
+#
+# Goal of this function is to kill all process (background,
+# other terminals.)
 ##
 hue_kill() {
   hue_reset
-  pkill hue
+
+  # Alternatives:
+  # - pkill (not on openwrt, busybox)
+  # - ps w | grep "hue" | awk '{print $1}' |
+
+  killall hue
 }
 
 ##
