@@ -325,11 +325,14 @@ hue_scene_random_breath() {
     local BRI_RANGE='50:255'
   fi
 
-  LIGHTS=$(echo $LIGHTS | tr "," "\n")
+  OLD_IFS=$IFS; IFS=","
 
   for LIGHT in $LIGHTS ; do
+    IFS=$OLD_IFS
+
     hue_loop _hue_scene_random_breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
   done
+
 }
 
 ##
@@ -416,9 +419,13 @@ hue_scene_color_sequence() {
 # - $4 = BRIGHTNESS
 ##
 _hue_scene_color_sequence() {
-  HUE_SEQUENCE=$(echo $1 | tr "," "\n")
+  HUE_SEQUENCE=$1
+
+  OLD_IFS=$IFS; IFS=","
 
   for HUE in $HUE_SEQUENCE ; do
+    IFS=$OLD_IFS
+
     hue_set all --sat 255 --hue $HUE -t $(($3 * 10)) --bri $4
     sleep $2
   done
@@ -830,9 +837,11 @@ hue_set() {
 
   else
 
-    LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+    OLD_IFS=$IFS; IFS=","
 
     for LIGHT in $LIGHTS; do
+      IFS=$OLD_IFS
+
       hue_call PUT lights/$LIGHT/state "$JSON"
     done
 
@@ -954,9 +963,11 @@ hue_get() {
 
   else
 
-    local LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+    OLD_IFS=$IFS; IFS=","
 
     for LIGHT in $LIGHTS; do
+      IFS=$OLD_IFS
+
       hue_call GET lights/$LIGHT
     done
 
@@ -978,9 +989,11 @@ hue_alert() {
 
   else
 
-    local LIGHTS=$(echo "$LIGHTS" | tr "," "\n")
+    OLD_IFS=$IFS; IFS=","
 
     for LIGHT in $LIGHTS; do
+      IFS=$OLD_IFS
+
       hue_call PUT lights/$LIGHT/state '{"alert":"select"}'
     done
 
