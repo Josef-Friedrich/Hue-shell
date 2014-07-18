@@ -18,7 +18,7 @@ SCENES_PATH="$INSTALLATION_PATH/scenes"
 
 DEFAULT_SCENE="random"
 
-SEED=$(date +%S)
+#SEED="1$(date +%S)"
 
 ########################################################################
 # Checks
