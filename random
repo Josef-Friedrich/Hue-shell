@@ -1,5 +1,0 @@
-#! /bin/sh
-
-. /home/jf/git-repositories/Hue-shell/hue
-
-hue_range 20:50

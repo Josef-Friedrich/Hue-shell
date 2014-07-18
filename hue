@@ -12,13 +12,15 @@ ALL_LIGHTS="1,2,3,7,8,9"
 
 INSTALLATION_PATH="/root/hue"
 
-PIDFILE="$HOME/.hue-bash_temp"
+PIDFILE="/tmp/hue-shell_pids"
 
 SCENES_PATH="$INSTALLATION_PATH/scenes"
 
 DEFAULT_SCENE="random"
 
 #SEED="1$(date +%S)"
+
+SEED_FILE="/tmp/hue-shell_seed"
 
 ########################################################################
 # Checks
@@ -27,6 +29,11 @@ DEFAULT_SCENE="random"
 if [ ! -f $PIDFILE ]; then
   touch $PIDFILE
   chmod 777 $PIDFILE
+fi
+
+if [ ! -f $SEED_FILE ]; then
+  touch $SEED_FILE
+  chmod 777 $SEED_FILE
 fi
 
 ########################################################################
@@ -99,12 +106,13 @@ hue_range() {
   local RANGE=$((END - START))
 
   # http://rosettacode.org/wiki/Linear_congruential_generator
-  # The Microsoft version
 
-  # 2**31 -> 2147483648
-  SEED=$(((214013 * $SEED + 2531011) % 2147483648))
-  # 2**14 -> 16384
-  RANDOM=$(($SEED / 16384))
+  SEED=$(cat $SEED_FILE)
+  SEED=$(((123 * $SEED + 23456) % 345678))
+  echo $SEED > $SEED_FILE
+
+  RANDOM=$(($SEED / 2))
+
   local NUMBER_IN_RANGE=$((RANDOM % RANGE))
 
   echo $((NUMBER_IN_RANGE + START))
