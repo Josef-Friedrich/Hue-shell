@@ -18,6 +18,8 @@ SCENES_PATH="$INSTALLATION_PATH/scenes"
 
 DEFAULT_SCENE="random"
 
+SEED=$(date +%S)
+
 ########################################################################
 # Checks
 ########################################################################
@@ -84,19 +86,25 @@ hue_loop() {
 # Random range function.
 #
 # - $1 = RANGE (3:7)
+#
+# Solution with /dev/urandom:
+# RANDOM=$(tr -cd 0-9 < /dev/urandom | head -c 6)
+# RANDOM="1$RANDOM"
 ##
 hue_range() {
   local START=${1%%:*}
   local END=${1#*:}
 
-  local END=$((END + 1))
-
+  END=$((END + 1))
   local RANGE=$((END - START))
 
-  local RANDOM=$(tr -cd 0-9 < /dev/urandom | head -c 6)
+  # http://rosettacode.org/wiki/Linear_congruential_generator
+  # The Microsoft version
 
-  RANDOM="1$RANDOM"
-
+  # 2**31 -> 2147483648
+  SEED=$(((214013 * $SEED + 2531011) % 2147483648))
+  # 2**14 -> 16384
+  RANDOM=$(($SEED / 16384))
   local NUMBER_IN_RANGE=$((RANDOM % RANGE))
 
   echo $((NUMBER_IN_RANGE + START))
