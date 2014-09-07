@@ -1,6 +1,6 @@
 #! /bin/sh
 
-. /etc/hue-shell.ini
+. /etc/hue-shell/hue-shell.conf
 
 . $INSTALLATION_PATH/base.sh
 

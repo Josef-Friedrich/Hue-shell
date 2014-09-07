@@ -1,0 +1,63 @@
+#! /bin/sh
+
+. /etc/hue-shell/hue-shell.conf
+
+. $INSTALLATION_PATH/base.sh
+
+##
+# Show available scenes.
+##
+hue_scene_info() {
+  echo "Available scenes:"
+  for SCENE in $(find $SCENES_PATH -name "*.scene"); do
+  local TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
+  echo " -> $TOKEN"
+  done
+}
+
+##
+# Execute scene.
+#
+# - $1 = SCENE_TOKEN
+##
+hue_scene_execute() {
+  local SCENE="$SCENES_PATH/$1.scene"
+
+  hue_stop
+  if [ -f "$SCENE" ]; then
+    $SCENE
+  else
+    local DEFAULT_SCENE="$SCENES_PATH/$DEFAULT_SCENE.scene"
+    $DEFAULT_SCENE
+  fi
+}
+
+##
+# Switch for scene functions.
+##
+hue_scene_switch() {
+
+  case "$1" in
+
+  execute)
+    hue_scene_execute $2
+  ;;
+
+  info)
+    hue_scene_info
+  ;;
+
+  stop)
+    hue_stop
+  ;;
+
+  reset)
+    hue_reset
+  ;;
+
+  *)
+  hue_help
+  ;;
+
+  esac
+}

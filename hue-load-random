@@ -1,0 +1,19 @@
+#! /bin/sh
+
+. /etc/hue-shell/hue-shell.conf
+
+. $INSTALLATION_PATH/base.sh
+
+hue_load_random() {
+  cat $INSTALLATION_PATH/random-scenes.conf | grep -v '^$' | grep -v '#' | sort -r | head -n 1
+}
+
+hue_stop
+
+RANDOM_SCENE=$(hue_load_random)
+
+if [ $DEBUG = "YES" ]; then
+  echo $RANDOM_SCENE
+fi
+
+eval "$RANDOM_SCENE"

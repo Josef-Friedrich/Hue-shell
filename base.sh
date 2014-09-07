@@ -92,10 +92,6 @@ hue_call() {
 
   if [ -n "$3" ]; then
     local DATA="--data $3"
-
-    if [ $JSONDEBUG ]; then
-      echo $3
-    fi
   fi
 
   curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | hue_output
@@ -227,10 +223,7 @@ hue_set() {
   fi
 
   JSON=$(echo "$JSON" | tail -c +2)
-
   JSON="{$JSON}"
-
-  echo $JSON
 
   if [ "$LIGHTS" = "all" ]; then
 
@@ -288,7 +281,6 @@ hue_get() {
   shift
 
   DEBUG=1
-  #JQDEBUG=1
 
   if [ "$LIGHTS" = "all" ]; then
 
@@ -334,20 +326,12 @@ hue_alert() {
 }
 
 ##
-# Print out debug output in three modes:
-#
-# - normal
-# - over jq
-# - formatted text output (not working yet)
+# Print out debug output in three modes.
 ##
 hue_output() {
   read OUTPUT
 
   if [ $DEBUG ]; then
     echo $OUTPUT | tr ',' '\n'
-  fi
-
-  if [ $JQDEBUG ]; then
-    echo $OUTPUT | jq '.'
   fi
 }

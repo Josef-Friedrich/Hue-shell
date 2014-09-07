@@ -1,5 +1,8 @@
 Warning! Experimental code!
 
+Hue shell is a collection of shell scripts to control the Hue lamps from
+Philips (https://www.meethue.com). Hue shell runs on many shells (sh, dash, ash, bash) and UNIX operating systems (Linux, MacOS X, FreeBSD, OpenWRT). 
+
 NAME
         hue - control the Hue lights from Philips using a unix shell.
 

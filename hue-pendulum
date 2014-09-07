@@ -1,70 +1,8 @@
 #! /bin/sh
 
-##
-# Scene: Switch between two colors.
-##
-hue_scene_two_color_switch() {
+. /etc/hue-shell/hue-shell.conf
 
-  hue_stop
-
-  while true ; do
-    case "$1" in
-
-      -l1|--lights1)
-        local LIGHTS1=$2
-        shift 2
-        ;;
-
-      -l2|--lights2)
-        local LIGHTS2=$2
-        shift 2
-        ;;
-
-      -c1|color1)
-        local COLOR1=$2
-        shift 2
-        ;;
-
-      -c2|color2)
-        local COLOR2=$2
-        shift 2
-        ;;
-
-      -s|switchtime)
-        local SWITCH_TIME=$2
-        shift 2
-        ;;
-
-      *)
-        break
-        ;;
-    esac
-  done
-
-  #
-  # Default JSON.
-  #
-  if [ -z $LIGHTS1 ] || [ -z $LIGHTS2 ] ; then
-    echo "Usage: hue two-color-switch --lights1 1,2 --lights2 3,4"
-    exit 1
-  fi
-
-  if [ -z $COLOR1 ]; then
-    local COLOR1='0'
-  fi
-
-  if [ -z $COLOR2 ]; then
-    local COLOR2='46920'
-  fi
-
-  if [ -z $SWITCH_TIME ]; then
-    local SWITCH_TIME='2'
-  fi
-
-  hue_set all --sat 255 --bri 255
-
-  hue_loop _hue_scene_two_color_switch $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME
-}
+. $INSTALLATION_PATH/base.sh
 
 ##
 # - 1$ = LIGHTS1
@@ -73,7 +11,7 @@ hue_scene_two_color_switch() {
 # - 4$ = COLOR2
 # - 5$ = SWITCH_TIME
 ##
-_hue_scene_two_color_switch() {
+hue_pendulum() {
 
   hue_set $1 --hue $3 -t 5
   hue_set $2 --hue $4 -t 5
@@ -83,3 +21,67 @@ _hue_scene_two_color_switch() {
   hue_set $1 --hue $4 -t 5
   sleep $5
 }
+
+##
+# Scene: Switch between two colors.
+##
+
+hue_stop
+
+while true ; do
+  case "$1" in
+
+    -l1|--lights1)
+      LIGHTS1=$2
+      shift 2
+      ;;
+
+    -l2|--lights2)
+      LIGHTS2=$2
+      shift 2
+      ;;
+
+    -c1|color1)
+      COLOR1=$2
+      shift 2
+      ;;
+
+    -c2|color2)
+      COLOR2=$2
+      shift 2
+      ;;
+
+    -s|switchtime)
+      SWITCH_TIME=$2
+      shift 2
+      ;;
+
+    *)
+      break
+      ;;
+  esac
+done
+
+#
+# Default JSON.
+#
+if [ -z $LIGHTS1 ] || [ -z $LIGHTS2 ] ; then
+  echo "Usage: hue-pendulum --lights1 1,2 --lights2 3,4"
+  exit 1
+fi
+
+if [ -z $COLOR1 ]; then
+  COLOR1='0'
+fi
+
+if [ -z $COLOR2 ]; then
+  COLOR2='46920'
+fi
+
+if [ -z $SWITCH_TIME ]; then
+  SWITCH_TIME='2'
+fi
+
+hue_set all --sat 255 --bri 255
+
+hue_loop hue_pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME

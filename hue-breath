@@ -1,6 +1,6 @@
 #! /bin/sh
 
-. /etc/hue-shell.ini
+. /etc/hue-shell/hue-shell.conf
 
 . $INSTALLATION_PATH/base.sh
 
@@ -12,7 +12,7 @@
 # - $3 = TIME_RANGE
 # - $4 = BRI_RANGE
 ##
-_hue_scene_random_breath() {
+hue_breath() {
   local TRANSTIME=$(hue_range $3)
   local BRI_START=${4%%:*}
   local BRI_END=${4#*:}
@@ -31,22 +31,22 @@ while true ; do
   case "$1" in
 
     -l|--lights)
-      local LIGHTS=$2
+      LIGHTS=$2
       shift 2
       ;;
 
     -h|--hue-range)
-      local HUE_RANGE=$2
+      HUE_RANGE=$2
       shift 2
       ;;
 
     -t|--time-range)
-      local TIME_RANGE=$2
+      TIME_RANGE=$2
       shift 2
       ;;
 
     -b|--bri-range|--brightness-range)
-      local BRI_RANGE=$2
+      BRI_RANGE=$2
       shift 2
       ;;
 
@@ -70,15 +70,15 @@ if [ -z $LIGHTS ]; then
 fi
 
 if [ -z $HUE_RANGE ]; then
-  local HUE_RANGE='52000:58000'
+  HUE_RANGE='52000:58000'
 fi
 
 if [ -z $TIME_RANGE ]; then
-  local TIME_RANGE='2:4'
+  TIME_RANGE='2:4'
 fi
 
 if [ -z $BRI_RANGE ]; then
-  local BRI_RANGE='50:255'
+  BRI_RANGE='50:255'
 fi
 
 OLD_IFS=$IFS; IFS=","
@@ -86,5 +86,5 @@ OLD_IFS=$IFS; IFS=","
 for LIGHT in $LIGHTS ; do
   IFS=$OLD_IFS
 
-  hue_loop _hue_scene_random_breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
+  hue_loop hue_breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
 done

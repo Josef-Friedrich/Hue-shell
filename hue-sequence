@@ -1,66 +1,8 @@
 #! /bin/sh
 
-. /etc/hue-shell.ini
+. /etc/hue-shell/hue-shell.conf
 
 . $INSTALLATION_PATH/base.sh
-
-##
-# Scene: All lights change at the same time the color in a given sequence.
-##
-hue_scene_color_sequence() {
-
-  hue_stop
-
-  while true ; do
-    case "$1" in
-
-      -h|--hues|--huesequence)
-        local HUE_SEQUENCE=$2
-        shift 2
-        ;;
-
-      -s|--sleeptime)
-        local SLEEP_TIME=$2
-        shift 2
-        ;;
-
-      -t|--transitiontime)
-        local TRANSITION_TIME=$2
-        shift 2
-        ;;
-
-      -b|--bri|--brightness)
-        local BRIGHTNESS=$2
-        shift 2
-        ;;
-
-      *)
-        break
-        ;;
-    esac
-  done
-
-  #
-  # Default JSON.
-  #
-  if [ -z $HUE_SEQUENCE ]; then
-    local HUE_SEQUENCE='0,12750,25500,46920,56100'
-  fi
-
-  if [ -z $SLEEP_TIME ]; then
-    local SLEEP_TIME='5'
-  fi
-
-  if [ -z $TRANSITION_TIME ]; then
-    local TRANSITION_TIME='1'
-  fi
-
-  if [ -z $BRIGHTNESS ]; then
-    local BRIGHTNESS='255'
-  fi
-
-  hue_loop _hue_scene_color_sequence $HUE_SEQUENCE $SLEEP_TIME $TRANSITION_TIME $BRIGHTNESS
-}
 
 ##
 # - $1 = HUE_SEQUENCE
@@ -68,7 +10,7 @@ hue_scene_color_sequence() {
 # - $3 = TRANSITION_TIME
 # - $4 = BRIGHTNESS
 ##
-_hue_scene_color_sequence() {
+hue_sequence() {
   HUE_SEQUENCE=$1
 
   OLD_IFS=$IFS; IFS=","
@@ -80,3 +22,59 @@ _hue_scene_color_sequence() {
     sleep $2
   done
 }
+
+##
+# Scene: All lights change at the same time the color in a given sequence.
+##
+
+hue_stop
+
+while true ; do
+  case "$1" in
+
+    -h|--hues|--huesequence)
+      HUE_SEQUENCE=$2
+      shift 2
+      ;;
+
+    -s|--sleeptime)
+      SLEEP_TIME=$2
+      shift 2
+      ;;
+
+    -t|--transitiontime)
+      TRANSITION_TIME=$2
+      shift 2
+      ;;
+
+    -b|--bri|--brightness)
+      BRIGHTNESS=$2
+      shift 2
+      ;;
+
+    *)
+      break
+      ;;
+  esac
+done
+
+#
+# Default JSON.
+#
+if [ -z $HUE_SEQUENCE ]; then
+  HUE_SEQUENCE='0,12750,25500,46920,56100'
+fi
+
+if [ -z $SLEEP_TIME ]; then
+  SLEEP_TIME='5'
+fi
+
+if [ -z $TRANSITION_TIME ]; then
+  TRANSITION_TIME='1'
+fi
+
+if [ -z $BRIGHTNESS ]; then
+  BRIGHTNESS='255'
+fi
+
+hue_loop hue_sequence $HUE_SEQUENCE $SLEEP_TIME $TRANSITION_TIME $BRIGHTNESS
