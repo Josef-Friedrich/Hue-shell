@@ -12,25 +12,29 @@
 
 # Author: Josef Friedrich <jf@josef-friedrich.de>
 
+. /etc/hue-shell/hue-shell.conf
+
+. $INSTALLATION_PATH/base.sh
+
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/root/bin:/root/hue
 DESC="Philips Hue Control"
-NAME=huectrl
+NAME=hue
 SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
   start)
-    hue-load-random
+    $INSTALLATION_PATH/hue-load-random
     echo "Starting hue daemon ..."
     ;;
 
   restart)
-    hue reset
-    hue-load-random
+    hue_reset
+    $INSTALLATION_PATH/hue-load-random
     echo "Starting hue daemon ..."
     ;;
 
   stop)
-    hue reset
+    hue_reset
     echo "Stopping hue daemon ..."
     ;;
 
@@ -41,4 +45,3 @@ case "$1" in
 esac
 
 exit 0
-
