@@ -29,6 +29,8 @@ INSTALLATION
 You have to set an username. Use this documentation for.
     http://www.developers.meethue.com/documentation/getting-started
 
+https://github.com/wertarbyte/triggerhappy
+
 cd /etc/triggerhappy/triggers.d
 ln -s $HOME/hue-shell/config/triggerhappy.conf
 
