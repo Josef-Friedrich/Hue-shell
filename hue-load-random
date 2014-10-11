@@ -19,7 +19,7 @@ _get() {
 }
 
 _get_random() {
-  _get | grep -v '^$' | grep -v '#' | sort -r | head -n 1
+  _get | grep -v '^$' | grep -v '#' | sort -R | head -n 1
 }
 
 _list() {
