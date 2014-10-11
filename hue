@@ -4,11 +4,10 @@
 
 . $INSTALLATION_PATH/base.sh
 
-
 ##
 # Print out a short help text.
 ##
-hue_help_short() {
+_usage() {
 echo "Usage: hue <command>
   help
   set <lights> <attributes>
@@ -27,7 +26,7 @@ echo "Usage: hue <command>
   two-color-switch
 "
 }
-hue_help_long() {
+_help() {
 echo "
 Warning! Experimental code!
 NAME
@@ -47,10 +46,7 @@ http://developers.meethue.com/gettingstarted.html for more
 informations to achieve that. Than edit the file 'hue' and fill
 in the values for IP and USERNAME.
 "
-hue_help_heading1 "HUE SET"
-hue_set_help
-hue_help_heading1 "HUE RECIPE"
-hue_scene_recipe_help
+
 }
 
 case "$1" in
@@ -109,11 +105,11 @@ case "$1" in
   #
 
   help)
-    hue_help_long
+    _help
     ;;
 
   *)
-    hue_help_short
+    _usage
     ;;
 
 esac

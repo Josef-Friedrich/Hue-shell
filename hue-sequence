@@ -10,7 +10,7 @@
 # - $3 = TRANSITION_TIME
 # - $4 = BRIGHTNESS
 ##
-hue_sequence() {
+_sequence() {
   HUE_SEQUENCE=$1
 
   OLD_IFS=$IFS; IFS=","
@@ -77,4 +77,4 @@ if [ -z $BRIGHTNESS ]; then
   BRIGHTNESS='255'
 fi
 
-hue_loop hue_sequence $HUE_SEQUENCE $SLEEP_TIME $TRANSITION_TIME $BRIGHTNESS
+hue_loop _sequence $HUE_SEQUENCE $SLEEP_TIME $TRANSITION_TIME $BRIGHTNESS

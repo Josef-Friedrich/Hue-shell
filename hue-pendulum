@@ -11,7 +11,7 @@
 # - 4$ = COLOR2
 # - 5$ = SWITCH_TIME
 ##
-hue_pendulum() {
+_pendulum() {
 
   hue_set $1 --hue $3 -t 5
   hue_set $2 --hue $4 -t 5
@@ -84,4 +84,4 @@ fi
 
 hue_set all --sat 255 --bri 255
 
-hue_loop hue_pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME
+hue_loop _pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME

@@ -9,7 +9,7 @@
 #
 # - $1 = HUE
 ##
-hue_all() {
+_all() {
   hue_stop
   hue_set all --hue $1 --sat 255 --bri 255
 }
@@ -19,36 +19,37 @@ hue_stop
 while true ; do
   case "$1" in
     -b|--blue)
-      hue_all 46920
+      _all 46920
     break
     ;;
 
     -c|--cyan)
-      hue_all 56100
+      _all 56100
     break
     ;;
 
     -g|--green)
-      hue_all 25500
+      _all 25500
     break
     ;;
 
     -r|--red)
-      hue_all 0
+      _all 0
     break
     ;;
 
     -w|--white)
-      hue_all 36210
+      _all 36210
     break
     ;;
 
     -y|--yellow)
-      hue_all 12750
+      _all 12750
     break
     ;;
 
     *)
+      _all $1
     break
     ;;
 
