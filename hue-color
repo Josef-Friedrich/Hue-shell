@@ -4,6 +4,15 @@
 
 . $INSTALLATION_PATH/base.sh
 
+
+_help() {
+
+}
+
+_usage() {
+  echo 'Usage: hue-color <option>'
+}
+
 ##
 # Scene: One color.
 #
