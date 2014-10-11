@@ -12,7 +12,7 @@
 # - $3 = TIME_RANGE
 # - $4 = BRI_RANGE
 ##
-hue_breath() {
+_breath() {
   local TRANSTIME=$(hue_range $3)
   local BRI_START=${4%%:*}
   local BRI_END=${4#*:}
@@ -86,5 +86,5 @@ OLD_IFS=$IFS; IFS=","
 for LIGHT in $LIGHTS ; do
   IFS=$OLD_IFS
 
-  hue_loop hue_breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
+  hue_loop _breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
 done

@@ -4,8 +4,8 @@
 
 . $INSTALLATION_PATH/base.sh
 
-hue_scene_recipe_help() {
-  echo "Usage: hue recipe <option>
+_help() {
+  echo "Usage: hue-recipe <option>
 
 DESCRIPTION
         This scene command shows white colors in different color
@@ -48,11 +48,17 @@ EXAMPLES
 "
 }
 
-##
-# Scene: Recipe
-#
-# - $1 = RECIPE
-##
+_usage() {
+  echo "Usage: hue-recipe <option>
+
+    -c, --concentrate   Medium cold color.
+    -d, --default       Default white color.
+    -e, --energize      Coldest white color.
+    -h, --help          Show help.
+    -R, --reading       Medium warm white color.
+    -r, --relax         Very warm white color.
+"
+}
 
 hue_stop
 
@@ -75,7 +81,7 @@ while true ; do
       ;;
 
     -h|--help)
-      hue_scene_recipe_help
+      _help
       break
       ;;
 
@@ -90,7 +96,7 @@ while true ; do
       ;;
 
     *)
-      hue_scene_recipe_help
+      _usage
       break
       ;;
 
