@@ -55,32 +55,6 @@ hue_range() {
   echo $((NUMBER_IN_RANGE + START))
 }
 
-
-##
-# Generate ASCII decoration for help headings.
-#
-# - $@ = Heading text
-##
-hue_help_heading1() {
-  echo "########################################################################
-# $@
-########################################################################
-"
-
-}
-
-##
-# Generate ASCII decoration for help headings.
-#
-# - $@ = Heading text
-##
-hue_help_heading2() {
-  echo "##
-# $@
-##
-"
-}
-
 ##
 # Execute the http call over curl.
 #
@@ -240,19 +214,6 @@ hue_set() {
     done
 
   fi
-}
-
-##
-# Set light state with tokens.
-#
-# - $1 = LIGHTS
-# - $2 = TOKEN
-##
-hue_set_token() {
-  local LIGHTS="$1"
-  local TOKEN="$2"
-
-  hue_set $LIGHTS $TOKEN
 }
 
 ##

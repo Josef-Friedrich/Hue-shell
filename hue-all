@@ -4,20 +4,6 @@
 
 . $INSTALLATION_PATH/base.sh
 
-_usage() {
-  echo 'Usage: hue-color <option>
-
-Options:
-    -b, --blue
-    -c, --cyan
-    -g, --green
-    -r, --red
-    -w, --white
-    -y, --yellow
-
-Usage2: hue-color <hue value>'
-}
-
 ##
 # Scene: One color.
 #
@@ -63,12 +49,7 @@ while true ; do
     ;;
 
     *)
-      if [ -n "$1" ]; then
-        _all $1
-      else
-        _usage
-      fi
-
+      _all $1
     break
     ;;
 

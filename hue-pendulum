@@ -1,8 +1,26 @@
 #! /bin/sh
 
+##
+# hue-pendulum switches two group of lights between two colors.
+##
+
 . /etc/hue-shell/hue-shell.conf
 
 . $INSTALLATION_PATH/base.sh
+
+_usage() {
+    echo '"hue-pendulum" switches two group of lights between two colors.
+
+Usage: hue-pendulum <options>
+
+Options:
+    -l1, --lights1  Lights group 1 (e. g. 1,2,3)
+    -l2, --lights2  Lights group 2 (e. g. 4,5,6)
+    -c1, color1     Hue color value for lights group 1.
+    -c2, color2     Hue color value for lights group 2.
+    -s, switchtime  Time in seconds to switch between the two lights groups.
+'
+}
 
 ##
 # - 1$ = LIGHTS1
@@ -12,7 +30,6 @@
 # - 5$ = SWITCH_TIME
 ##
 _pendulum() {
-
   hue_set $1 --hue $3 -t 5
   hue_set $2 --hue $4 -t 5
   sleep $5
@@ -21,10 +38,6 @@ _pendulum() {
   hue_set $1 --hue $4 -t 5
   sleep $5
 }
-
-##
-# Scene: Switch between two colors.
-##
 
 hue_stop
 
@@ -65,8 +78,8 @@ done
 #
 # Default JSON.
 #
-if [ -z $LIGHTS1 ] || [ -z $LIGHTS2 ] ; then
-  echo "Usage: hue-pendulum --lights1 1,2 --lights2 3,4"
+if [ -z $LIGHTS1 ] || [ -z $LIGHTS2 ]; then
+  _usage
   exit 1
 fi
 

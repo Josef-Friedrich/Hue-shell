@@ -29,6 +29,13 @@ INSTALLATION
 You have to set an username. Use this documentation for.
     http://www.developers.meethue.com/documentation/getting-started
 
+You need a working Philips Hue setup, the IP address of your
+bridge and a username to access the bridge. Please read
+http://developers.meethue.com/gettingstarted.html for more
+informations to achieve that. Than edit the file 'hue' and fill
+in the values for IP and USERNAME.
+
+
 https://github.com/wertarbyte/triggerhappy
 
 cd /etc/triggerhappy/triggers.d

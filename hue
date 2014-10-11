@@ -8,46 +8,14 @@
 # Print out a short help text.
 ##
 _usage() {
-echo "Usage: hue <command>
+echo 'Usage: hue <command>
+  get <lights>
   help
   set <lights> <attributes>
-  get <lights>
   alert <lights>
-  scene
-  execute <scene>: Execute scene
-  info: Show available scenes
-  stop: Stop scene
-  One color scenes:
-  one-color
-  recipe
-  Multi color scenes:
-  color-sequence
-  random-breath
-  two-color-switch
-"
+'
 }
-_help() {
-echo "
-Warning! Experimental code!
-NAME
-hue - control the Hue lights from Philips using a minimal unix
-shell.
-SYNOPSIS
-hue <command> <options>
-DESCRIPTION
-Hue-Shell is a shell script to control the Hue lamps from
-Philips (https://www.meethue.com).
-REQUIREMENTS
-curl
-INSTALLATION
-You need a working Philips Hue setup, the IP address of your
-bridge and a username to access the bridge. Please read
-http://developers.meethue.com/gettingstarted.html for more
-informations to achieve that. Than edit the file 'hue' and fill
-in the values for IP and USERNAME.
-"
 
-}
 
 case "$1" in
 
@@ -58,11 +26,6 @@ case "$1" in
   set)
     shift
     hue_set $@
-    ;;
-
-  token)
-    shift
-    hue_set_token $@
     ;;
 
   transit)
@@ -105,7 +68,7 @@ case "$1" in
   #
 
   help)
-    _help
+    _usage
     ;;
 
   *)
