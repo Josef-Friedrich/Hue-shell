@@ -16,9 +16,9 @@ Usage: hue-pendulum <options>
 Options:
     -l1, --lights1  Lights group 1 (e. g. 1,2,3)
     -l2, --lights2  Lights group 2 (e. g. 4,5,6)
-    -c1, color1     Hue color value for lights group 1.
-    -c2, color2     Hue color value for lights group 2.
-    -s, switchtime  Time in seconds to switch between the two lights groups.
+    -c1, --color1     Hue color value for lights group 1.
+    -c2, --color2     Hue color value for lights group 2.
+    -s, --switchtime  Time in seconds to switch between the two lights groups.
 '
 }
 
@@ -30,12 +30,12 @@ Options:
 # - 5$ = SWITCH_TIME
 ##
 _pendulum() {
-  hue_set $1 --hue $3 -t 5
-  hue_set $2 --hue $4 -t 5
+  hue_set $1 --hue $3 -t 10
+  hue_set $2 --hue $4 -t 10
   sleep $5
 
-  hue_set $2 --hue $3 -t 5
-  hue_set $1 --hue $4 -t 5
+  hue_set $2 --hue $3 -t 10
+  hue_set $1 --hue $4 -t 10
   sleep $5
 }
 
@@ -54,17 +54,17 @@ while true ; do
       shift 2
       ;;
 
-    -c1|color1)
+    -c1|--color1)
       COLOR1=$2
       shift 2
       ;;
 
-    -c2|color2)
+    -c2|--color2)
       COLOR2=$2
       shift 2
       ;;
 
-    -s|switchtime)
+    -s|--switchtime)
       SWITCH_TIME=$2
       shift 2
       ;;
@@ -78,23 +78,47 @@ done
 #
 # Default JSON.
 #
-if [ -z $LIGHTS1 ] || [ -z $LIGHTS2 ]; then
+if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
   _usage
-  exit 1
+
+    OLD_IFS=$IFS; IFS=","
+
+    for LIGHT in $ALL_LIGHTS; do
+      IFS=$OLD_IFS
+
+      NUMBER=$(hue_range 1:2)
+
+      if [ "$NUMBER" = 1 ]; then
+        LIGHTS1="$LIGHTS1,$LIGHT"
+      else
+        LIGHTS2="$LIGHTS2,$LIGHT"
+      fi
+
+    done
+
+  LIGHTS1=$(echo "$LIGHTS1" | tail -c +2)
+  LIGHTS2=$(echo "$LIGHTS2" | tail -c +2)
 fi
 
-if [ -z $COLOR1 ]; then
-  COLOR1='0'
+if [ -z "$COLOR1" ]; then
+  #COLOR1='0'
+  COLOR1=$(hue_range 0:65535)
 fi
 
-if [ -z $COLOR2 ]; then
-  COLOR2='46920'
+if [ -z "$COLOR2" ]; then
+  #COLOR2='46920'
+  COLOR2=$(hue_range 0:65535)
 fi
 
-if [ -z $SWITCH_TIME ]; then
-  SWITCH_TIME='2'
+if [ -z "$SWITCH_TIME" ]; then
+  #SWITCH_TIME='2'
+  SWITCH_TIME=$(hue_range 1:10)
 fi
 
 hue_set all --sat 255 --bri 255
+
+echo "using default values:
+
+hue-pendulum -l1 $LIGHTS1 -l2 $LIGHTS2 -c1 $COLOR1 -c2 $COLOR2 -s $SWITCH_TIME"
 
 hue_loop _pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME

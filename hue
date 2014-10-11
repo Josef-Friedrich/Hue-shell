@@ -47,6 +47,12 @@ case "$1" in
     hue_alert $@
     ;;
 
+  config)
+    cat /etc/hue-shell/hue-shell.conf
+    echo
+    exit
+    ;;
+
   #
   # Stop
   #
