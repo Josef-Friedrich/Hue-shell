@@ -19,13 +19,13 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
   start)
-    hue random-scene
+    hue-load-random
     echo "Starting hue daemon ..."
     ;;
 
   restart)
     hue reset
-    hue random-scene
+    hue-load-random
     echo "Starting hue daemon ..."
     ;;
 
@@ -35,7 +35,7 @@ case "$1" in
     ;;
 
   *)
-	echo "Usage: $SCRIPTNAME {start|stop}" >&2
+	echo "Usage: $SCRIPTNAME {start|restart|stop}" >&2
 	exit 3
 	;;
 esac
