@@ -331,7 +331,7 @@ hue_alert() {
 hue_output() {
   read OUTPUT
 
-  if [ $DEBUG ]; then
+  if [ $DEBUG = "YES" ]; then
     echo $OUTPUT | tr ',' '\n'
   fi
 }

@@ -17,7 +17,20 @@ REQUIREMENTS
         curl
 
 INSTALLATION
-        Hue shell needsCreate a ini file in /etc/hue.ini.
+
+    git clone git@github.com:Josef-Friedrich/Hue-shell.git $HOME/hue-shell
+
+    mkdir /etc/hue-shell
+    cd /etc/hue-shell
+    ln -s $HOME/hue-shell/config/hue-shell.conf
+    ln -s $HOME/hue-shell/config/random-scenes.conf
+    ln -s $HOME/hue-shell/config/scenes/
+
+You have to set an username. Use this documentation for.
+    http://www.developers.meethue.com/documentation/getting-started
+
+cd /etc/triggerhappy/triggers.d
+ln -s $HOME/hue-shell/config/triggerhappy.conf
 
 
 ########################################################################
