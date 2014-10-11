@@ -4,16 +4,67 @@
 
 . $INSTALLATION_PATH/base.sh
 
-hue_load_random() {
-  cat $CONFIGURATION_PATH/random-scenes.conf | grep -v '^$' | grep -v '#' | sort -r | head -n 1
+RANDOM_FILE="$CONFIGURATION_PATH/random-scenes.conf"
+
+_edit() {
+  if [ -z "$EDITOR" ]; then
+    EDITOR='vi'
+  fi
+
+  $EDITOR $RANDOM_FILE
 }
+
+_get() {
+  cat $RANDOM_FILE
+}
+
+_get_random() {
+  _get | grep -v '^$' | grep -v '#' | sort -r | head -n 1
+}
+
+_list() {
+  _get | grep -v '^$' | grep -v '#'
+}
+
+_show() {
+  _get
+}
+
+while true ; do
+  case "$1" in
+
+    -d|--debug)
+      DEBUG="YES"
+      shift
+      ;;
+
+    -e|--edit)
+      _edit
+      exit 0
+      ;;
+
+    -l|--list)
+      _list
+      exit 0
+      ;;
+
+    -s|--show)
+      _show
+      exit 0
+      ;;
+
+    *)
+      break
+      ;;
+  esac
+done
 
 hue_stop
 
-RANDOM_SCENE=$(hue_load_random)
+RANDOM_SCENE=$(_get_random)
 
-if [ $DEBUG = "YES" ]; then
+if [ "$DEBUG" = "YES" ]; then
   echo $RANDOM_SCENE
 fi
 
-eval "$RANDOM_SCENE"
+eval "$INSTALLATION_PATH/$RANDOM_SCENE"
