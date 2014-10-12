@@ -6,6 +6,21 @@
 
 RANDOM_FILE="$CONFIGURATION_PATH/random-scenes.conf"
 
+_usage() {
+  echo "'hue-load-random' loads a random light scene, which is picked from the
+config file $CONFIGURATION_PATH/random-scenes.conf.
+
+hue-load-random <options>
+
+Options:
+    -d, --debug   Enable debug mode, which puts out the executed scene command.
+    -e, --edit    Edit the random scenes file in the default text editor.
+    -l, --list    List all scenes commands without blank lines and without
+                  comments.
+    -s, --show    Show the random scenes file.
+  "
+}
+
 _edit() {
   if [ -z "$EDITOR" ]; then
     EDITOR='vi'
@@ -30,8 +45,28 @@ _show() {
   _get
 }
 
+_execute_line_by_line() {
+  COMMANDS=$(_list)
+
+  OLD_IFS=$IFS; IFS=";"
+  for COMMAND in $COMMANDS; do
+
+    IFS=$OLD_IFS
+    echo $COMMAND
+    eval "$COMMAND"
+    sleep 10
+    hue_kill
+  done
+}
+
 while true ; do
   case "$1" in
+
+    -a|--all)
+      _execute_line_by_line
+      exit 0
+      ;;
+
 
     -d|--debug)
       DEBUG="YES"
@@ -60,6 +95,8 @@ while true ; do
 done
 
 hue_stop
+
+_usage
 
 RANDOM_SCENE=$(_get_random)
 
