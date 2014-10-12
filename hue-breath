@@ -4,6 +4,22 @@
 
 . $INSTALLATION_PATH/base.sh
 
+_usage() {
+
+  echo "'hue-breath' fades the lights smoothly up and down, so it seems that they were
+breathing.
+
+Usage: hue-breath <option>
+
+Options:
+    -l, --lights            Lights to use (comma seperated numbers, e. g.:
+                            1,2,3).
+    -h, --hue-range         Two hue color values (e. g. 23461:40123)
+    -t, --time-range        A time range in seconds separated by a colon.
+    -b, --brightness-range
+"
+}
+
 ##
 # Helper function for random breath scene.
 #
@@ -45,7 +61,7 @@ while true ; do
       shift 2
       ;;
 
-    -b|--bri-range|--brightness-range)
+    -b|--brightness-range)
       BRI_RANGE=$2
       shift 2
       ;;
@@ -57,16 +73,10 @@ while true ; do
 done
 
 #
-# Default JSON.
+# Default values.
 #
-if [ -z $LIGHTS ]; then
-
-  if [ -n $ALL_LIGHTS ]; then
-    LIGHTS=$ALL_LIGHTS
-  else
-    echo "Usage: hue-breath --lights 1,2,3 --hue-range 52000:58000 --time-range 5:15 --brightness-range 50:150"
-    exit 1
-  fi
+if [ -z $LIGHTS ] && [ -n $ALL_LIGHTS ]; then
+  LIGHTS=$ALL_LIGHTS
 fi
 
 if [ -z $HUE_RANGE ]; then
@@ -80,6 +90,12 @@ fi
 if [ -z $BRI_RANGE ]; then
   BRI_RANGE='50:255'
 fi
+
+_usage
+
+echo "Generating a lighting scene with following values:
+
+hue-breath -l $LIGHT -h $HUE_RANGE -t $TIME_RANGE -b $BRI_RANGE"
 
 OLD_IFS=$IFS; IFS=","
 
