@@ -34,7 +34,10 @@ _get() {
 }
 
 _get_random() {
-  _get | grep -v '^$' | grep -v '#' | sort -R | head -n 1
+  local LINES=$(_list | wc -l)
+  local RANDOM=$(hue_range 1:"$LINES")
+
+  _list | sed -n "$RANDOM"p
 }
 
 _list() {

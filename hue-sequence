@@ -4,6 +4,24 @@
 
 . $INSTALLATION_PATH/base.sh
 
+_usage() {
+
+}
+
+
+_usage() {
+  echo "'hue-sequence'
+
+Usage: hue-sequence <option>
+
+Options:
+  -h, --huesequence       A sequence of hue color values seperated by commas.
+  -s, --sleeptime         Time between the color changes in seconds.
+  -t, --transitiontime    Transition time in seconds.
+  -b, --brightness        Brightness of the lights (0 - 255).
+
+"
+}
 ##
 # - $1 = HUE_SEQUENCE
 # - $2 = SLEEP_TIME
@@ -32,7 +50,7 @@ hue_stop
 while true ; do
   case "$1" in
 
-    -h|--hues|--huesequence)
+    -h|--huesequence)
       HUE_SEQUENCE=$2
       shift 2
       ;;
@@ -47,7 +65,7 @@ while true ; do
       shift 2
       ;;
 
-    -b|--bri|--brightness)
+    -b|--brightness)
       BRIGHTNESS=$2
       shift 2
       ;;

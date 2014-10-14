@@ -4,6 +4,18 @@
 
 . $INSTALLATION_PATH/base.sh
 
+_usage() {
+  echo "Usage: hue-recipe <option>
+
+    -c, --concentrate   Medium cold color.
+    -d, --default       Default white color.
+    -e, --energize      Coldest white color.
+    -h, --help          Show help.
+    -R, --reading       Medium warm white color.
+    -r, --relax         Very warm white color.
+"
+}
+
 _help() {
   echo "Usage: hue-recipe <option>
 
@@ -48,17 +60,6 @@ EXAMPLES
 "
 }
 
-_usage() {
-  echo "Usage: hue-recipe <option>
-
-    -c, --concentrate   Medium cold color.
-    -d, --default       Default white color.
-    -e, --energize      Coldest white color.
-    -h, --help          Show help.
-    -R, --reading       Medium warm white color.
-    -r, --relax         Very warm white color.
-"
-}
 
 hue_stop
 
