@@ -26,11 +26,13 @@ case "$1" in
   set)
     shift
     hue_set $@
+    break
     ;;
 
   transit)
     shift
     hue_set_transit $@
+    break
     ;;
 
   #
@@ -40,11 +42,13 @@ case "$1" in
   get)
     shift
     hue_get $@
+    break
     ;;
 
   alert)
     shift
     hue_alert $@
+    break
     ;;
 
   config)
@@ -59,14 +63,17 @@ case "$1" in
 
   reset)
     hue_reset
+    break
     ;;
 
   stop)
     hue_stop
+    break
     ;;
 
   kill)
     hue_kill
+    break
     ;;
 
   #
@@ -75,10 +82,12 @@ case "$1" in
 
   help)
     _usage
+    break
     ;;
 
   *)
     _usage
+    break
     ;;
 
 esac
