@@ -14,28 +14,30 @@ _usage() {
 Usage: hue-pendulum <options>
 
 Options:
-    -l1, --lights1    Lights group 1 (comma seperated numbers, e. g.: 1,2,3).
-    -l2, --lights2    Lights group 2 (comma seperated numbers, e. g.: 4,5,6).
-    -c1, --color1     Hue color value (0 - 65535) for lights group 1.
-    -c2, --color2     Hue color value (0 - 65535) for lights group 2.
-    -s, --switchtime  Time in seconds to switch between the two lights groups.
+    -l1, --lights1        Lights group 1 (comma seperated numbers, e. g.: 1,2,3).
+    -l2, --lights2        Lights group 2 (comma seperated numbers, e. g.: 4,5,6).
+    -c1, --color1         Hue color value (0 - 65535) for lights group 1.
+    -c2, --color2         Hue color value (0 - 65535) for lights group 2.
+    -s, --switchtime      Time in seconds to switch between the two lights groups.
+    -t, --transitiontime  Transition time in seconds.
 "
 }
 
 ##
-# - 1$ = LIGHTS1
-# - 2$ = LIGHTS2
-# - 3$ = COLOR1
-# - 4$ = COLOR2
-# - 5$ = SWITCH_TIME
+# - $1 = LIGHTS1
+# - $2 = LIGHTS2
+# - $3 = COLOR1
+# - $4 = COLOR2
+# - $5 = SWITCH_TIME
+# - $6 = TRANSITION_TIME
 ##
 _pendulum() {
-  hue_set $1 --hue $3 -t 10
-  hue_set $2 --hue $4 -t 10
+  hue_set $1 --hue $3 -t $6
+  hue_set $2 --hue $4 -t $6
   sleep $5
 
-  hue_set $2 --hue $3 -t 10
-  hue_set $1 --hue $4 -t 10
+  hue_set $2 --hue $3 -t $6
+  hue_set $1 --hue $4 -t $6
   sleep $5
 }
 
@@ -69,15 +71,20 @@ while true ; do
       shift 2
       ;;
 
+    -t|--transitiontime)
+      TRANSITION_TIME=$2
+      shift 2
+      ;;
+
     *)
       break
       ;;
   esac
 done
 
-#
-# Default JSON.
-#
+##
+# Defaults
+##
 if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
   _usage
 
@@ -115,10 +122,14 @@ if [ -z "$SWITCH_TIME" ]; then
   SWITCH_TIME=$(hue_range 1:10)
 fi
 
+if [ -z "$TRANSITION_TIME" ]; then
+  TRANSITION_TIME=$(hue_range 5:50)
+fi
+
 hue_set all --sat 255 --bri 255
 
 echo "using default values:
 
-hue-pendulum -l1 $LIGHTS1 -l2 $LIGHTS2 -c1 $COLOR1 -c2 $COLOR2 -s $SWITCH_TIME"
+hue-pendulum -l1 $LIGHTS1 -l2 $LIGHTS2 -c1 $COLOR1 -c2 $COLOR2 -s $SWITCH_TIME -t $TRANSITION_TIME"
 
-hue_loop _pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME
+hue_loop _pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME $TRANSITION_TIME
