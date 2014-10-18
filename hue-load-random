@@ -68,10 +68,12 @@ _execute_line_by_line() {
   for COMMAND in $COMMANDS; do
 
     IFS=$OLD_IFS
-    echo $COMMAND
+    echo "
+#####
+"
+    echo "$COMMAND"
     eval "$COMMAND" > /dev/null 2>&1
     sleep 10
-    hue_kill
   done
 }
 
