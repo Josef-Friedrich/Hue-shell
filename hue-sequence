@@ -92,6 +92,8 @@ if [ -z $BRIGHTNESS ]; then
   BRIGHTNESS='255'
 fi
 
+_usage
+
 echo "Generating a lighting scene with following values:
 
 hue-sequence -h $HUE_SEQUENCE -s $SLEEP_TIME -t $TRANSITION_TIME -b $BRIGHTNESS"
