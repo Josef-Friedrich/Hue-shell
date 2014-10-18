@@ -241,7 +241,7 @@ hue_get() {
   local LIGHTS="$1"
   shift
 
-  DEBUG=1
+  DEBUG="YES"
 
   if [ "$LIGHTS" = "all" ]; then
 
