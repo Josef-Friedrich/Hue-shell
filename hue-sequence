@@ -1,16 +1,15 @@
 #! /bin/sh
 
+##
+# Scene: All lights change at the same time the color in a certain sequence.
+##
+
 . /etc/hue-shell/hue-shell.conf
 
 . $INSTALLATION_PATH/base.sh
 
 _usage() {
-
-}
-
-
-_usage() {
-  echo "'hue-sequence'
+  echo "'hue-sequence' changes all lights at the same time in a certain sequence.
 
 Usage: hue-sequence <option>
 
@@ -41,9 +40,7 @@ _sequence() {
   done
 }
 
-##
-# Scene: All lights change at the same time the color in a given sequence.
-##
+
 
 hue_stop
 
@@ -94,5 +91,9 @@ fi
 if [ -z $BRIGHTNESS ]; then
   BRIGHTNESS='255'
 fi
+
+echo "Generating a lighting scene with following values:
+
+hue-sequence -h $HUE_SEQUENCE -s $SLEEP_TIME -t $TRANSITION_TIME -b $BRIGHTNESS"
 
 hue_loop _sequence $HUE_SEQUENCE $SLEEP_TIME $TRANSITION_TIME $BRIGHTNESS

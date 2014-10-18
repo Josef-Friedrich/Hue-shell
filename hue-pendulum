@@ -128,7 +128,7 @@ fi
 
 hue_set all --sat 255 --bri 255
 
-echo "using default values:
+echo "Generating a lighting scene with following values:
 
 hue-pendulum -l1 $LIGHTS1 -l2 $LIGHTS2 -c1 $COLOR1 -c2 $COLOR2 -s $SWITCH_TIME -t $TRANSITION_TIME"
 
