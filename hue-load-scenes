@@ -4,10 +4,15 @@
 
 . $INSTALLATION_PATH/base.sh
 
+_usage() {
+  echo "Usage: hue-load-scenes"
+
+}
+
 ##
 # Show available scenes.
 ##
-hue_scene_info() {
+_info() {
   echo "Available scenes:"
   for SCENE in $(find $SCENES_PATH -name "*.scene"); do
   local TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
@@ -20,7 +25,7 @@ hue_scene_info() {
 #
 # - $1 = SCENE_TOKEN
 ##
-hue_scene_execute() {
+_execute() {
   local SCENE="$SCENES_PATH/$1.scene"
 
   hue_stop
@@ -35,16 +40,14 @@ hue_scene_execute() {
 ##
 # Switch for scene functions.
 ##
-hue_scene_switch() {
-
-  case "$1" in
+case "$1" in
 
   execute)
-    hue_scene_execute $2
+    _execute $2
   ;;
 
   info)
-    hue_scene_info
+    _info
   ;;
 
   stop)
@@ -56,8 +59,7 @@ hue_scene_switch() {
   ;;
 
   *)
-  hue_help
+    _usage
   ;;
 
-  esac
-}
+esac
