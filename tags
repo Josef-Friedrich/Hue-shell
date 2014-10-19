@@ -1,0 +1,27 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+_all	hue-color	/^_all() {$/;"	f
+_breath	hue-breath	/^_breath() {$/;"	f
+_edit	hue-load-random	/^_edit() {$/;"	f
+_execute	hue-load-scenes	/^_execute() {$/;"	f
+_execute_line_by_line	hue-load-random	/^_execute_line_by_line() {$/;"	f
+_get	hue-load-random	/^_get() {$/;"	f
+_get_random	hue-load-random	/^_get_random() {$/;"	f
+_help	hue-recipe	/^_help() {$/;"	f
+_info	hue-load-scenes	/^_info() {$/;"	f
+_list	hue-load-random	/^_list() {$/;"	f
+_pendulum	hue-pendulum	/^_pendulum() {$/;"	f
+_sequence	hue-sequence	/^_sequence() {$/;"	f
+_show	hue-load-random	/^_show() {$/;"	f
+_usage	hue	/^_usage() {$/;"	f
+_usage	hue-breath	/^_usage() {$/;"	f
+_usage	hue-color	/^_usage() {$/;"	f
+_usage	hue-load-random	/^_usage() {$/;"	f
+_usage	hue-load-scenes	/^_usage() {$/;"	f
+_usage	hue-pendulum	/^_usage() {$/;"	f
+_usage	hue-recipe	/^_usage() {$/;"	f
+_usage	hue-sequence	/^_usage() {$/;"	f

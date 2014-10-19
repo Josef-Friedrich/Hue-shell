@@ -5,8 +5,12 @@
 . $INSTALLATION_PATH/base.sh
 
 _usage() {
-  echo "Usage: hue-load-scenes"
-
+  echo "Usage: hue-load-scenes
+ 
+Options:
+  info
+  execute
+ "
 }
 
 ##
