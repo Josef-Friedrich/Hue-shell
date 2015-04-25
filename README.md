@@ -18,13 +18,9 @@ REQUIREMENTS
 
 INSTALLATION
 
-    git clone git@github.com:Josef-Friedrich/Hue-shell.git $HOME/hue-shell
-
-    mkdir /etc/hue-shell
-    cd /etc/hue-shell
-    ln -s $HOME/hue-shell/config/hue-shell.conf
-    ln -s $HOME/hue-shell/config/random-scenes.conf
-    ln -s $HOME/hue-shell/config/scenes/
+    git clone git@github.com:Josef-Friedrich/Hue-shell.git $HOME/Hue-shell
+    ln -s $HOME/Hue-shell/config/hue-shell.conf /etc/hue-shell
+    ln -s $HOME/Hue-shell/startup/SysVinit /etc/init.d/hue
 
 You have to set an username. Use this documentation for.
     http://www.developers.meethue.com/documentation/getting-started
