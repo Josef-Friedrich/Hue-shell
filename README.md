@@ -38,14 +38,15 @@ in the values for IP and USERNAME.
 
 https://github.com/wertarbyte/triggerhappy
 
-cd /etc/triggerhappy/triggers.d
-ln -s $HOME/hue-shell/config/triggerhappy.conf
+    cd /etc/triggerhappy/triggers.d
+    ln -s $HOME/hue-shell/config/triggerhappy.conf
 
 
 ########################################################################
 # HUE SET
 ########################################################################
 
+```
 Usage: hue set <lights> <options>
 
 OPTIONS
@@ -112,10 +113,13 @@ EXAMPLES
         hue set 1,2,3 --alert
         hue set all --hue 23456 --bri 123 --sat 234
 
+```
+
 ########################################################################
 # HUE RECIPE
 ########################################################################
 
+```
 Usage: hue recipe <option>
 
 DESCRIPTION
@@ -156,3 +160,4 @@ SORTING BY COLOR TEMPERATURE
 EXAMPLES
         hue recipe --reading
         hue recipe -r
+```
