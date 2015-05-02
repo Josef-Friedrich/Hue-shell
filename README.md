@@ -45,3 +45,6 @@ ln -s $HOME/hue-shell/config/triggerhappy.conf
 
 ## Scene commands
 
+* [hue-breath](doc/hue-breath.md)
+* [hue-pendulum](doc/hue-pendulum.md)
+* [hue-sequence](doc/hue-sequence.md)
