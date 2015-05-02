@@ -14,8 +14,7 @@ Options:
     -r, --red
     -w, --white
     -y, --yellow
-
-Usage2: hue-color <hue value>'
+'
 }
 
 ##
