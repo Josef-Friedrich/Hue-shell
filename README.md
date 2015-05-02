@@ -1,24 +1,18 @@
 Hue shell is a collection of shell scripts to control the Hue lamps from
 Philips (https://www.meethue.com). Hue shell runs on many shells (sh, dash, ash, bash) and UNIX operating systems (Linux, MacOS X, FreeBSD, OpenWRT). 
 
-NAME
-        hue - control the Hue lights from Philips using a unix shell.
+# REQUIREMENTS
 
-SYNOPSIS
-        hue <command> <options>
+* shell (sh, ash, dash, bash)
+* curl
 
-DESCRIPTION
-        Hue-Shell is a shell script to control the Hue lamps from
-        Philips (https://www.meethue.com).
+# INSTALLATION
 
-REQUIREMENTS
-        curl
-
-INSTALLATION
-
-    git clone git@github.com:Josef-Friedrich/Hue-shell.git $HOME/Hue-shell
-    ln -s $HOME/Hue-shell/config/hue-shell.conf /etc/hue-shell
-    ln -s $HOME/Hue-shell/startup/SysVinit /etc/init.d/hue
+```
+git clone git@github.com:Josef-Friedrich/Hue-shell.git $HOME/Hue-shell
+ln -s $HOME/Hue-shell/config/hue-shell.conf /etc/hue-shell
+ln -s $HOME/Hue-shell/startup/SysVinit /etc/init.d/hue
+```
 
 You have to set an username. Use this documentation for.
     http://www.developers.meethue.com/documentation/getting-started
@@ -29,6 +23,7 @@ http://developers.meethue.com/gettingstarted.html for more
 informations to achieve that. Than edit the file 'hue' and fill
 in the values for IP and USERNAME.
 
+# Integration with triggerhappy
 
 https://github.com/wertarbyte/triggerhappy
 
