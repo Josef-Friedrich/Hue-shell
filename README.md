@@ -20,7 +20,7 @@ sudo make install
 
 You need a working Philips Hue setup, the IP address of your
 bridge and a username to access the bridge. Please read
-http://developers.meethue.com/gettingstarted.html for more
+http://www.developers.meethue.com/documentation/getting-started for more
 informations to achieve that. Than edit the file '/etc/hue-shell/hue-shell.conf' and fill
 in the values for IP and USERNAME.
 
