@@ -4,24 +4,39 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-_all	hue-color	/^_all() {$/;"	f
-_breath	hue-breath	/^_breath() {$/;"	f
-_edit	hue-load-random	/^_edit() {$/;"	f
-_execute	hue-load-scenes	/^_execute() {$/;"	f
-_execute_line_by_line	hue-load-random	/^_execute_line_by_line() {$/;"	f
-_get	hue-load-random	/^_get() {$/;"	f
-_get_random	hue-load-random	/^_get_random() {$/;"	f
-_help	hue-recipe	/^_help() {$/;"	f
-_info	hue-load-scenes	/^_info() {$/;"	f
-_list	hue-load-random	/^_list() {$/;"	f
-_pendulum	hue-pendulum	/^_pendulum() {$/;"	f
-_sequence	hue-sequence	/^_sequence() {$/;"	f
-_show	hue-load-random	/^_show() {$/;"	f
-_usage	hue	/^_usage() {$/;"	f
-_usage	hue-breath	/^_usage() {$/;"	f
-_usage	hue-color	/^_usage() {$/;"	f
-_usage	hue-load-random	/^_usage() {$/;"	f
-_usage	hue-load-scenes	/^_usage() {$/;"	f
-_usage	hue-pendulum	/^_usage() {$/;"	f
-_usage	hue-recipe	/^_usage() {$/;"	f
-_usage	hue-sequence	/^_usage() {$/;"	f
+_all	bin/hue-color	/^_all() {$/;"	f
+_breath	bin/hue-breath	/^_breath() {$/;"	f
+_edit	bin/hue-load-random	/^_edit() {$/;"	f
+_execute	bin/hue-load-scenes	/^_execute() {$/;"	f
+_execute_line_by_line	bin/hue-load-random	/^_execute_line_by_line() {$/;"	f
+_get	bin/hue-load-random	/^_get() {$/;"	f
+_get_random	bin/hue-load-random	/^_get_random() {$/;"	f
+_help	bin/hue-recipe	/^_help() {$/;"	f
+_info	bin/hue-load-scenes	/^_info() {$/;"	f
+_list	bin/hue-load-random	/^_list() {$/;"	f
+_pendulum	bin/hue-pendulum	/^_pendulum() {$/;"	f
+_sequence	bin/hue-sequence	/^_sequence() {$/;"	f
+_show	bin/hue-load-random	/^_show() {$/;"	f
+_usage	bin/hue	/^_usage() {$/;"	f
+_usage	bin/hue-breath	/^_usage() {$/;"	f
+_usage	bin/hue-color	/^_usage() {$/;"	f
+_usage	bin/hue-load-random	/^_usage() {$/;"	f
+_usage	bin/hue-load-scenes	/^_usage() {$/;"	f
+_usage	bin/hue-pendulum	/^_usage() {$/;"	f
+_usage	bin/hue-recipe	/^_usage() {$/;"	f
+_usage	bin/hue-sequence	/^_usage() {$/;"	f
+all_color	config/scenes/all-best.scene	/^function all_color {$/;"	f
+hue_alert	base.sh	/^hue_alert() {$/;"	f
+hue_call	base.sh	/^hue_call() {$/;"	f
+hue_get	base.sh	/^hue_get() {$/;"	f
+hue_kill	base.sh	/^hue_kill() {$/;"	f
+hue_loop	base.sh	/^hue_loop() {$/;"	f
+hue_output	base.sh	/^hue_output() {$/;"	f
+hue_range	base.sh	/^hue_range() {$/;"	f
+hue_reset	base.sh	/^hue_reset() {$/;"	f
+hue_set	base.sh	/^hue_set() {$/;"	f
+hue_set_transit	base.sh	/^hue_set_transit() {$/;"	f
+hue_stop	base.sh	/^hue_stop() {$/;"	f
+light7	config/scenes/default.scene	/^function light7 {$/;"	f
+light8	config/scenes/default.scene	/^function light8 {$/;"	f
+switch_colors	config/scenes/switch.scene	/^function switch_colors {$/;"	f
