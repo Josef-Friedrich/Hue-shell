@@ -2,8 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-. $INSTALLATION_PATH/base.sh
-
 _usage() {
   echo "'hue-breath' fades the lights smoothly up and down, so it seems that they were
 breathing.

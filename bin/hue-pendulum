@@ -6,8 +6,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-. $INSTALLATION_PATH/base.sh
-
 _usage() {
     echo "'hue-pendulum' switches two group of lights between two colors.
 

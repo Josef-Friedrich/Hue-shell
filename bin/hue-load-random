@@ -2,8 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-. $INSTALLATION_PATH/base.sh
-
 RANDOM_FILE="$CONFIGURATION_PATH/random-scenes.conf"
 
 _usage() {

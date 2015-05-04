@@ -2,8 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-. $INSTALLATION_PATH/base.sh
-
 _usage() {
   echo "Usage: hue-recipe <option>
 

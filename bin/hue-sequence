@@ -6,8 +6,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-. $INSTALLATION_PATH/base.sh
-
 _usage() {
   echo "'hue-sequence' changes all lights at the same time in a certain sequence.
 
