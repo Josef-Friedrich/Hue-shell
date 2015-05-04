@@ -13,19 +13,25 @@ and many UNIX operating systems (Linux, MacOS X, FreeBSD, OpenWRT).
 # INSTALLATION
 
 ```
-git clone git@github.com:Josef-Friedrich/Hue-shell.git $HOME/Hue-shell
-ln -s $HOME/Hue-shell/config/hue-shell.conf /etc/hue-shell
-ln -s $HOME/Hue-shell/startup/SysVinit /etc/init.d/hue
+git clone git@github.com:Josef-Friedrich/Hue-shell.git
+cd Hue-shell
+sudo make install
 ```
-
-You have to set an username. Use this documentation for.
-    http://www.developers.meethue.com/documentation/getting-started
 
 You need a working Philips Hue setup, the IP address of your
 bridge and a username to access the bridge. Please read
 http://developers.meethue.com/gettingstarted.html for more
-informations to achieve that. Than edit the file 'hue' and fill
+informations to achieve that. Than edit the file '/etc/hue-shell/hue-shell.conf' and fill
 in the values for IP and USERNAME.
+
+```
+vim /etc/hue-shell/hue-shell.conf
+```
+
+```
+IP="192.168.1.2"
+USERNAME="yourusername"
+```
 
 # Integration with triggerhappy
 
