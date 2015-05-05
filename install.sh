@@ -16,3 +16,5 @@ cp bin/hue* $INSTALL_DIR/bin
 # /etc/init.d
 cp startup/SysVinit /etc/init.d/hue
 
+# triggerhappy
+cp triggerhappy/hue.conf /etc/triggerhappy/triggers.d/
