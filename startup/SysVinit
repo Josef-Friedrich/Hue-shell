@@ -14,8 +14,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-. $INSTALLATION_PATH/base.sh
-
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/root/bin:/root/hue
 DESC="Philips Hue Control"
 NAME=hue
@@ -23,13 +21,13 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
   start)
-    $INSTALLATION_PATH/hue-load-random
+    hue-load-random
     echo "Starting hue daemon ..."
     ;;
 
   restart)
     hue_reset
-    $INSTALLATION_PATH/hue-load-random
+    hue-load-random
     echo "Starting hue daemon ..."
     ;;
 
