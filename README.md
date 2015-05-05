@@ -15,7 +15,7 @@ and many UNIX operating systems (Linux, MacOS X, FreeBSD, OpenWRT).
 ```
 git clone git@github.com:Josef-Friedrich/Hue-shell.git
 cd Hue-shell
-sudo make install
+sudo ./install.sh
 ```
 
 You need a working Philips Hue setup, the IP address of your
