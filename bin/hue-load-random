@@ -119,4 +119,4 @@ if [ "$DEBUG" = "YES" ]; then
   echo $RANDOM_SCENE
 fi
 
-eval "$INSTALLATION_PATH/$RANDOM_SCENE"
+eval "$RANDOM_SCENE"
