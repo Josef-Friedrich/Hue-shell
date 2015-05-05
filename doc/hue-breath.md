@@ -1,3 +1,7 @@
+########################################################################
+# HUE BREATH
+########################################################################
+
 ```
 'hue-breath' fades the lights smoothly up and down, so it seems that they were
 breathing.
