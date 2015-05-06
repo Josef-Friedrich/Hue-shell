@@ -1,6 +1,6 @@
 #! /bin/sh
 
-INSTALL_DIR='/usr/local'
+INSTALL_DIR='/usr'
 
 rm -rf /etc/hue-shell
 rm -rf $INSTALL_DIR/lib/hue-shell
