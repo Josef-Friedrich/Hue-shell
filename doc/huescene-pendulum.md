@@ -1,7 +1,7 @@
 ´´´
-'hue-pendulum' switches two group of lights between two colors.
+'huescene-pendulum' switches two group of lights between two colors.
 
-Usage: hue-pendulum <options>
+Usage: huescene-pendulum <options>
 
 Options:
     -l1, --lights1        Lights group 1 (comma seperated numbers, e. g.: 1,2,3).

@@ -3,7 +3,7 @@
 ########################################################################
 
 ```
-Usage: hue-color <option>
+Usage: huecolor-basic <option>
 
 Options:
     -b, --blue

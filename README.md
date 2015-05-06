@@ -1,7 +1,7 @@
 `Hue-shell` is a collection of shell scripts to control the Hue lamps from
 Philips. It is designed for embedded operating systems with very limited
-resources (successfully tested on the old and outdated wifi router 
-"Linksys WRT54GL"). `Hue-shell` runs on many shells (sh, dash, ash, bash) 
+resources (successfully tested on the old and outdated wifi router
+"Linksys WRT54GL"). `Hue-shell` runs on many shells (sh, dash, ash, bash)
 and many UNIX operating systems (Linux, MacOS X, FreeBSD, OpenWRT).
 `Hue-shell` works well in a small BusyBox environment.
 
@@ -46,7 +46,7 @@ ln -s $HOME/hue-shell/config/triggerhappy.conf
 
 ## Basic commands
 
-* [hue](doc/hue-set.md)
+* [hue](doc/hue.md)
 
 ## Load commands
 
@@ -55,11 +55,11 @@ ln -s $HOME/hue-shell/config/triggerhappy.conf
 
 ## One color commands
 
-* [hcolor-basic](doc/hue-color.md)
-* [hcolor-recipe](doc/hue-recipe.md)
+* [huecolor-basic](doc/huecolor-basic.md)
+* [huecolor-recipe](doc/huecolor-recipe.md)
 
 ## Scene commands
 
-* [hscene-breath](doc/hue-breath.md)
-* [hscene-pendulum](doc/hue-pendulum.md)
-* [hscene-sequence](doc/hue-sequence.md)
+* [huescene-breath](doc/huescene-breath.md)
+* [huescene-pendulum](doc/huescene-pendulum.md)
+* [huescene-sequence](doc/huescene-sequence.md)

@@ -3,7 +3,7 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-  echo "Usage: hue-recipe <option>
+  echo "Usage: huecolor-recipe <option>
 
     -c, --concentrate   Medium cold color.
     -d, --default       Default white color.
@@ -15,7 +15,7 @@ _usage() {
 }
 
 _help() {
-  echo "Usage: hue-recipe <option>
+  echo "Usage: huecolor-recipe <option>
 
 DESCRIPTION
         This scene command shows white colors in different color

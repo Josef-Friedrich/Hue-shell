@@ -1,7 +1,7 @@
 ```
-'hue-sequence' changes all lights at the same time in a certain sequence.
+'huescene-sequence' changes all lights at the same time in a certain sequence.
 
-Usage: hue-sequence <option>
+Usage: huescene-sequence <option>
 
 Options:
   -h, --huesequence       A sequence of hue color values seperated by commas.

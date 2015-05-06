@@ -3,7 +3,7 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-  echo 'Usage: hue-color <option>
+  echo 'Usage: huecolor-basic <option>
 
 Options:
     -b, --blue

@@ -1,15 +1,15 @@
 #! /bin/sh
 
 ##
-# hue-pendulum switches two group of lights between two colors.
+# huescene-pendulum switches two group of lights between two colors.
 ##
 
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-    echo "'hue-pendulum' switches two group of lights between two colors.
+    echo "'huescene-pendulum' switches two group of lights between two colors.
 
-Usage: hue-pendulum <options>
+Usage: huescene-pendulum <options>
 
 Options:
     -l1, --lights1        Lights group 1 (comma seperated numbers, e. g.: 1,2,3).
@@ -128,6 +128,6 @@ hue_set all --sat 255 --bri 255
 
 echo "Generating a lighting scene with following values:
 
-hue-pendulum -l1 $LIGHTS1 -l2 $LIGHTS2 -c1 $COLOR1 -c2 $COLOR2 -s $SWITCH_TIME -t $TRANSITION_TIME"
+huescene-pendulum -l1 $LIGHTS1 -l2 $LIGHTS2 -c1 $COLOR1 -c2 $COLOR2 -s $SWITCH_TIME -t $TRANSITION_TIME"
 
 hue_loop _pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME $TRANSITION_TIME

@@ -3,10 +3,10 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-  echo "'hue-breath' fades the lights smoothly up and down, so it seems that they were
+  echo "'huescene-breath' fades the lights smoothly up and down, so it seems that they were
 breathing.
 
-Usage: hue-breath <option>
+Usage: huescene-breath <option>
 
 Options:
     -l, --lights            Lights to use (comma seperated numbers, e. g.:
@@ -92,7 +92,7 @@ _usage
 
 echo "Generating a lighting scene with following values:
 
-hue-breath -l $LIGHT -h $HUE_RANGE -t $TIME_RANGE -b $BRI_RANGE"
+huescene-breath -l $LIGHT -h $HUE_RANGE -t $TIME_RANGE -b $BRI_RANGE"
 
 OLD_IFS=$IFS; IFS=","
 

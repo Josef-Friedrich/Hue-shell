@@ -3,10 +3,10 @@
 ########################################################################
 
 ```
-'hue-breath' fades the lights smoothly up and down, so it seems that they were
+'huescene-breath' fades the lights smoothly up and down, so it seems that they were
 breathing.
 
-Usage: hue-breath <option>
+Usage: huescene-breath <option>
 
 Options:
     -l, --lights            Lights to use (comma seperated numbers, e. g.:
