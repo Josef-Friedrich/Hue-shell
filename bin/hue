@@ -7,9 +7,12 @@
 ##
 _usage() {
 echo 'Usage: hue <command>
-  get <lights>
-  help
   set <lights> <attributes>
+  transit
+  get <lights>
+  alert <lights>
+  help
+
   alert <lights>
 '
 }
