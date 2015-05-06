@@ -3,8 +3,8 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-  echo "Usage: hue-load-scenes
- 
+  echo "Usage: hueload-scenes
+
 Options:
   info
   execute

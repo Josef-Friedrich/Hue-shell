@@ -1,3 +1,7 @@
+########################################################################
+# huescene-sequence
+########################################################################
+
 ```
 'huescene-sequence' changes all lights at the same time in a certain sequence.
 

@@ -5,10 +5,10 @@
 RANDOM_FILE="$CONFIGURATION_PATH/random-scenes.conf"
 
 _usage() {
-  echo "'hue-load-random' loads a random light scene, which is picked from the
+  echo "'hueload-random' loads a random light scene, which is picked from the
 config file $CONFIGURATION_PATH/random-scenes.conf.
 
-hue-load-random <options>
+hueload-random <options>
 
 Options:
     -a, --all     Execute all scenes line by line without random.

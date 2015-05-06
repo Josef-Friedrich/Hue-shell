@@ -50,8 +50,8 @@ ln -s $HOME/hue-shell/config/triggerhappy.conf
 
 ## Load commands
 
-* hload-random
-* hload-scene
+* [hueload-random](doc/hueload-random.md)
+* [hueload-scenes](doc/hueload-scenes.md)
 
 ## One color commands
 

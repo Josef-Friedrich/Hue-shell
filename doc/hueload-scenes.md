@@ -1,15 +1,11 @@
 ########################################################################
-# huecolor-basic
+# hueload-scenes
 ########################################################################
 
 ```
-Usage: huecolor-basic <option>
+Usage: hueload-scenes
 
 Options:
-    -b, --blue
-    -c, --cyan
-    -g, --green
-    -r, --red
-    -w, --white
-    -y, --yellow
+  info
+  execute
 ```

@@ -1,9 +1,9 @@
 ########################################################################
-# HUE RECIPE
+# huecolor-recipe
 ########################################################################
 
 ```
-Usage: hue recipe <option>
+Usage: huecolor-recipe <option>
 
 DESCRIPTION
         This scene command shows white colors in different color
