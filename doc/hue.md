@@ -1,6 +1,28 @@
 ########################################################################
 # hue
 ########################################################################
+Overview:
+
+```
+Usage: hue <command>
+  
+Set commands:
+  - set <lights> <attributes>
+  - transit <lights> <attributes>
+
+Info / debug commands:
+  - get <lights>
+  - alert <lights>
+  - config
+  - help
+
+Stop commands:  
+  - reset
+  - stop
+  - kill
+```
+
+
 
 ```
 Usage: hue set <lights> <options>

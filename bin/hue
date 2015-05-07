@@ -6,14 +6,22 @@
 # Print out a short help text.
 ##
 _usage() {
-echo 'Usage: hue <command>
-  set <lights> <attributes>
-  transit
-  get <lights>
-  alert <lights>
-  help
+  echo 'Usage: hue <command>
+  
+Set commands:
+  - set <lights> <attributes>
+  - transit <lights> <attributes>
 
-  alert <lights>
+Info / debug commands:
+  - get <lights>
+  - alert <lights>
+  - config
+  - help
+
+Stop commands:  
+  - reset
+  - stop
+  - kill
 '
 }
 
