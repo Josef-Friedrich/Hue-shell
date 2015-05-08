@@ -1,16 +1,14 @@
-#! /bin/bash
+#! /bin/sh
 
-source /usr/local/bin/hue > /dev/null
+. /etc/hue-shell/hue-shell.conf
 
-function light7 {
-  hue_set_transit 7 21 hue 0 bri 255 sat 255
-  hue_set_transit 7 21 bri 80
-}
+hue_set all -b 3
 
-function light8 {
-  hue_set_transit 8 15 hue 10639 bri 80 sat 255
-  hue_set_transit 8 15 bri 255
-}
+sleep 10
 
-hue_loop light7
-hue_loop light8
+hue_set all -b 200
+
+sleep 10
+
+hue_set all -b 1
+

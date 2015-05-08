@@ -3,11 +3,11 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-  echo "Usage: hueload-scenes
+  echo "Usage: hueload-scenes <options>
 
 Options:
   info
-  execute
+  execute <scene>
  "
 }
 

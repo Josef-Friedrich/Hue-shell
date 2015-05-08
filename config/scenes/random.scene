@@ -1,5 +1,0 @@
-#! /bin/bash
-
-source /usr/local/bin/hue > /dev/null
-
-hue_scene_random_breath 1,2,3,7,8,9 60000 3000
