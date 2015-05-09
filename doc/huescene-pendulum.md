@@ -2,7 +2,7 @@
 # huescene-pendulum
 ########################################################################
 
-´´´
+```
 'huescene-pendulum' switches two group of lights between two colors.
 
 Usage: huescene-pendulum <options>
@@ -14,4 +14,4 @@ Options:
     -c2, --color2         Hue color value (0 - 65535) for lights group 2.
     -s, --switchtime      Time in seconds to switch between the two lights groups.
     -t, --transitiontime  Transition time in seconds.
-´´´
+```
