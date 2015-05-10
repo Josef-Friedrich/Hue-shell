@@ -3,11 +3,11 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-  echo "Usage: hueload-scenes <options>
+	echo "Usage: hueload-scenes <options>
 
 Options:
-  info
-  execute <scene>
+	info
+	execute <scene>
  "
 }
 
@@ -15,11 +15,11 @@ Options:
 # Show available scenes.
 ##
 _info() {
-  echo "Available scenes:"
-  for SCENE in $(find $SCENES_PATH -name "*.scene"); do
-  local TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
-  echo " -> $TOKEN"
-  done
+	echo "Available scenes:"
+	for SCENE in $(find $SCENES_PATH -name "*.scene"); do
+	local TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
+	echo " -> $TOKEN"
+	done
 }
 
 ##
@@ -28,15 +28,15 @@ _info() {
 # - $1 = SCENE_TOKEN
 ##
 _execute() {
-  local SCENE="$SCENES_PATH/$1.scene"
+	local SCENE="$SCENES_PATH/$1.scene"
 
-  hue_stop
-  if [ -f "$SCENE" ]; then
-    $SCENE
-  else
-    local DEFAULT_SCENE="$SCENES_PATH/$DEFAULT_SCENE.scene"
-    $DEFAULT_SCENE
-  fi
+	hue_stop
+	if [ -f "$SCENE" ]; then
+		$SCENE
+	else
+		local DEFAULT_SCENE="$SCENES_PATH/$DEFAULT_SCENE.scene"
+		$DEFAULT_SCENE
+	fi
 }
 
 ##
@@ -44,24 +44,24 @@ _execute() {
 ##
 case "$1" in
 
-  execute)
-    _execute $2
-  ;;
+	execute)
+		_execute $2
+	;;
 
-  info)
-    _info
-  ;;
+	info)
+		_info
+	;;
 
-  stop)
-    hue_stop
-  ;;
+	stop)
+		hue_stop
+	;;
 
-  reset)
-    hue_reset
-  ;;
+	reset)
+		hue_reset
+	;;
 
-  *)
-    _usage
-  ;;
+	*)
+		_usage
+	;;
 
 esac

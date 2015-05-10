@@ -7,17 +7,17 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-    echo "'huescene-pendulum' switches two group of lights between two colors.
+		echo "'huescene-pendulum' switches two group of lights between two colors.
 
 Usage: huescene-pendulum <options>
 
 Options:
-    -l1, --lights1        Lights group 1 (comma seperated numbers, e. g.: 1,2,3).
-    -l2, --lights2        Lights group 2 (comma seperated numbers, e. g.: 4,5,6).
-    -c1, --color1         Hue color value (0 - 65535) for lights group 1.
-    -c2, --color2         Hue color value (0 - 65535) for lights group 2.
-    -s, --switchtime      Time in seconds to switch between the two lights groups.
-    -t, --transitiontime  Transition time in seconds.
+		-l1, --lights1        Lights group 1 (comma seperated numbers, e. g.: 1,2,3).
+		-l2, --lights2        Lights group 2 (comma seperated numbers, e. g.: 4,5,6).
+		-c1, --color1         Hue color value (0 - 65535) for lights group 1.
+		-c2, --color2         Hue color value (0 - 65535) for lights group 2.
+		-s, --switchtime      Time in seconds to switch between the two lights groups.
+		-t, --transitiontime  Transition time in seconds.
 "
 }
 
@@ -30,98 +30,98 @@ Options:
 # - $6 = TRANSITION_TIME
 ##
 _pendulum() {
-  hue_set $1 --hue $3 -t $6
-  hue_set $2 --hue $4 -t $6
-  sleep $5
+	hue_set $1 --hue $3 -t $6
+	hue_set $2 --hue $4 -t $6
+	sleep $5
 
-  hue_set $2 --hue $3 -t $6
-  hue_set $1 --hue $4 -t $6
-  sleep $5
+	hue_set $2 --hue $3 -t $6
+	hue_set $1 --hue $4 -t $6
+	sleep $5
 }
 
 hue_stop
 
 while true ; do
-  case "$1" in
+	case "$1" in
 
-    -l1|--lights1)
-      LIGHTS1=$2
-      shift 2
-      ;;
+		-l1|--lights1)
+			LIGHTS1=$2
+			shift 2
+			;;
 
-    -l2|--lights2)
-      LIGHTS2=$2
-      shift 2
-      ;;
+		-l2|--lights2)
+			LIGHTS2=$2
+			shift 2
+			;;
 
-    -c1|--color1)
-      COLOR1=$2
-      shift 2
-      ;;
+		-c1|--color1)
+			COLOR1=$2
+			shift 2
+			;;
 
-    -c2|--color2)
-      COLOR2=$2
-      shift 2
-      ;;
+		-c2|--color2)
+			COLOR2=$2
+			shift 2
+			;;
 
-    -s|--switchtime)
-      SWITCH_TIME=$2
-      shift 2
-      ;;
+		-s|--switchtime)
+			SWITCH_TIME=$2
+			shift 2
+			;;
 
-    -t|--transitiontime)
-      TRANSITION_TIME=$2
-      shift 2
-      ;;
+		-t|--transitiontime)
+			TRANSITION_TIME=$2
+			shift 2
+			;;
 
-    *)
-      break
-      ;;
-  esac
+		*)
+			break
+			;;
+	esac
 done
 
 ##
 # Defaults
 ##
 if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
-  _usage
+	_usage
 
-    OLD_IFS=$IFS; IFS=","
+		OLD_IFS=$IFS; IFS=","
 
-    for LIGHT in $ALL_LIGHTS; do
-      IFS=$OLD_IFS
+		for LIGHT in $ALL_LIGHTS; do
+			IFS=$OLD_IFS
 
-      NUMBER=$(hue_range 1:2)
+			NUMBER=$(hue_range 1:2)
 
-      if [ "$NUMBER" = 1 ]; then
-        LIGHTS1="$LIGHTS1,$LIGHT"
-      else
-        LIGHTS2="$LIGHTS2,$LIGHT"
-      fi
+			if [ "$NUMBER" = 1 ]; then
+				LIGHTS1="$LIGHTS1,$LIGHT"
+			else
+				LIGHTS2="$LIGHTS2,$LIGHT"
+			fi
 
-    done
+		done
 
-  LIGHTS1=$(echo "$LIGHTS1" | tail -c +2)
-  LIGHTS2=$(echo "$LIGHTS2" | tail -c +2)
+	LIGHTS1=$(echo "$LIGHTS1" | tail -c +2)
+	LIGHTS2=$(echo "$LIGHTS2" | tail -c +2)
 fi
 
 if [ -z "$COLOR1" ]; then
-  #COLOR1='0'
-  COLOR1=$(hue_range 0:65535)
+	#COLOR1='0'
+	COLOR1=$(hue_range 0:65535)
 fi
 
 if [ -z "$COLOR2" ]; then
-  #COLOR2='46920'
-  COLOR2=$(hue_range 0:65535)
+	#COLOR2='46920'
+	COLOR2=$(hue_range 0:65535)
 fi
 
 if [ -z "$SWITCH_TIME" ]; then
-  #SWITCH_TIME='2'
-  SWITCH_TIME=$(hue_range 1:10)
+	#SWITCH_TIME='2'
+	SWITCH_TIME=$(hue_range 1:10)
 fi
 
 if [ -z "$TRANSITION_TIME" ]; then
-  TRANSITION_TIME=$(hue_range 5:50)
+	TRANSITION_TIME=$(hue_range 5:50)
 fi
 
 hue_set all --sat 255 --bri 255

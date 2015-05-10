@@ -5,108 +5,108 @@
 RANDOM_FILE="$CONFIGURATION_PATH/random-scenes.conf"
 
 _usage() {
-  echo "'hueload-random' loads a random light scene, which is picked from the
+	echo "'hueload-random' loads a random light scene, which is picked from the
 config file $CONFIGURATION_PATH/random-scenes.conf.
 
 hueload-random <options>
 
 Options:
-    -a, --all     Execute all scenes line by line without random.
-    -d, --debug   Enable debug mode, which puts out the executed scene command.
-    -e, --edit    Edit the random scenes file in the default text editor.
-    -l, --list    List all scenes commands without blank lines and without
-                  comments.
-    -s, --show    Show the random scenes file.
-  "
+		-a, --all     Execute all scenes line by line without random.
+		-d, --debug   Enable debug mode, which puts out the executed scene command.
+		-e, --edit    Edit the random scenes file in the default text editor.
+		-l, --list    List all scenes commands without blank lines and without
+									comments.
+		-s, --show    Show the random scenes file.
+	"
 }
 
 _edit() {
-  if [ -z "$EDITOR" ]; then
-    EDITOR='vi'
-  fi
+	if [ -z "$EDITOR" ]; then
+		EDITOR='vi'
+	fi
 
-  $EDITOR $RANDOM_FILE
+	$EDITOR $RANDOM_FILE
 }
 
 ##
 # Print out the contents of the random config file to standard output.
 ##
 _get() {
-  cat $RANDOM_FILE
+	cat $RANDOM_FILE
 }
 
 ##
 # Send one random light scene to standard output.
 ##
 _get_random() {
-  local LINES=$(_list | wc -l)
-  local RANDOM=$(hue_range 1:"$LINES")
+	local LINES=$(_list | wc -l)
+	local RANDOM=$(hue_range 1:"$LINES")
 
-  _list | sed -n "$RANDOM"p
+	_list | sed -n "$RANDOM"p
 }
 
 ##
 # List all light scenes without empty lines and comments.
 ##
 _list() {
-  _get | grep -v '^$' | grep -v '#'
+	_get | grep -v '^$' | grep -v '#'
 }
 
 ##
 #
 ##
 _show() {
-  _get
+	_get
 }
 
 _execute_line_by_line() {
-  COMMANDS=$(_list)
+	COMMANDS=$(_list)
 
-  OLD_IFS=$IFS; IFS=";"
-  for COMMAND in $COMMANDS; do
+	OLD_IFS=$IFS; IFS=";"
+	for COMMAND in $COMMANDS; do
 
-    IFS=$OLD_IFS
-    echo "
+		IFS=$OLD_IFS
+		echo "
 #####
 "
-    echo "$COMMAND"
-    eval "$COMMAND" > /dev/null 2>&1
-    sleep 10
-  done
+		echo "$COMMAND"
+		eval "$COMMAND" > /dev/null 2>&1
+		sleep 10
+	done
 }
 
 while true ; do
-  case "$1" in
+	case "$1" in
 
-    -a|--all)
-      _execute_line_by_line
-      exit 0
-      ;;
+		-a|--all)
+			_execute_line_by_line
+			exit 0
+			;;
 
-    -d|--debug)
-      DEBUG="YES"
-      shift
-      ;;
+		-d|--debug)
+			DEBUG="YES"
+			shift
+			;;
 
-    -e|--edit)
-      _edit
-      exit 0
-      ;;
+		-e|--edit)
+			_edit
+			exit 0
+			;;
 
-    -l|--list)
-      _list
-      exit 0
-      ;;
+		-l|--list)
+			_list
+			exit 0
+			;;
 
-    -s|--show)
-      _show
-      exit 0
-      ;;
+		-s|--show)
+			_show
+			exit 0
+			;;
 
-    *)
-      break
-      ;;
-  esac
+		*)
+			break
+			;;
+	esac
 done
 
 hue_stop
@@ -116,7 +116,7 @@ _usage
 RANDOM_SCENE=$(_get_random)
 
 if [ "$DEBUG" = "YES" ]; then
-  echo $RANDOM_SCENE
+	echo $RANDOM_SCENE
 fi
 
 eval "$RANDOM_SCENE"

@@ -3,17 +3,17 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-  echo "'huescene-breath' fades the lights smoothly up and down, so it seems that they were
+	echo "'huescene-breath' fades the lights smoothly up and down, so it seems that they were
 breathing.
 
 Usage: huescene-breath <option>
 
 Options:
-    -l, --lights            Lights to use (comma seperated numbers, e. g.:
-                            1,2,3).
-    -h, --hue-range         Two hue color values (e. g. 23461:40123)
-    -t, --time-range        A time range in seconds separated by a colon.
-    -b, --brightness-range
+		-l, --lights            Lights to use (comma seperated numbers, e. g.:
+														1,2,3).
+		-h, --hue-range         Two hue color values (e. g. 23461:40123)
+		-t, --time-range        A time range in seconds separated by a colon.
+		-b, --brightness-range
 "
 }
 
@@ -26,12 +26,12 @@ Options:
 # - $4 = BRI_RANGE
 ##
 _breath() {
-  local TRANSTIME=$(hue_range $3)
-  local BRI_START=${4%%:*}
-  local BRI_END=${4#*:}
+	local TRANSTIME=$(hue_range $3)
+	local BRI_START=${4%%:*}
+	local BRI_END=${4#*:}
 
-  hue_set_transit $1 $TRANSTIME --hue $(hue_range $2) --bri $BRI_END --sat 255
-  hue_set_transit $1 $TRANSTIME --bri $BRI_START
+	hue_set_transit $1 $TRANSTIME --hue $(hue_range $2) --bri $BRI_END --sat 255
+	hue_set_transit $1 $TRANSTIME --bri $BRI_START
 }
 
 ##
@@ -41,51 +41,51 @@ _breath() {
 hue_stop
 
 while true ; do
-  case "$1" in
+	case "$1" in
 
-    -l|--lights)
-      LIGHTS=$2
-      shift 2
-      ;;
+		-l|--lights)
+			LIGHTS=$2
+			shift 2
+			;;
 
-    -h|--hue-range)
-      HUE_RANGE=$2
-      shift 2
-      ;;
+		-h|--hue-range)
+			HUE_RANGE=$2
+			shift 2
+			;;
 
-    -t|--time-range)
-      TIME_RANGE=$2
-      shift 2
-      ;;
+		-t|--time-range)
+			TIME_RANGE=$2
+			shift 2
+			;;
 
-    -b|--brightness-range)
-      BRI_RANGE=$2
-      shift 2
-      ;;
+		-b|--brightness-range)
+			BRI_RANGE=$2
+			shift 2
+			;;
 
-    *)
-      break
-      ;;
-  esac
+		*)
+			break
+			;;
+	esac
 done
 
 #
 # Default values.
 #
 if [ -z $LIGHTS ] && [ -n $ALL_LIGHTS ]; then
-  LIGHTS=$ALL_LIGHTS
+	LIGHTS=$ALL_LIGHTS
 fi
 
 if [ -z $HUE_RANGE ]; then
-  HUE_RANGE='52000:58000'
+	HUE_RANGE='52000:58000'
 fi
 
 if [ -z $TIME_RANGE ]; then
-  TIME_RANGE='2:4'
+	TIME_RANGE='2:4'
 fi
 
 if [ -z $BRI_RANGE ]; then
-  BRI_RANGE='50:255'
+	BRI_RANGE='50:255'
 fi
 
 _usage
@@ -97,7 +97,7 @@ huescene-breath -l $LIGHT -h $HUE_RANGE -t $TIME_RANGE -b $BRI_RANGE"
 OLD_IFS=$IFS; IFS=","
 
 for LIGHT in $LIGHTS ; do
-  IFS=$OLD_IFS
+	IFS=$OLD_IFS
 
-  hue_loop _breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
+	hue_loop _breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
 done

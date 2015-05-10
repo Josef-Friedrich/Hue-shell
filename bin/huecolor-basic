@@ -6,12 +6,12 @@ _usage() {
   echo 'Usage: huecolor-basic <option>
 
 Options:
-    -b, --blue
-    -c, --cyan
-    -g, --green
-    -r, --red
-    -w, --white
-    -y, --yellow
+	-b, --blue
+	-c, --cyan
+	-g, --green
+	-r, --red
+	-w, --white
+	-y, --yellow
 '
 }
 

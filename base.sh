@@ -11,12 +11,12 @@ SEED_FILE='/var/run/hue-shell/hue-shell-random.seed'
 # Loop function.
 ##
 hue_loop() {
-  (
-    while true; do
-      eval "$*"
-    done
-  ) &
-  echo $! >> $PIDFILE
+	(
+		while true; do
+			eval "$*"
+		done
+	) &
+	echo $! >> $PIDFILE
 }
 
 ##
@@ -29,23 +29,23 @@ hue_loop() {
 # RANDOM="1$RANDOM"
 ##
 hue_range() {
-  local START=${1%%:*}
-  local END=${1#*:}
+	local START=${1%%:*}
+	local END=${1#*:}
 
-  END=$((END + 1))
-  local RANGE=$((END - START))
+	END=$((END + 1))
+	local RANGE=$((END - START))
 
-  # http://rosettacode.org/wiki/Linear_congruential_generator
+	# http://rosettacode.org/wiki/Linear_congruential_generator
 
-  SEED=$(cat $SEED_FILE)
-  SEED=$(((123 * $SEED + 23456) % 345678))
-  echo $SEED > $SEED_FILE
+	SEED=$(cat $SEED_FILE)
+	SEED=$(((123 * $SEED + 23456) % 345678))
+	echo $SEED > $SEED_FILE
 
-  RANDOM=$(($SEED / 2))
+	RANDOM=$(($SEED / 2))
 
-  local NUMBER_IN_RANGE=$((RANDOM % RANGE))
+	local NUMBER_IN_RANGE=$((RANDOM % RANGE))
 
-  echo $((NUMBER_IN_RANGE + START))
+	echo $((NUMBER_IN_RANGE + START))
 }
 
 ##
@@ -57,11 +57,11 @@ hue_range() {
 ##
 hue_call() {
 
-  if [ -n "$3" ]; then
-    local DATA="--data $3"
-  fi
+	if [ -n "$3" ]; then
+		local DATA="--data $3"
+	fi
 
-  curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | hue_output
+	curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | hue_output
 }
 
 ##
@@ -69,11 +69,11 @@ hue_call() {
 ##
 hue_stop() {
 
-  for PID in $(cat $PIDFILE); do
-    kill $PID > /dev/null 2>&1
-  done
+	for PID in $(cat $PIDFILE); do
+		kill $PID > /dev/null 2>&1
+	done
 
-  > $PIDFILE
+	> $PIDFILE
 }
 
 ##
@@ -83,21 +83,21 @@ hue_stop() {
 # other terminals.)
 ##
 hue_kill() {
-  hue_reset
+	hue_reset
 
-  # Alternatives:
-  # - pkill (not on openwrt, busybox)
-  # - ps -w | grep "hue" | awk '{print $1}'
+	# Alternatives:
+	# - pkill (not on openwrt, busybox)
+	# - ps -w | grep "hue" | awk '{print $1}'
 
-  killall hue > /dev/null 2>&1
+	killall hue > /dev/null 2>&1
 }
 
 ##
 # Stop all hue processes and reset to default color.
 ##
 hue_reset() {
-  hue_stop
-  hue_set all --ct 369 --bri 254
+	hue_stop
+	hue_set all --ct 369 --bri 254
 }
 
 ##
@@ -107,106 +107,106 @@ hue_reset() {
 # - $@ = LIGHT_ATTRIBUTES
 ##
 hue_set() {
-  local LIGHTS="$1"
+	local LIGHTS="$1"
 
-  shift
+	shift
 
-  local JSON=""
+	local JSON=""
 
-  while true ; do
-    case "$1" in
+	while true ; do
+		case "$1" in
 
-      --on)
-        JSON="$JSON,\"on\":true"
-        shift 1
-        ;;
+			--on)
+				JSON="$JSON,\"on\":true"
+				shift 1
+				;;
 
-      --off)
-        JSON="$JSON,\"on\":false"
-        shift 1
-        ;;
+			--off)
+				JSON="$JSON,\"on\":false"
+				shift 1
+				;;
 
-      -b|--bri|--brightness)
-        JSON="$JSON,\"bri\":$2"
-        shift 2
-        ;;
+			-b|--bri|--brightness)
+				JSON="$JSON,\"bri\":$2"
+				shift 2
+				;;
 
-      -h|--hue)
-        JSON="$JSON,\"hue\":$2"
-        shift 2
-        ;;
+			-h|--hue)
+				JSON="$JSON,\"hue\":$2"
+				shift 2
+				;;
 
-      -s|--sat|--saturation)
-        JSON="$JSON,\"sat\":$2"
-        shift 2
-        ;;
+			-s|--sat|--saturation)
+				JSON="$JSON,\"sat\":$2"
+				shift 2
+				;;
 
-      -x)
-        local X=$2
-        shift 2
-        ;;
+			-x)
+				local X=$2
+				shift 2
+				;;
 
-      -y)
-        local Y=$2
-        shift 2
-        ;;
+			-y)
+				local Y=$2
+				shift 2
+				;;
 
-      -c|--ct)
-        JSON="$JSON,\"ct\":$2"
-        shift 2
-        ;;
+			-c|--ct)
+				JSON="$JSON,\"ct\":$2"
+				shift 2
+				;;
 
-      -a|--alert)
-        JSON="$JSON,\"alert\":\"$2\""
-        shift 2
-        ;;
+			-a|--alert)
+				JSON="$JSON,\"alert\":\"$2\""
+				shift 2
+				;;
 
-      -e|--effect)
-        JSON="$JSON,\"effect\":\"$2\""
-        shift 2
-        ;;
+			-e|--effect)
+				JSON="$JSON,\"effect\":\"$2\""
+				shift 2
+				;;
 
-      -t|--transitiontime)
-        JSON="$JSON,\"transitiontime\":$2"
-        shift 2
-        ;;
+			-t|--transitiontime)
+				JSON="$JSON,\"transitiontime\":$2"
+				shift 2
+				;;
 
-      -H|--help)
-        hue_set_help
-        break
-        ;;
+			-H|--help)
+				hue_set_help
+				break
+				;;
 
-      *)
-        if [ -n "$1" ]; then
-          hue_set_help
-        fi
-        break
-        ;;
-    esac
-  done
+			*)
+				if [ -n "$1" ]; then
+					hue_set_help
+				fi
+				break
+				;;
+		esac
+	done
 
-  if [ $X ] && [ $Y ]; then
-    JSON="$JSON,\"xy\":[$X,$Y]"
-  fi
+	if [ $X ] && [ $Y ]; then
+		JSON="$JSON,\"xy\":[$X,$Y]"
+	fi
 
-  JSON=$(echo "$JSON" | tail -c +2)
-  JSON="{$JSON}"
+	JSON=$(echo "$JSON" | tail -c +2)
+	JSON="{$JSON}"
 
-  if [ "$LIGHTS" = "all" ]; then
+	if [ "$LIGHTS" = "all" ]; then
 
-    hue_call PUT groups/0/action $JSON
+		hue_call PUT groups/0/action $JSON
 
-  else
+	else
 
-    OLD_IFS=$IFS; IFS=","
+		OLD_IFS=$IFS; IFS=","
 
-    for LIGHT in $LIGHTS; do
-      IFS=$OLD_IFS
+		for LIGHT in $LIGHTS; do
+			IFS=$OLD_IFS
 
-      hue_call PUT lights/$LIGHT/state "$JSON"
-    done
+			hue_call PUT lights/$LIGHT/state "$JSON"
+		done
 
-  fi
+	fi
 }
 
 ##
@@ -216,12 +216,12 @@ hue_set() {
 # $2 = TRANSITIONTIME: in seconds
 ##
 hue_set_transit() {
-  local LIGHTS="$1"
-  local TRANSITIONTIME="$2"
-  shift 2
+	local LIGHTS="$1"
+	local TRANSITIONTIME="$2"
+	shift 2
 
-  hue_set $LIGHTS --transitiontime $(($TRANSITIONTIME * 10)) $@
-  sleep $TRANSITIONTIME
+	hue_set $LIGHTS --transitiontime $(($TRANSITIONTIME * 10)) $@
+	sleep $TRANSITIONTIME
 }
 
 ##
@@ -231,25 +231,25 @@ hue_set_transit() {
 ##
 hue_get() {
 
-  local LIGHTS="$1"
-  shift
+	local LIGHTS="$1"
+	shift
 
-  DEBUG="YES"
+	DEBUG="YES"
 
-  if [ "$LIGHTS" = "all" ]; then
+	if [ "$LIGHTS" = "all" ]; then
 
-    hue_call GET lights
-  else
+		hue_call GET lights
+	else
 
-    OLD_IFS=$IFS; IFS=","
+		OLD_IFS=$IFS; IFS=","
 
-    for LIGHT in $LIGHTS; do
-      IFS=$OLD_IFS
+		for LIGHT in $LIGHTS; do
+			IFS=$OLD_IFS
 
-      hue_call GET lights/$LIGHT
-    done
+			hue_call GET lights/$LIGHT
+		done
 
-  fi
+	fi
 
 }
 
@@ -259,33 +259,33 @@ hue_get() {
 # - $1 = LIGHTS
 ##
 hue_alert() {
-  local LIGHTS="$1"
-  shift
+	local LIGHTS="$1"
+	shift
 
-  if [ "$LIGHTS" = "all" ]; then
+	if [ "$LIGHTS" = "all" ]; then
 
-    hue_call PUT groups/0/action '{"alert":"select"}'
+		hue_call PUT groups/0/action '{"alert":"select"}'
 
-  else
+	else
 
-    OLD_IFS=$IFS; IFS=","
+		OLD_IFS=$IFS; IFS=","
 
-    for LIGHT in $LIGHTS; do
-      IFS=$OLD_IFS
+		for LIGHT in $LIGHTS; do
+			IFS=$OLD_IFS
 
-      hue_call PUT lights/$LIGHT/state '{"alert":"select"}'
-    done
+			hue_call PUT lights/$LIGHT/state '{"alert":"select"}'
+		done
 
-  fi
+	fi
 }
 
 ##
 # Print out debug output in three modes.
 ##
 hue_output() {
-  read OUTPUT
+	read OUTPUT
 
-  if [ $DEBUG = "YES" ]; then
-    echo $OUTPUT | tr ',' '\n'
-  fi
+	if [ $DEBUG = "YES" ]; then
+		echo $OUTPUT | tr ',' '\n'
+	fi
 }

@@ -6,97 +6,97 @@
 # Print out a short help text.
 ##
 _usage() {
-  echo 'Usage: hue <command>
-  
+	echo 'Usage: hue <command>
+
 Set commands:
-  - set <lights> <attributes>
-  - transit <lights> <attributes>
+	- set <lights> <attributes>
+	- transit <lights> <attributes>
 
 Info / debug commands:
-  - get <lights>
-  - alert <lights>
-  - config
-  - help
+	- get <lights>
+	- alert <lights>
+	- config
+	- help
 
-Stop commands:  
-  - reset
-  - stop
-  - kill
+Stop commands:
+	- reset
+	- stop
+	- kill
 '
 }
 
 
 case "$1" in
 
-  #
-  # Set
-  #
+	#
+	# Set
+	#
 
-  set)
-    shift
-    hue_set $@
-    break
-    ;;
+	set)
+		shift
+		hue_set $@
+		break
+		;;
 
-  transit)
-    shift
-    hue_set_transit $@
-    break
-    ;;
+	transit)
+		shift
+		hue_set_transit $@
+		break
+		;;
 
-  #
-  # Info / debug
-  #
+	#
+	# Info / debug
+	#
 
-  get)
-    shift
-    hue_get $@
-    break
-    ;;
+	get)
+		shift
+		hue_get $@
+		break
+		;;
 
-  alert)
-    shift
-    hue_alert $@
-    break
-    ;;
+	alert)
+		shift
+		hue_alert $@
+		break
+		;;
 
-  config)
-    cat /etc/hue-shell/hue-shell.conf
-    echo
-    exit
-    ;;
+	config)
+		cat /etc/hue-shell/hue-shell.conf
+		echo
+		exit
+		;;
 
-  #
-  # Stop
-  #
+	#
+	# Stop
+	#
 
-  reset)
-    hue_reset
-    break
-    ;;
+	reset)
+		hue_reset
+		break
+		;;
 
-  stop)
-    hue_stop
-    break
-    ;;
+	stop)
+		hue_stop
+		break
+		;;
 
-  kill)
-    hue_kill
-    break
-    ;;
+	kill)
+		hue_kill
+		break
+		;;
 
-  #
-  # Help
-  #
+	#
+	# Help
+	#
 
-  help)
-    _usage
-    break
-    ;;
+	help)
+		_usage
+		break
+		;;
 
-  *)
-    _usage
-    break
-    ;;
+	*)
+		_usage
+		break
+		;;
 
 esac

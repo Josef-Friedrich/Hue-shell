@@ -7,18 +7,19 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-  echo "'hue-sequence' changes all lights at the same time in a certain sequence.
+	echo "'hue-sequence' changes all lights at the same time in a certain sequence.
 
 Usage: hue-sequence <option>
 
 Options:
-  -h, --huesequence       A sequence of hue color values seperated by commas.
-  -s, --sleeptime         Time between the color changes in seconds.
-  -t, --transitiontime    Transition time in seconds.
-  -b, --brightness        Brightness of the lights (0 - 255).
+	-h, --huesequence       A sequence of hue color values seperated by commas.
+	-s, --sleeptime         Time between the color changes in seconds.
+	-t, --transitiontime    Transition time in seconds.
+	-b, --brightness        Brightness of the lights (0 - 255).
 
 "
 }
+
 ##
 # - $1 = HUE_SEQUENCE
 # - $2 = SLEEP_TIME
@@ -26,16 +27,16 @@ Options:
 # - $4 = BRIGHTNESS
 ##
 _sequence() {
-  HUE_SEQUENCE=$1
+	HUE_SEQUENCE=$1
 
-  OLD_IFS=$IFS; IFS=","
+	OLD_IFS=$IFS; IFS=","
 
-  for HUE in $HUE_SEQUENCE ; do
-    IFS=$OLD_IFS
+	for HUE in $HUE_SEQUENCE ; do
+		IFS=$OLD_IFS
 
-    hue_set all --sat 255 --hue $HUE -t $(($3 * 10)) --bri $4
-    sleep $2
-  done
+		hue_set all --sat 255 --hue $HUE -t $(($3 * 10)) --bri $4
+		sleep $2
+	done
 }
 
 
@@ -43,51 +44,51 @@ _sequence() {
 hue_stop
 
 while true ; do
-  case "$1" in
+	case "$1" in
 
-    -h|--huesequence)
-      HUE_SEQUENCE=$2
-      shift 2
-      ;;
+		-h|--huesequence)
+			HUE_SEQUENCE=$2
+			shift 2
+			;;
 
-    -s|--sleeptime)
-      SLEEP_TIME=$2
-      shift 2
-      ;;
+		-s|--sleeptime)
+			SLEEP_TIME=$2
+			shift 2
+			;;
 
-    -t|--transitiontime)
-      TRANSITION_TIME=$2
-      shift 2
-      ;;
+		-t|--transitiontime)
+			TRANSITION_TIME=$2
+			shift 2
+			;;
 
-    -b|--brightness)
-      BRIGHTNESS=$2
-      shift 2
-      ;;
+		-b|--brightness)
+			BRIGHTNESS=$2
+			shift 2
+			;;
 
-    *)
-      break
-      ;;
-  esac
+		*)
+			break
+			;;
+	esac
 done
 
 #
 # Default JSON.
 #
 if [ -z $HUE_SEQUENCE ]; then
-  HUE_SEQUENCE='0,12750,25500,46920,56100'
+	HUE_SEQUENCE='0,12750,25500,46920,56100'
 fi
 
 if [ -z $SLEEP_TIME ]; then
-  SLEEP_TIME='5'
+	SLEEP_TIME='5'
 fi
 
 if [ -z $TRANSITION_TIME ]; then
-  TRANSITION_TIME='1'
+	TRANSITION_TIME='1'
 fi
 
 if [ -z $BRIGHTNESS ]; then
-  BRIGHTNESS='255'
+	BRIGHTNESS='255'
 fi
 
 _usage
