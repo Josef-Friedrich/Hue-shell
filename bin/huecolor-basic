@@ -5,7 +5,7 @@
 _usage() {
   echo 'Usage: huecolor-basic <option>
 
-Options:
+OPTIONS
 	-b, --blue
 	-c, --cyan
 	-g, --green

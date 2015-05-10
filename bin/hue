@@ -3,7 +3,7 @@
 . /etc/hue-shell/hue-shell.conf
 
 ##
-# Print out a short help text.
+# Print a short help text.
 ##
 _usage() {
 	echo 'Usage: hue <command>

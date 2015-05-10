@@ -5,12 +5,13 @@
 _usage() {
 	echo "Usage: huecolor-recipe <option>
 
-		-c, --concentrate   Medium cold color.
-		-d, --default       Default white color.
-		-e, --energize      Coldest white color.
-		-h, --help          Show help.
-		-R, --reading       Medium warm white color.
-		-r, --relax         Very warm white color.
+OPTIONS
+	-c, --concentrate   Medium cold color.
+	-d, --default       Default white color.
+	-e, --energize      Coldest white color.
+	-h, --help          Show help.
+	-R, --reading       Medium warm white color.
+	-r, --relax         Very warm white color.
 "
 }
 
