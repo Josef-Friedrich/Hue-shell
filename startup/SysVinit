@@ -20,23 +20,23 @@ NAME=hue
 SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
-  start)
-    hueload-random
-    echo "Starting hue daemon ..."
-    ;;
+	start)
+		hueload-random
+		echo "Starting hue daemon ..."
+		;;
 
-  restart)
-    _hue_reset
-    hueload-random
-    echo "Starting hue daemon ..."
-    ;;
+	restart)
+		_hue_reset
+		hueload-random
+		echo "Starting hue daemon ..."
+		;;
 
-  stop)
-    _hue_reset
-    echo "Stopping hue daemon ..."
-    ;;
+	stop)
+		_hue_reset
+		echo "Stopping hue daemon ..."
+		;;
 
-  *)
+	*)
 	echo "Usage: $SCRIPTNAME {start|restart|stop}" >&2
 	exit 3
 	;;
