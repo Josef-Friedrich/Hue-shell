@@ -89,7 +89,16 @@ hue_kill() {
 	# - pkill (not on openwrt, busybox)
 	# - ps -w | grep "hue" | awk '{print $1}'
 
-	killall hue > /dev/null 2>&1
+	killall \
+		hue \
+		huecolor-basic \
+		huecolor-recipe \
+		hueload-random \
+		hueload-scenes \
+		huescene-breath \
+		huescene-pendulum \
+		huescene-sequence \
+		> /dev/null 2>&1
 }
 
 ##
