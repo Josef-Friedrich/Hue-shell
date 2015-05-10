@@ -7,7 +7,7 @@
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Control Philips Hue lamps.
-# Description:       Bash scripts to control Philips Hue lamps.
+# Description:       Shell scripts to control Philips hue lamps.
 ### END INIT INFO
 
 # Author: Josef Friedrich <jf@josef-friedrich.de>
