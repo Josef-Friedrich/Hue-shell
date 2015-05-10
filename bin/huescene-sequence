@@ -34,14 +34,14 @@ _sequence() {
 	for HUE in $HUE_SEQUENCE ; do
 		IFS=$OLD_IFS
 
-		hue_set all --sat 255 --hue $HUE -t $(($3 * 10)) --bri $4
+		_hue_set all --sat 255 --hue $HUE -t $(($3 * 10)) --bri $4
 		sleep $2
 	done
 }
 
 
 
-hue_stop
+_hue_stop
 
 while true ; do
 	case "$1" in
@@ -97,4 +97,4 @@ echo "Generating a lighting scene with following values:
 
 hue-sequence -h $HUE_SEQUENCE -s $SLEEP_TIME -t $TRANSITION_TIME -b $BRIGHTNESS"
 
-hue_loop _sequence $HUE_SEQUENCE $SLEEP_TIME $TRANSITION_TIME $BRIGHTNESS
+_hue_loop _sequence $HUE_SEQUENCE $SLEEP_TIME $TRANSITION_TIME $BRIGHTNESS

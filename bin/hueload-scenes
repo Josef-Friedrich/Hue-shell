@@ -30,7 +30,7 @@ _info() {
 _execute() {
 	local SCENE="$SCENES_PATH/$1.scene"
 
-	hue_stop
+	_hue_stop
 	if [ -f "$SCENE" ]; then
 		$SCENE
 	else
@@ -53,11 +53,11 @@ case "$1" in
 	;;
 
 	stop)
-		hue_stop
+		_hue_stop
 	;;
 
 	reset)
-		hue_reset
+		_hue_reset
 	;;
 
 	*)

@@ -34,13 +34,13 @@ case "$1" in
 
 	set)
 		shift
-		hue_set $@
+		_hue_set $@
 		break
 		;;
 
 	transit)
 		shift
-		hue_set_transit $@
+		_hue_set_transit $@
 		break
 		;;
 
@@ -50,13 +50,13 @@ case "$1" in
 
 	get)
 		shift
-		hue_get $@
+		_hue_get $@
 		break
 		;;
 
 	alert)
 		shift
-		hue_alert $@
+		_hue_alert $@
 		break
 		;;
 
@@ -71,17 +71,17 @@ case "$1" in
 	#
 
 	reset)
-		hue_reset
+		_hue_reset
 		break
 		;;
 
 	stop)
-		hue_stop
+		_hue_stop
 		break
 		;;
 
 	kill)
-		hue_kill
+		_hue_kill
 		break
 		;;
 

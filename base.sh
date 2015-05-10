@@ -10,7 +10,7 @@ SEED_FILE='/var/run/hue-shell/hue-shell-random.seed'
 ##
 # Loop function.
 ##
-hue_loop() {
+_hue_loop() {
 	(
 		while true; do
 			eval "$*"
@@ -28,7 +28,7 @@ hue_loop() {
 # RANDOM=$(tr -cd 0-9 < /dev/urandom | head -c 6)
 # RANDOM="1$RANDOM"
 ##
-hue_range() {
+_hue_range() {
 	local START=${1%%:*}
 	local END=${1#*:}
 
@@ -55,19 +55,19 @@ hue_range() {
 # - $2 = PATH:
 # - $3 = JSON:
 ##
-hue_call() {
+_hue_call() {
 
 	if [ -n "$3" ]; then
 		local DATA="--data $3"
 	fi
 
-	curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | hue_output
+	curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | _hue_output
 }
 
 ##
 # Stop all hue processes.
 ##
-hue_stop() {
+_hue_stop() {
 
 	for PID in $(cat $PIDFILE); do
 		kill $PID > /dev/null 2>&1
@@ -82,8 +82,8 @@ hue_stop() {
 # Goal of this function is to kill all process (background,
 # other terminals.)
 ##
-hue_kill() {
-	hue_reset
+_hue_kill() {
+	_hue_reset
 
 	# Alternatives:
 	# - pkill (not on openwrt, busybox)
@@ -104,9 +104,9 @@ hue_kill() {
 ##
 # Stop all hue processes and reset to default color.
 ##
-hue_reset() {
-	hue_stop
-	hue_set all --ct 369 --bri 254
+_hue_reset() {
+	_hue_stop
+	_hue_set all --ct 369 --bri 254
 }
 
 ##
@@ -115,7 +115,7 @@ hue_reset() {
 # - $1 = LIGHTS
 # - $@ = LIGHT_ATTRIBUTES
 ##
-hue_set() {
+_hue_set() {
 	local LIGHTS="$1"
 
 	shift
@@ -181,13 +181,13 @@ hue_set() {
 				;;
 
 			-H|--help)
-				hue_set_help
+				_hue_set_help
 				break
 				;;
 
 			*)
 				if [ -n "$1" ]; then
-					hue_set_help
+					_hue_set_help
 				fi
 				break
 				;;
@@ -203,7 +203,7 @@ hue_set() {
 
 	if [ "$LIGHTS" = "all" ]; then
 
-		hue_call PUT groups/0/action $JSON
+		_hue_call PUT groups/0/action $JSON
 
 	else
 
@@ -212,7 +212,7 @@ hue_set() {
 		for LIGHT in $LIGHTS; do
 			IFS=$OLD_IFS
 
-			hue_call PUT lights/$LIGHT/state "$JSON"
+			_hue_call PUT lights/$LIGHT/state "$JSON"
 		done
 
 	fi
@@ -224,12 +224,12 @@ hue_set() {
 # $1 = LIGHTS:
 # $2 = TRANSITIONTIME: in seconds
 ##
-hue_set_transit() {
+_hue_set_transit() {
 	local LIGHTS="$1"
 	local TRANSITIONTIME="$2"
 	shift 2
 
-	hue_set $LIGHTS --transitiontime $(($TRANSITIONTIME * 10)) $@
+	_hue_set $LIGHTS --transitiontime $(($TRANSITIONTIME * 10)) $@
 	sleep $TRANSITIONTIME
 }
 
@@ -238,7 +238,7 @@ hue_set_transit() {
 #
 # - $1 = LIGHTS
 ##
-hue_get() {
+_hue_get() {
 
 	local LIGHTS="$1"
 	shift
@@ -247,7 +247,7 @@ hue_get() {
 
 	if [ "$LIGHTS" = "all" ]; then
 
-		hue_call GET lights
+		_hue_call GET lights
 	else
 
 		OLD_IFS=$IFS; IFS=","
@@ -255,7 +255,7 @@ hue_get() {
 		for LIGHT in $LIGHTS; do
 			IFS=$OLD_IFS
 
-			hue_call GET lights/$LIGHT
+			_hue_call GET lights/$LIGHT
 		done
 
 	fi
@@ -267,13 +267,13 @@ hue_get() {
 #
 # - $1 = LIGHTS
 ##
-hue_alert() {
+_hue_alert() {
 	local LIGHTS="$1"
 	shift
 
 	if [ "$LIGHTS" = "all" ]; then
 
-		hue_call PUT groups/0/action '{"alert":"select"}'
+		_hue_call PUT groups/0/action '{"alert":"select"}'
 
 	else
 
@@ -282,7 +282,7 @@ hue_alert() {
 		for LIGHT in $LIGHTS; do
 			IFS=$OLD_IFS
 
-			hue_call PUT lights/$LIGHT/state '{"alert":"select"}'
+			_hue_call PUT lights/$LIGHT/state '{"alert":"select"}'
 		done
 
 	fi
@@ -291,7 +291,7 @@ hue_alert() {
 ##
 # Print out debug output in three modes.
 ##
-hue_output() {
+_hue_output() {
 	read OUTPUT
 
 	if [ $DEBUG = "YES" ]; then

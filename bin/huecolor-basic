@@ -21,11 +21,11 @@ Options:
 # - $1 = HUE
 ##
 _all() {
-  hue_stop
-  hue_set all --hue $1 --sat 255 --bri 255
+  _hue_stop
+  _hue_set all --hue $1 --sat 255 --bri 255
 }
 
-hue_stop
+_hue_stop
 
 while true ; do
   case "$1" in

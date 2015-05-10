@@ -26,13 +26,13 @@ case "$1" in
     ;;
 
   restart)
-    hue_reset
+    _hue_reset
     hueload-random
     echo "Starting hue daemon ..."
     ;;
 
   stop)
-    hue_reset
+    _hue_reset
     echo "Stopping hue daemon ..."
     ;;
 

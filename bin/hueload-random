@@ -40,7 +40,7 @@ _get() {
 ##
 _get_random() {
 	local LINES=$(_list | wc -l)
-	local RANDOM=$(hue_range 1:"$LINES")
+	local RANDOM=$(_hue_range 1:"$LINES")
 
 	_list | sed -n "$RANDOM"p
 }
@@ -109,7 +109,7 @@ while true ; do
 	esac
 done
 
-hue_stop
+_hue_stop
 
 _usage
 

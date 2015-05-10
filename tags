@@ -26,17 +26,17 @@ _usage	bin/huescene-pendulum	/^_usage() {$/;"	f
 _usage	bin/huecolor-recipe	/^_usage() {$/;"	f
 _usage	bin/huescene-sequence	/^_usage() {$/;"	f
 all_color	config/scenes/all-best.scene	/^function all_color {$/;"	f
-hue_alert	base.sh	/^hue_alert() {$/;"	f
-hue_call	base.sh	/^hue_call() {$/;"	f
-hue_get	base.sh	/^hue_get() {$/;"	f
-hue_kill	base.sh	/^hue_kill() {$/;"	f
-hue_loop	base.sh	/^hue_loop() {$/;"	f
-hue_output	base.sh	/^hue_output() {$/;"	f
-hue_range	base.sh	/^hue_range() {$/;"	f
-hue_reset	base.sh	/^hue_reset() {$/;"	f
-hue_set	base.sh	/^hue_set() {$/;"	f
-hue_set_transit	base.sh	/^hue_set_transit() {$/;"	f
-hue_stop	base.sh	/^hue_stop() {$/;"	f
+_hue_alert	base.sh	/^_hue_alert() {$/;"	f
+_hue_call	base.sh	/^_hue_call() {$/;"	f
+_hue_get	base.sh	/^_hue_get() {$/;"	f
+_hue_kill	base.sh	/^_hue_kill() {$/;"	f
+_hue_loop	base.sh	/^_hue_loop() {$/;"	f
+_hue_output	base.sh	/^_hue_output() {$/;"	f
+_hue_range	base.sh	/^_hue_range() {$/;"	f
+_hue_reset	base.sh	/^_hue_reset() {$/;"	f
+_hue_set	base.sh	/^_hue_set() {$/;"	f
+_hue_set_transit	base.sh	/^_hue_set_transit() {$/;"	f
+_hue_stop	base.sh	/^_hue_stop() {$/;"	f
 light7	config/scenes/default.scene	/^function light7 {$/;"	f
 light8	config/scenes/default.scene	/^function light8 {$/;"	f
 switch_colors	config/scenes/switch.scene	/^function switch_colors {$/;"	f

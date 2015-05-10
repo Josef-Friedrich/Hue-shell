@@ -30,16 +30,16 @@ Options:
 # - $6 = TRANSITION_TIME
 ##
 _pendulum() {
-	hue_set $1 --hue $3 -t $6
-	hue_set $2 --hue $4 -t $6
+	_hue_set $1 --hue $3 -t $6
+	_hue_set $2 --hue $4 -t $6
 	sleep $5
 
-	hue_set $2 --hue $3 -t $6
-	hue_set $1 --hue $4 -t $6
+	_hue_set $2 --hue $3 -t $6
+	_hue_set $1 --hue $4 -t $6
 	sleep $5
 }
 
-hue_stop
+_hue_stop
 
 while true ; do
 	case "$1" in
@@ -91,7 +91,7 @@ if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
 		for LIGHT in $ALL_LIGHTS; do
 			IFS=$OLD_IFS
 
-			NUMBER=$(hue_range 1:2)
+			NUMBER=$(_hue_range 1:2)
 
 			if [ "$NUMBER" = 1 ]; then
 				LIGHTS1="$LIGHTS1,$LIGHT"
@@ -107,27 +107,27 @@ fi
 
 if [ -z "$COLOR1" ]; then
 	#COLOR1='0'
-	COLOR1=$(hue_range 0:65535)
+	COLOR1=$(_hue_range 0:65535)
 fi
 
 if [ -z "$COLOR2" ]; then
 	#COLOR2='46920'
-	COLOR2=$(hue_range 0:65535)
+	COLOR2=$(_hue_range 0:65535)
 fi
 
 if [ -z "$SWITCH_TIME" ]; then
 	#SWITCH_TIME='2'
-	SWITCH_TIME=$(hue_range 1:10)
+	SWITCH_TIME=$(_hue_range 1:10)
 fi
 
 if [ -z "$TRANSITION_TIME" ]; then
-	TRANSITION_TIME=$(hue_range 5:50)
+	TRANSITION_TIME=$(_hue_range 5:50)
 fi
 
-hue_set all --sat 255 --bri 255
+_hue_set all --sat 255 --bri 255
 
 echo "Generating a lighting scene with following values:
 
 huescene-pendulum -l1 $LIGHTS1 -l2 $LIGHTS2 -c1 $COLOR1 -c2 $COLOR2 -s $SWITCH_TIME -t $TRANSITION_TIME"
 
-hue_loop _pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME $TRANSITION_TIME
+_hue_loop _pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME $TRANSITION_TIME

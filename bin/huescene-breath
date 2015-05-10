@@ -26,19 +26,19 @@ Options:
 # - $4 = BRI_RANGE
 ##
 _breath() {
-	local TRANSTIME=$(hue_range $3)
+	local TRANSTIME=$(_hue_range $3)
 	local BRI_START=${4%%:*}
 	local BRI_END=${4#*:}
 
-	hue_set_transit $1 $TRANSTIME --hue $(hue_range $2) --bri $BRI_END --sat 255
-	hue_set_transit $1 $TRANSTIME --bri $BRI_START
+	_hue_set_transit $1 $TRANSTIME --hue $(_hue_range $2) --bri $BRI_END --sat 255
+	_hue_set_transit $1 $TRANSTIME --bri $BRI_START
 }
 
 ##
 # Scene: Random breath.
 ##
 
-hue_stop
+_hue_stop
 
 while true ; do
 	case "$1" in
@@ -99,5 +99,5 @@ OLD_IFS=$IFS; IFS=","
 for LIGHT in $LIGHTS ; do
 	IFS=$OLD_IFS
 
-	hue_loop _breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
+	_hue_loop _breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
 done

@@ -59,23 +59,23 @@ EXAMPLES
 }
 
 
-hue_stop
+_hue_stop
 
 while true ; do
 	case "$1" in
 
 		-c|--concentrate)
-			hue_set all --ct 233 --bri 219
+			_hue_set all --ct 233 --bri 219
 			break
 			;;
 
 		-d|--default)
-			hue_set all --ct 369 --bri 254
+			_hue_set all --ct 369 --bri 254
 			break
 			;;
 
 		-e|--energize)
-			hue_set all --ct 156 --bri 203
+			_hue_set all --ct 156 --bri 203
 			break
 			;;
 
@@ -85,12 +85,12 @@ while true ; do
 			;;
 
 		-R|--reading)
-			hue_set all --ct 346 --bri 240
+			_hue_set all --ct 346 --bri 240
 			break
 			;;
 
 		-r|--relax)
-			hue_set all --ct 443 --bri 173
+			_hue_set all --ct 443 --bri 173
 			break
 			;;
 
