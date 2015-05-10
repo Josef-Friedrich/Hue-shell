@@ -12,20 +12,6 @@ _execute_line_by_line	bin/hueload-random	/^_execute_line_by_line() {$/;"	f
 _get	bin/hueload-random	/^_get() {$/;"	f
 _get_random	bin/hueload-random	/^_get_random() {$/;"	f
 _help	bin/huecolor-recipe	/^_help() {$/;"	f
-_info	bin/hueload-scenes	/^_info() {$/;"	f
-_list	bin/hueload-random	/^_list() {$/;"	f
-_pendulum	bin/huescene-pendulum	/^_pendulum() {$/;"	f
-_sequence	bin/huescene-sequence	/^_sequence() {$/;"	f
-_show	bin/hueload-random	/^_show() {$/;"	f
-_usage	bin/hue	/^_usage() {$/;"	f
-_usage	bin/huescene-breath	/^_usage() {$/;"	f
-_usage	bin/huecolor-basic	/^_usage() {$/;"	f
-_usage	bin/hueload-random	/^_usage() {$/;"	f
-_usage	bin/hueload-scenes	/^_usage() {$/;"	f
-_usage	bin/huescene-pendulum	/^_usage() {$/;"	f
-_usage	bin/huecolor-recipe	/^_usage() {$/;"	f
-_usage	bin/huescene-sequence	/^_usage() {$/;"	f
-all_color	config/scenes/all-best.scene	/^function all_color {$/;"	f
 _hue_alert	base.sh	/^_hue_alert() {$/;"	f
 _hue_call	base.sh	/^_hue_call() {$/;"	f
 _hue_get	base.sh	/^_hue_get() {$/;"	f
@@ -37,6 +23,16 @@ _hue_reset	base.sh	/^_hue_reset() {$/;"	f
 _hue_set	base.sh	/^_hue_set() {$/;"	f
 _hue_set_transit	base.sh	/^_hue_set_transit() {$/;"	f
 _hue_stop	base.sh	/^_hue_stop() {$/;"	f
-light7	config/scenes/default.scene	/^function light7 {$/;"	f
-light8	config/scenes/default.scene	/^function light8 {$/;"	f
-switch_colors	config/scenes/switch.scene	/^function switch_colors {$/;"	f
+_info	bin/hueload-scenes	/^_info() {$/;"	f
+_list	bin/hueload-random	/^_list() {$/;"	f
+_pendulum	bin/huescene-pendulum	/^_pendulum() {$/;"	f
+_sequence	bin/huescene-sequence	/^_sequence() {$/;"	f
+_show	bin/hueload-random	/^_show() {$/;"	f
+_usage	bin/hue	/^_usage() {$/;"	f
+_usage	bin/huecolor-basic	/^_usage() {$/;"	f
+_usage	bin/huecolor-recipe	/^_usage() {$/;"	f
+_usage	bin/hueload-random	/^_usage() {$/;"	f
+_usage	bin/hueload-scenes	/^_usage() {$/;"	f
+_usage	bin/huescene-breath	/^_usage() {$/;"	f
+_usage	bin/huescene-pendulum	/^_usage() {$/;"	f
+_usage	bin/huescene-sequence	/^_usage() {$/;"	f
