@@ -24,4 +24,6 @@ chmod 666 $RUN_FILES
 cp startup/SysVinit /etc/init.d/hue
 
 # triggerhappy
-cp triggerhappy/hue.conf /etc/triggerhappy/triggers.d/
+if [ -f /etc/triggerhappy/triggers.d ]; then
+	cp triggerhappy/hue.conf /etc/triggerhappy/triggers.d/
+fi
