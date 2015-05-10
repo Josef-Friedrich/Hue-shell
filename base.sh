@@ -4,15 +4,8 @@
 # Checks
 ########################################################################
 
-if [ ! -f $PIDFILE ]; then
-  touch $PIDFILE
-  chmod 777 $PIDFILE
-fi
-
-if [ ! -f $SEED_FILE ]; then
-  touch $SEED_FILE
-  chmod 777 $SEED_FILE
-fi
+PIDFILE='/var/run/hue-shell/hue-shell.pids'
+SEED_FILE='/var/run/hue-shell/hue-shell-random.seed'
 
 ##
 # Loop function.

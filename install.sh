@@ -13,6 +13,13 @@ cp base.sh $INSTALL_DIR/lib/hue-shell
 # bin
 cp bin/hue* $INSTALL_DIR/bin
 
+# run
+RUN='/var/run/hue-shell'
+mkdir -p $RUN
+RUN_FILES="$RUN/hue-shell.pids $RUN/hue-shell-random.seed"
+touch $RUN_FILES
+chmod 666 $RUN_FILES
+
 # /etc/init.d
 cp startup/SysVinit /etc/init.d/hue
 
