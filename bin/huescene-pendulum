@@ -7,9 +7,8 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-		echo "'huescene-pendulum' switches two group of lights between two colors.
-
-Usage: huescene-pendulum <options>
+		echo "USAGE
+	huescene-pendulum <options>
 
 OPTIONS
 	-l1, --lights1        Lights group 1 (comma seperated numbers, e. g.: 1,2,3).
@@ -18,6 +17,9 @@ OPTIONS
 	-c2, --color2         Hue color value (0 - 65535) for lights group 2.
 	-s, --switchtime      Time in seconds to switch between the two lights groups.
 	-t, --transitiontime  Transition time in seconds.
+
+DESCRIPTION
+	'huescene-pendulum' switches two group of lights between two colors.
 "
 }
 

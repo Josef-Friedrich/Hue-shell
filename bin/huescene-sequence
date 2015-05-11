@@ -7,15 +7,17 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-	echo "'hue-sequence' changes all lights at the same time in a certain sequence.
-
-Usage: hue-sequence <option>
+	echo "USAGE
+	hue-sequence <option>
 
 OPTIONS
 	-h, --huesequence       A sequence of hue color values seperated by commas.
 	-s, --sleeptime         Time between the color changes in seconds.
 	-t, --transitiontime    Transition time in seconds.
 	-b, --brightness        Brightness of the lights (0 - 255).
+
+DESCRIPTION
+	'hue-sequence' changes all lights at the same time in a certain sequence.
 "
 }
 
