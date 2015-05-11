@@ -10,7 +10,7 @@ config file $CONFIGURATION_PATH/random-scenes.conf.
 
 hueload-random <options>
 
-Options:
+OPTIONS
 		-a, --all     Execute all scenes line by line without random.
 		-d, --debug   Enable debug mode, which puts out the executed scene command.
 		-e, --edit    Edit the random scenes file in the default text editor.

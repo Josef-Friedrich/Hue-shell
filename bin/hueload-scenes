@@ -5,7 +5,7 @@
 _usage() {
 	echo "Usage: hueload-scenes <options>
 
-Options:
+OPTIONS
 	info
 	execute <scene>
  "
