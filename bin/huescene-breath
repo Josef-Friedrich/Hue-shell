@@ -101,3 +101,6 @@ for LIGHT in $LIGHTS ; do
 
 	_hue_loop _breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
 done
+
+# vim: set ts=8 sw=8 sts=8 et :
+# sublime: tab_size 8;

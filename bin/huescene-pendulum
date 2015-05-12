@@ -135,3 +135,4 @@ huescene-pendulum -l1 $LIGHTS1 -l2 $LIGHTS2 -c1 $COLOR1 -c2 $COLOR2 -s $SWITCH_T
 _hue_loop _pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME $TRANSITION_TIME
 
 # vim: set ts=8 sw=8 sts=8 et :
+# sublime: tab_size 8;

@@ -27,3 +27,6 @@ cp startup/SysVinit /etc/init.d/hue
 if [ -f /etc/triggerhappy/triggers.d ]; then
 	cp triggerhappy/hue.conf /etc/triggerhappy/triggers.d/
 fi
+
+# vim: set ts=8 sw=8 sts=8 et :
+# sublime: tab_size 8;
