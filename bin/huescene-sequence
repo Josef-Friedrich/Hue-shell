@@ -11,13 +11,15 @@ _usage() {
 	hue-sequence <option>
 
 OPTIONS
-	-h, --huesequence       A sequence of hue color values seperated by commas.
-	-s, --sleeptime         Time between the color changes in seconds.
-	-t, --transitiontime    Transition time in seconds.
-	-b, --brightness        Brightness of the lights (0 - 255).
+	-h, --huesequence     A sequence of hue color values seperated
+	                      by commas.
+	-s, --sleeptime       Time between the color changes in seconds.
+	-t, --transitiontime  Transition time in seconds.
+	-b, --brightness      Brightness of the lights (0 - 255).
 
 DESCRIPTION
-	'hue-sequence' changes all lights at the same time in a certain sequence.
+	'hue-sequence' changes all lights at the same time in a certain
+	sequence.
 "
 }
 
@@ -39,8 +41,6 @@ _sequence() {
 		sleep $2
 	done
 }
-
-
 
 _hue_stop
 

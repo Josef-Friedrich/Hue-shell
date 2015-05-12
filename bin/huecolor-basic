@@ -3,10 +3,8 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-  echo 'DESCRIPTION
-
-USAGE
-  huecolor-basic <option>
+	echo "USAGE
+huecolor-basic <option>
 
 OPTIONS
 	-b, --blue
@@ -15,7 +13,11 @@ OPTIONS
 	-r, --red
 	-w, --white
 	-y, --yellow
-'
+
+DESCRIPTION
+	If you usce 'huecolor-basic' command, all lights will shine in
+	the same color.
+"
 }
 
 ##
@@ -24,55 +26,54 @@ OPTIONS
 # - $1 = HUE
 ##
 _all() {
-  _hue_stop
-  _hue_set all --hue $1 --sat 255 --bri 255
+	_hue_stop
+	_hue_set all --hue $1 --sat 255 --bri 255
 }
 
 _hue_stop
 
 while true ; do
-  case "$1" in
-    -b|--blue)
-      _all 46920
-    break
-    ;;
+	case "$1" in
+		-b|--blue)
+			_all 46920
+			break
+		;;
 
-    -c|--cyan)
-      _all 56100
-    break
-    ;;
+		-c|--cyan)
+			_all 56100
+			break
+		;;
 
-    -g|--green)
-      _all 25500
-    break
-    ;;
+		-g|--green)
+			_all 25500
+			break
+		;;
 
-    -r|--red)
-      _all 0
-    break
-    ;;
+		-r|--red)
+			_all 0
+			break
+		;;
 
-    -w|--white)
-      _all 36210
-    break
-    ;;
+		-w|--white)
+			_all 36210
+			break
+		;;
 
-    -y|--yellow)
-      _all 12750
-    break
-    ;;
+		-y|--yellow)
+			_all 12750
+			break
+		;;
 
-    *)
-      if [ -n "$1" ]; then
-        _all $1
-      else
-        _usage
-      fi
+		*)
+			if [ -n "$1" ]; then
+				_all $1
+			else
+				_usage
+			fi
+			break
+		;;
 
-    break
-    ;;
-
-  esac
+	esac
 done
 
 # vim: set ts=8 sw=8 sts=8 et :

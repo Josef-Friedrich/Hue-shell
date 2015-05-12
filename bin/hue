@@ -6,8 +6,10 @@
 # Print a short help text.
 ##
 _usage() {
-	echo 'Usage: hue <command>
+	echo 'USAGE
+	hue <command>
 
+OPTIONS
 Set commands:
 	- set <lights> <attributes>
 	- transit <lights> <attributes>
@@ -22,6 +24,9 @@ Stop commands:
 	- reset
 	- stop
 	- kill
+
+DESCRIPTION
+	Basic command to create own scenes.
 '
 }
 

@@ -6,10 +6,6 @@ _usage()
 	echo "USAGE
 	huecolor-recipe <option>
 
-DESCRIPTION
-	This scene command shows white colors in different color
-	temperatures. All lights displaying the same color temperature.
-
 OPTIONS (only one option is possible)
 	-c, --concentrate
 		This option creates a light situation best for
@@ -40,6 +36,10 @@ SORTING BY COLOR TEMPERATURE
 
 	The numbers in parentheses are Mired color temperature values.6)
 	-> default (369) -> relax (443) -> WARM
+
+DESCRIPTION
+	This scene command shows white colors in different color
+	temperatures. All lights displaying the same color temperature.
 
 EXAMPLES
 	hue recipe --reading

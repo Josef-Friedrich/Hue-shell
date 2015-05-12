@@ -3,12 +3,17 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-	echo "Usage: hueload-scenes <options>
+	echo "USAGE
+	hueload-scenes <options>
 
 OPTIONS
 	info
 	execute <scene>
- "
+
+DESCRIPTION
+	'hueload-scenes' is management tool for user generated hue
+	scripts.
+"
 }
 
 ##

@@ -3,17 +3,20 @@
 . /etc/hue-shell/hue-shell.conf
 
 _usage() {
-	echo "'huescene-breath' fades the lights smoothly up and down, so it seems that they were
-breathing.
-
-Usage: huescene-breath <option>
+	echo "USAGE
+	huescene-breath <option>
 
 OPTIONS
-	-l, --lights            Lights to use (comma seperated numbers, e. g.:
-													1,2,3).
+	-l, --lights            Lights to use (comma seperated numbers,
+	                        e. g.: 1,2,3).
 	-h, --hue-range         Two hue color values (e. g. 23461:40123)
-	-t, --time-range        A time range in seconds separated by a colon.
+	-t, --time-range        A time range in seconds separated by a
+	                        colon.
 	-b, --brightness-range
+
+DESCRIPTION
+	'huescene-breath' fades the lights smoothly up and down, so it
+	seems that they were breathing.
 "
 }
 
