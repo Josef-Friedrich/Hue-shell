@@ -2,21 +2,9 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-_usage() {
-	echo "Usage: huecolor-recipe <option>
-
-OPTIONS
-	-c, --concentrate   Medium cold color.
-	-d, --default       Default white color.
-	-e, --energize      Coldest white color.
-	-h, --help          Show help.
-	-R, --reading       Medium warm white color.
-	-r, --relax         Very warm white color.
-"
-}
-
-_help() {
-	echo "Usage: huecolor-recipe <option>
+_usage()
+	echo "USAGE
+	huecolor-recipe <option>
 
 DESCRIPTION
 	This scene command shows white colors in different color
@@ -103,3 +91,4 @@ while true ; do
 	esac
 done
 
+# vim: set ts=8 sw=8 sts=8 et :

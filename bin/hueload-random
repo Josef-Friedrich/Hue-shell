@@ -5,10 +5,8 @@
 RANDOM_FILE="$CONFIGURATION_PATH/random-scenes.conf"
 
 _usage() {
-	echo "'hueload-random' loads a random light scene, which is picked from the
-config file $CONFIGURATION_PATH/random-scenes.conf.
-
-hueload-random <options>
+	echo "USAGE
+	hueload-random <option>
 
 OPTIONS
 	-a, --all     Execute all scenes line by line without random.
@@ -17,6 +15,10 @@ OPTIONS
 	-l, --list    List all scenes commands without blank lines and without
 								comments.
 	-s, --show    Show the random scenes file.
+
+DESCRIPTION
+	'hueload-random' loads a random light scene, which is picked from the
+	config file $CONFIGURATION_PATH/random-scenes.conf.
 "
 }
 
@@ -120,3 +122,5 @@ if [ "$DEBUG" = "YES" ]; then
 fi
 
 eval "$RANDOM_SCENE"
+
+# vim: set ts=8 sw=8 sts=8 et :

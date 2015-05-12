@@ -99,3 +99,5 @@ echo "Generating a lighting scene with following values:
 hue-sequence -h $HUE_SEQUENCE -s $SLEEP_TIME -t $TRANSITION_TIME -b $BRIGHTNESS"
 
 _hue_loop _sequence $HUE_SEQUENCE $SLEEP_TIME $TRANSITION_TIME $BRIGHTNESS
+
+# vim: set ts=8 sw=8 sts=8 et :
