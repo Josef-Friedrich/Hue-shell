@@ -6,15 +6,20 @@ USAGE
 	hueload-scene <options>
 
 OPTIONS
-	-e, --execute <scene>  Execute a light scene.
+	-e, --execute <scene>
+		Execute a light scene.
 
-	-h, --help             Show this help message.
+	-h, --help
+		Show this help message.
 
-	-i, --info             Show all scenes.
+	-i, --info
+		Show all scenes.
 
-	-r, --reset            Reset loaded scene.
+	-r, --reset
+		Reset loaded scene.
 
-	-s, --stop             Stop loaded scene.
+	-s, --stop
+		Stop loaded scene.
 
 DESCRIPTION
 	'hueload-scene' is a management tool for user generated light

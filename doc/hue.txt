@@ -68,10 +68,15 @@ OPTIONS
 	-a, --alert
 		The alert effect, is a temporary change to the bulb’s
 		state, and has one of the following values:
-			“none” – The light is not performing an alert effect.
-			“select” – The light is performing one breathe cycle.
-			“lselect” – The light is performing breathe cycles for
-			30 seconds or until an “none” command is received.
+			“none” – The light is not performing an alert
+			effect.
+
+			“select” – The light is performing one breathe
+			 cycle.
+
+			“lselect” – The light is performing breathe
+			cycles for 30 seconds or until an “none” command
+			is received.
 
 	-e, --effect
 		The dynamic effect of the light. Currently “none” and
