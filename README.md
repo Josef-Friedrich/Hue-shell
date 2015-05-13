@@ -46,20 +46,20 @@ ln -s $HOME/hue-shell/config/triggerhappy.conf
 
 ## Basic commands
 
-* [hue](doc/hue.md)
+* [hue](doc/hue.txt)
 
 ## Load commands
 
-* [hueload-random](doc/hueload-random.md)
-* [hueload-scene](doc/hueload-scene.md)
+* [hueload-random](doc/hueload-random.txt)
+* [hueload-scene](doc/hueload-scene.txt)
 
 ## One color commands
 
-* [huecolor-basic](doc/huecolor-basic.md)
-* [huecolor-recipe](doc/huecolor-recipe.md)
+* [huecolor-basic](doc/huecolor-basic.txt)
+* [huecolor-recipe](doc/huecolor-recipe.txt)
 
 ## Scene commands
 
-* [huescene-breath](doc/huescene-breath.md)
-* [huescene-pendulum](doc/huescene-pendulum.md)
-* [huescene-sequence](doc/huescene-sequence.md)
+* [huescene-breath](doc/huescene-breath.txt)
+* [huescene-pendulum](doc/huescene-pendulum.txt)
+* [huescene-sequence](doc/huescene-sequence.txt)
