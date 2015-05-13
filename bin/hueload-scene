@@ -4,7 +4,7 @@
 
 _usage() {
 	echo "USAGE
-	hueload-scenes <options>
+	hueload-scene <options>
 
 OPTIONS
 	-e, --execute <scene>  Execute a light scene.
@@ -18,7 +18,7 @@ OPTIONS
 	-s, --stop             Stop loaded scene.
 
 DESCRIPTION
-	'hueload-scenes' is a management tool for user generated light
+	'hueload-scene' is a management tool for user generated light
 	scenes. Light scenes scripts have to be put in $SCENES_PATH.
 	File extensions of the scripts are '*.scene'.
 "

@@ -94,7 +94,7 @@ _hue_kill() {
 		huecolor-basic \
 		huecolor-recipe \
 		hueload-random \
-		hueload-scenes \
+		hueload-scene \
 		huescene-breath \
 		huescene-pendulum \
 		huescene-sequence \
