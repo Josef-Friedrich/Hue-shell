@@ -305,6 +305,7 @@ _hue_output() {
 _hue_usage() {
 	cat /usr/share/doc/hue-shell/$1.txt
 	echo ''
+	exit 0
 }
 
 # vim: set ts=8 sw=8 sts=8 et :

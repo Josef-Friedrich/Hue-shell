@@ -1,45 +1,42 @@
 #! /bin/sh
 
-. /etc/hue-shell/hue-shell.conf
+. /etc/hue-shell/hue-shell.con
 
-_hue_stop
+_recipe() {
+	_hue_kill
+	_hue_set all $@
+	exit 0
+}
 
 while true ; do
 	case "$1" in
 
 		-c|--concentrate)
-			_hue_set all --ct 233 --bri 219
-			break
+			_recipe --ct 233 --bri 219
 			;;
 
 		-d|--default)
-			_hue_set all --ct 369 --bri 254
-			break
+			_recipe --ct 369 --bri 254
 			;;
 
 		-e|--energize)
-			_hue_set all --ct 156 --bri 203
-			break
+			_recipe --ct 156 --bri 203
 			;;
 
 		-h|--help)
 			_hue_usage $(basename $0)
-			break
 			;;
 
 		-R|--reading)
-			_hue_set all --ct 346 --bri 240
-			break
+			_recipe --ct 346 --bri 240
 			;;
 
 		-r|--relax)
-			_hue_set all --ct 443 --bri 173
-			break
+			_recipe --ct 443 --bri 173
 			;;
 
 		*)
 			_hue_usage $(basename $0)
-			break
 			;;
 
 	esac
