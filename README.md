@@ -37,11 +37,6 @@ USERNAME="yourusername"
 
 https://github.com/wertarbyte/triggerhappy
 
-```
-cd /etc/triggerhappy/triggers.d
-ln -s $HOME/hue-shell/config/triggerhappy.conf
-```
-
 # Commands
 
 ## Basic commands
