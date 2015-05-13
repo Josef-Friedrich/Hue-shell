@@ -11,4 +11,3 @@ _hue_set all -b 200
 sleep 10
 
 _hue_set all -b 1
-

@@ -74,7 +74,7 @@ done
 # Defaults
 ##
 if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
-	_usage
+	_hue_usage $(basename $0)
 
 		OLD_IFS=$IFS; IFS=","
 
@@ -96,17 +96,14 @@ if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
 fi
 
 if [ -z "$COLOR1" ]; then
-	#COLOR1='0'
 	COLOR1=$(_hue_range 0:65535)
 fi
 
 if [ -z "$COLOR2" ]; then
-	#COLOR2='46920'
 	COLOR2=$(_hue_range 0:65535)
 fi
 
 if [ -z "$SWITCH_TIME" ]; then
-	#SWITCH_TIME='2'
 	SWITCH_TIME=$(_hue_range 1:10)
 fi
 
