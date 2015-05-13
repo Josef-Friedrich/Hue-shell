@@ -33,8 +33,7 @@ SORTING BY COLOR TEMPERATURE
 	COLD -> energize (156) -> concentrate (233) -> readintg (346)
 	-> default (369) -> relax (443) -> WARM
 
-	The numbers in parentheses are Mired color temperature values.6)
-	-> default (369) -> relax (443) -> WARM
+	The numbers in parentheses are Mired color temperature values.
 
 DESCRIPTION
 	This scene command shows white colors in different color
