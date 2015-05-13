@@ -2,24 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-_usage() {
-	echo "USAGE
-	huescene-breath <option>
-
-OPTIONS
-	-l, --lights            Lights to use (comma seperated numbers,
-	                        e. g.: 1,2,3).
-	-h, --hue-range         Two hue color values (e. g. 23461:40123)
-	-t, --time-range        A time range in seconds separated by a
-	                        colon.
-	-b, --brightness-range
-
-DESCRIPTION
-	'huescene-breath' fades the lights smoothly up and down, so it
-	seems that they were breathing.
-"
-}
-
 ##
 # Helper function for random breath scene.
 #
@@ -51,7 +33,12 @@ while true ; do
 			shift 2
 			;;
 
-		-h|--hue-range)
+		-h|--help)
+			_hue_usage $(basename $0)
+			break
+			;;
+
+		-H|--hue-range)
 			HUE_RANGE=$2
 			shift 2
 			;;
@@ -67,7 +54,6 @@ while true ; do
 			;;
 
 		*)
-			_hue_usage $(basename $0)
 			break
 			;;
 	esac

@@ -77,6 +77,11 @@ while true ; do
 			exit 0
 			;;
 
+		-h|--help)
+			_hue_usage $(basename $0)
+			exit 0
+			;;
+
 		-l|--list)
 			_list
 			exit 0

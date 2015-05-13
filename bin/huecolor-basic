@@ -32,7 +32,7 @@ while true ; do
 		;;
 
 		-h|--help)
-			_usage
+			_hue_usage $(basename $0)
 			break
 		;;
 

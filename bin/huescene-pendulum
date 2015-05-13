@@ -29,16 +29,6 @@ _hue_stop
 while true ; do
 	case "$1" in
 
-		-l1|--lights1)
-			LIGHTS1=$2
-			shift 2
-			;;
-
-		-l2|--lights2)
-			LIGHTS2=$2
-			shift 2
-			;;
-
 		-c1|--color1)
 			COLOR1=$2
 			shift 2
@@ -46,6 +36,21 @@ while true ; do
 
 		-c2|--color2)
 			COLOR2=$2
+			shift 2
+			;;
+
+		-h|--help)
+			_hue_usage $(basename $0)
+			break
+			;;
+
+		-l1|--lights1)
+			LIGHTS1=$2
+			shift 2
+			;;
+
+		-l2|--lights2)
+			LIGHTS2=$2
 			shift 2
 			;;
 
@@ -61,7 +66,6 @@ while true ; do
 
 		*)
 			break
-			_hue_usage $(basename $0)
 			;;
 	esac
 done
