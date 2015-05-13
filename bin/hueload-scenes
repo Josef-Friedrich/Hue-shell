@@ -7,12 +7,20 @@ _usage() {
 	hueload-scenes <options>
 
 OPTIONS
-	info
-	execute <scene>
+	-e, --execute <scene>  Execute a light scene.
+
+	-h, --help             Show this help message.
+
+	-i, --info             Show all scenes.
+
+	-r, --reset            Reset loaded scene.
+
+	-s, --stop             Stop loaded scene.
 
 DESCRIPTION
-	'hueload-scenes' is management tool for user generated hue
-	scripts.
+	'hueload-scenes' is a management tool for user generated light
+	scenes. Light scenes scripts have to be put in $SCENES_PATH.
+	File extensions of the scripts are '*.scene'.
 "
 }
 
@@ -49,20 +57,24 @@ _execute() {
 ##
 case "$1" in
 
-	execute)
+	-e|--execute)
 		_execute $2
 	;;
 
-	info)
+	-h|--help)
+		_usage
+	;;
+
+	-i|--info)
 		_info
 	;;
 
-	stop)
-		_hue_stop
+	-r|--reset)
+		_hue_reset
 	;;
 
-	reset)
-		_hue_reset
+	-s|--stop)
+		_hue_stop
 	;;
 
 	*)
