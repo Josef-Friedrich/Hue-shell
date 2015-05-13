@@ -1,6 +1,6 @@
 #! /bin/sh
 
-. /etc/hue-shell/hue-shell.con
+. /etc/hue-shell/hue-shell.conf
 
 _recipe() {
 	_hue_kill
