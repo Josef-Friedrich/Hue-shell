@@ -7,16 +7,21 @@ _usage() {
 huecolor-basic <option>
 
 OPTIONS
-	-b, --blue
-	-c, --cyan
-	-g, --green
-	-r, --red
-	-w, --white
-	-y, --yellow
+	-b, --blue     All lights shine blue.
+
+	-c, --cyan     All lights shine cyan.
+
+	-g, --green    All lights shine green.
+
+	-r, --red      All lights shine red.
+
+	-w, --white    All lights shine white.
+
+	-y, --yellow   All lights shine yellow.
 
 DESCRIPTION
-	If you usce 'huecolor-basic' command, all lights will shine in
-	the same color.
+	If you use the 'huecolor-basic' command, all lights will shine
+	in the same color.
 "
 }
 
