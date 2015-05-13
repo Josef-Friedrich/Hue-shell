@@ -38,6 +38,7 @@ while true ; do
 			;;
 
 		*)
+			_hue_usage $(basename $0)
 			break
 			;;
 
