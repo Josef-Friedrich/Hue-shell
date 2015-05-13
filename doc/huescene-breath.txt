@@ -6,12 +6,17 @@ USAGE
 	huescene-breath <option>
 
 OPTIONS
+	-b, --brightness-range  Two brightness values (e. g. 10:255).
+
+	-h, --help              Show this help message.
+
+	-H, --hue-range         Two hue color values (e. g. 23461:40123)
+
 	-l, --lights            Lights to use (comma seperated numbers,
 	                        e. g.: 1,2,3).
-	-h, --hue-range         Two hue color values (e. g. 23461:40123)
+
 	-t, --time-range        A time range in seconds separated by a
 	                        colon.
-	-b, --brightness-range
 
 DESCRIPTION
 	'huescene-breath' fades the lights smoothly up and down, so it

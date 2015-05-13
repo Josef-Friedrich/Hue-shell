@@ -27,9 +27,8 @@ _hue_stop
 
 while true ; do
 	case "$1" in
-
-		-l|--lights)
-			LIGHTS=$2
+		-b|--brightness-range)
+			BRI_RANGE=$2
 			shift 2
 			;;
 
@@ -43,13 +42,13 @@ while true ; do
 			shift 2
 			;;
 
-		-t|--time-range)
-			TIME_RANGE=$2
+		-l|--lights)
+			LIGHTS=$2
 			shift 2
 			;;
 
-		-b|--brightness-range)
-			BRI_RANGE=$2
+		-t|--time-range)
+			TIME_RANGE=$2
 			shift 2
 			;;
 

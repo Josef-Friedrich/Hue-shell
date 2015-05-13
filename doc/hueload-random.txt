@@ -14,6 +14,8 @@ OPTIONS
 	-e, --edit    Edit the random scenes file in the default text
 	              editor.
 
+	-h, --help    Show this help message.
+
 	-l, --list    List all scenes commands without blank lines and
 	              without comments.
 
