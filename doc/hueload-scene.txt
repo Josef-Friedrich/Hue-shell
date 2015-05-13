@@ -1,0 +1,22 @@
+########################################################################
+# hueload-scene
+########################################################################
+
+USAGE
+	hueload-scene <options>
+
+OPTIONS
+	-e, --execute <scene>  Execute a light scene.
+
+	-h, --help             Show this help message.
+
+	-i, --info             Show all scenes.
+
+	-r, --reset            Reset loaded scene.
+
+	-s, --stop             Stop loaded scene.
+
+DESCRIPTION
+	'hueload-scene' is a management tool for user generated light
+	scenes. Light scenes scripts have to be put in $SCENES_PATH.
+	File extensions of the scripts are '*.scene'.

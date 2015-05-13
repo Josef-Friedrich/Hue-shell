@@ -6,34 +6,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-_usage() {
-	echo "USAGE
-	huescene-pendulum <options>
-
-OPTIONS
-	-l1, --lights1        Lights group 1 (comma seperated numbers,
-	                      e. g.: 1,2,3).
-
-	-l2, --lights2        Lights group 2 (comma seperated numbers,
-	                      e. g.: 4,5,6).
-
-	-c1, --color1         Hue color value (0 - 65535) for lights
-	                      group 1.
-
-	-c2, --color2         Hue color value (0 - 65535) for lights
-	                      group 2.
-
-	-s, --switchtime      Time in seconds to switch between the two
-	                      lights groups.
-
-	-t, --transitiontime  Transition time in seconds.
-
-DESCRIPTION
-	'huescene-pendulum' switches two group of lights between two
-	colors.
-"
-}
-
 ##
 # - $1 = LIGHTS1
 # - $2 = LIGHTS2
@@ -89,6 +61,7 @@ while true ; do
 
 		*)
 			break
+			_hue_usage $(basename $0)
 			;;
 	esac
 done
@@ -138,10 +111,6 @@ if [ -z "$TRANSITION_TIME" ]; then
 fi
 
 _hue_set all --sat 255 --bri 255
-
-echo "Generating a lighting scene with following values:
-
-huescene-pendulum -l1 $LIGHTS1 -l2 $LIGHTS2 -c1 $COLOR1 -c2 $COLOR2 -s $SWITCH_TIME -t $TRANSITION_TIME"
 
 _hue_loop _pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME $TRANSITION_TIME
 

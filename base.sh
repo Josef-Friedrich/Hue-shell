@@ -299,5 +299,13 @@ _hue_output() {
 	fi
 }
 
+##
+# Show help messages.
+##
+_hue_usage() {
+	cat /usr/share/doc/hue-shell/$1.txt
+
+}
+
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;

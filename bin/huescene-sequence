@@ -6,23 +6,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-_usage() {
-	echo "USAGE
-	hue-sequence <option>
-
-OPTIONS
-	-h, --huesequence     A sequence of hue color values seperated
-	                      by commas.
-	-s, --sleeptime       Time between the color changes in seconds.
-	-t, --transitiontime  Transition time in seconds.
-	-b, --brightness      Brightness of the lights (0 - 255).
-
-DESCRIPTION
-	'hue-sequence' changes all lights at the same time in a certain
-	sequence.
-"
-}
-
 ##
 # - $1 = HUE_SEQUENCE
 # - $2 = SLEEP_TIME
@@ -69,6 +52,7 @@ while true ; do
 
 		*)
 			break
+			_hue_usage $(basename $0)
 			;;
 	esac
 done
@@ -91,12 +75,6 @@ fi
 if [ -z $BRIGHTNESS ]; then
 	BRIGHTNESS='255'
 fi
-
-_usage
-
-echo "Generating a lighting scene with following values:
-
-hue-sequence -h $HUE_SEQUENCE -s $SLEEP_TIME -t $TRANSITION_TIME -b $BRIGHTNESS"
 
 _hue_loop _sequence $HUE_SEQUENCE $SLEEP_TIME $TRANSITION_TIME $BRIGHTNESS
 

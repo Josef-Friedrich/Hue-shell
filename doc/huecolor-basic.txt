@@ -1,0 +1,31 @@
+########################################################################
+# huecolor-basic
+########################################################################
+
+USAGE
+	huecolor-basic <option> or <hue-color-value>
+
+OPTIONS
+	-b, --blue     All lights shine blue.
+
+	-c, --cyan     All lights shine cyan.
+
+	-g, --green    All lights shine green.
+
+	-h, --help     Show this help message.
+
+	-r, --red      All lights shine red.
+
+	-w, --white    All lights shine white.
+
+	-y, --yellow   All lights shine yellow.
+
+DESCRIPTION
+	If you use the 'huecolor-basic' command, all lights will shine
+	in the same color. Either use the options for predefined colors
+	or use hue color values (0-65535) directly.
+
+EXAMPLES
+	huecolor-basic -b
+	huecolor-basic --green
+	huecolor-basic 65535

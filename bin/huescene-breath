@@ -67,6 +67,7 @@ while true ; do
 			;;
 
 		*)
+			_hue_usage $(basename $0)
 			break
 			;;
 	esac
@@ -90,12 +91,6 @@ fi
 if [ -z $BRI_RANGE ]; then
 	BRI_RANGE='50:255'
 fi
-
-_usage
-
-echo "Generating a lighting scene with following values:
-
-huescene-breath -l $LIGHT -h $HUE_RANGE -t $TIME_RANGE -b $BRI_RANGE"
 
 OLD_IFS=$IFS; IFS=","
 

@@ -2,34 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-##
-# Print a short help text.
-##
-_usage() {
-	echo 'USAGE
-	hue <command>
-
-OPTIONS
-Set commands:
-	- set <lights> <attributes>
-	- transit <lights> <attributes>
-
-Info / debug commands:
-	- get <lights>
-	- alert <lights>
-	- config
-	- help
-
-Stop commands:
-	- reset
-	- stop
-	- kill
-
-DESCRIPTION
-	Basic command to create own scenes.
-'
-}
-
 case "$1" in
 
 	#
@@ -94,12 +66,12 @@ case "$1" in
 	#
 
 	help)
-		_usage
+		_hue_usage $(basename $0)
 		break
 		;;
 
 	*)
-		_usage
+		_hue_usage $(basename $0)
 		break
 		;;
 
