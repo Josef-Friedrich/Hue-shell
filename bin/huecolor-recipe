@@ -3,7 +3,7 @@
 . /etc/hue-shell/hue-shell.conf
 
 _recipe() {
-	_hue_kill
+	_hue_stop
 	_hue_set all $@
 	exit 0
 }
