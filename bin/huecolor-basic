@@ -4,7 +4,7 @@
 
 _usage() {
 	echo "USAGE
-huecolor-basic <option>
+huecolor-basic <option> or <hue-color-value>
 
 OPTIONS
 	-b, --blue     All lights shine blue.
@@ -12,6 +12,8 @@ OPTIONS
 	-c, --cyan     All lights shine cyan.
 
 	-g, --green    All lights shine green.
+
+	-h, --help     Show this help message.
 
 	-r, --red      All lights shine red.
 
@@ -21,7 +23,13 @@ OPTIONS
 
 DESCRIPTION
 	If you use the 'huecolor-basic' command, all lights will shine
-	in the same color.
+	in the same color. Either use the options for predefined colors
+	or use hue color values (0-65535) directly.
+
+EXAMPLES
+	huecolor-basic -b
+	huecolor-basic --green
+	huecolor-basic 65535
 "
 }
 
@@ -51,6 +59,11 @@ while true ; do
 
 		-g|--green)
 			_all 25500
+			break
+		;;
+
+		-h|--help)
+			_usage
 			break
 		;;
 
