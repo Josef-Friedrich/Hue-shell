@@ -10,45 +10,37 @@
 _all() {
 	_hue_stop
 	_hue_set all --hue $1 --sat 255 --bri 255
+	exit 0
 }
-
-_hue_stop
 
 while true ; do
 	case "$1" in
 		-b|--blue)
 			_all 46920
-			break
 			;;
 
 		-c|--cyan)
 			_all 56100
-			break
 			;;
 
 		-g|--green)
 			_all 25500
-			break
 			;;
 
 		-h|--help)
 			_hue_usage $(basename $0)
-			break
 			;;
 
 		-r|--red)
 			_all 0
-			break
 			;;
 
 		-w|--white)
 			_all 36210
-			break
 			;;
 
 		-y|--yellow)
 			_all 12750
-			break
 			;;
 
 		*)
@@ -57,7 +49,6 @@ while true ; do
 			else
 				_hue_usage $(basename $0)
 			fi
-			break
 			;;
 
 	esac
