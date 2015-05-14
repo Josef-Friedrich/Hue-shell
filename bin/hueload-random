@@ -2,7 +2,7 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-RANDOM_FILE="$CONFIGURATION_PATH/random-scenes.conf"
+RANDOM_FILE="/etc/hue-shell/random-scenes.conf"
 
 _edit() {
 	if [ -z "$EDITOR" ]; then
