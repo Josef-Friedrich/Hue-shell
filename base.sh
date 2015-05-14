@@ -77,10 +77,7 @@ _hue_stop() {
 }
 
 ##
-# Kill all hue process.
-#
-# Goal of this function is to kill all process (background,
-# other terminals.)
+# Kill all hue processes.
 ##
 _hue_kill() {
 	_hue_reset
@@ -102,7 +99,7 @@ _hue_kill() {
 }
 
 ##
-# Stop all hue processes and reset to default color.
+# Stop all hue processes and reset the lights to the default color.
 ##
 _hue_reset() {
 	_hue_stop

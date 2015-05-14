@@ -46,6 +46,11 @@ case "$1" in
 	# Stop
 	#
 
+	kill)
+		_hue_kill
+		break
+		;;
+
 	reset)
 		_hue_reset
 		break
@@ -53,11 +58,6 @@ case "$1" in
 
 	stop)
 		_hue_stop
-		break
-		;;
-
-	kill)
-		_hue_kill
 		break
 		;;
 

@@ -3,28 +3,37 @@
 ########################################################################
 
 USAGE
-	hue <command>
+	hue <subcommand>
 
-OPTIONS
-Set commands:
-	- set <lights> <attributes>
-	- transit <lights> <attributes>
+SUBCOMMANDS
 
-Info / debug commands:
-	- get <lights>
-	- alert <lights>
-	- config
-	- help
+	SET SUBCOMMANDS
 
-Stop commands:
-	- reset
-	- stop
-	- kill
+		set <lights> <options>
+		transit <lights> <options>
+
+	INFO SUBCOMMANDS
+
+		alert <lights>
+		get <lights>
+		config
+		help
+
+	STOP SUBCOMMANDS
+
+		kill
+		reset
+		stop
 
 DESCRIPTION
-	Basic command to create own scenes.
+	Basic command to control the Hue lights.
 
-Usage: hue set <lights> <options>
+####################################
+# hue set
+####################################
+
+USAGE
+	hue set <lights> <options>
 
 OPTIONS
 
@@ -94,3 +103,34 @@ OPTIONS
 EXAMPLES
 	hue set 1,2,3 --alert
 	hue set all --hue 23456 --bri 123 --sat 234
+
+####################################
+# hue kill
+####################################
+
+USAGE
+	hue kill
+
+DESCRIPTION
+	Kill all hue processes.
+
+####################################
+# hue reset
+####################################
+
+USAGE
+	hue reset
+
+DESCRIPTION
+	Stop all hue processes and reset the lights to the default
+	color.
+
+####################################
+# hue stop
+####################################
+
+USAGE
+	hue kill
+
+DESCRIPTION
+	Stop all hue processes.
