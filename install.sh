@@ -19,12 +19,12 @@ $CP base.sh $INSTALL_DIR/lib/hue-shell
 # bin
 $CP bin/hue* $INSTALL_DIR/bin
 
-# run
-RUN='/var/run/hue-shell'
-mkdir -p $RUN
-RUN_FILES="$RUN/hue-shell.pids $RUN/hue-shell-random.seed"
-touch $RUN_FILES
-chmod 666 $RUN_FILES
+# /var/tmp
+TMP='/var/tmp/hue-shell'
+mkdir -p $TMP
+TMP_FILES="$TMP/hue-shell.pids $TMP/hue-shell-random.seed"
+touch $TMP_FILES
+chmod 666 $TMP_FILES
 
 # doc
 if [ -d '/usr/share/doc' ]; then
