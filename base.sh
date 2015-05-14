@@ -4,8 +4,8 @@
 # Checks
 ########################################################################
 
-PIDFILE='/var/run/hue-shell/hue-shell.pids'
-SEED_FILE='/var/run/hue-shell/hue-shell-random.seed'
+PIDFILE='/var/tmp/hue-shell/hue-shell.pids'
+SEED_FILE='/var/tmp/hue-shell/hue-shell-random.seed'
 
 ##
 # Loop function.
