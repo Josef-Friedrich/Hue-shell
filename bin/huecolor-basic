@@ -19,37 +19,37 @@ while true ; do
 		-b|--blue)
 			_all 46920
 			break
-		;;
+			;;
 
 		-c|--cyan)
 			_all 56100
 			break
-		;;
+			;;
 
 		-g|--green)
 			_all 25500
 			break
-		;;
+			;;
 
 		-h|--help)
 			_hue_usage $(basename $0)
 			break
-		;;
+			;;
 
 		-r|--red)
 			_all 0
 			break
-		;;
+			;;
 
 		-w|--white)
 			_all 36210
 			break
-		;;
+			;;
 
 		-y|--yellow)
 			_all 12750
 			break
-		;;
+			;;
 
 		*)
 			if [ -n "$1" ]; then
@@ -58,7 +58,7 @@ while true ; do
 				_hue_usage $(basename $0)
 			fi
 			break
-		;;
+			;;
 
 	esac
 done

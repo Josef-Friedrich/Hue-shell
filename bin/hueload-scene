@@ -38,27 +38,27 @@ case "$1" in
 
 	-e|--execute)
 		_execute $2
-	;;
+		;;
 
 	-h|--help)
 		_hue_usage $(basename $0)
-	;;
+		;;
 
 	-i|--info)
 		_info
-	;;
+		;;
 
 	-r|--reset)
 		_hue_reset
-	;;
+		;;
 
 	-s|--stop)
 		_hue_stop
-	;;
+		;;
 
 	*)
 		_hue_usage $(basename $0)
-	;;
+		;;
 
 esac
 
