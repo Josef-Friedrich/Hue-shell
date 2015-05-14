@@ -27,8 +27,7 @@ _execute() {
 	if [ -f "$SCENE" ]; then
 		$SCENE
 	else
-		local DEFAULT_SCENE="$SCENES_PATH/$DEFAULT_SCENE.scene"
-		$DEFAULT_SCENE
+		_info
 	fi
 }
 
