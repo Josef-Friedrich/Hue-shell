@@ -21,13 +21,13 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
 	start)
-		hueload-random
+		eval "STARTUP_DAEMON"
 		echo "Starting hue daemon ..."
 		;;
 
 	restart)
 		_hue_reset
-		hueload-random
+		eval "STARTUP_DAEMON"
 		echo "Starting hue daemon ..."
 		;;
 
