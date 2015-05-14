@@ -37,7 +37,7 @@ fi
 $CP startup/SysVinit /etc/init.d/hue
 
 # triggerhappy
-if [ -f /etc/triggerhappy/triggers.d ]; then
+if [ -d /etc/triggerhappy/triggers.d ]; then
 	$CP triggerhappy/hue.conf /etc/triggerhappy/triggers.d/
 fi
 
