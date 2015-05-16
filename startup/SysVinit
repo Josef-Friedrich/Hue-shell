@@ -15,7 +15,7 @@
 . /etc/hue-shell/hue-shell.conf
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC="Philips Hue Control"
+DESC="Hue-shell"
 NAME=hue
 SCRIPTNAME=/etc/init.d/$NAME
 
