@@ -45,6 +45,7 @@ https://github.com/wertarbyte/triggerhappy
 
 ## Load commands
 
+* [hueload-default](doc/hueload-default.txt)
 * [hueload-random](doc/hueload-random.txt)
 * [hueload-scene](doc/hueload-scene.txt)
 
