@@ -2,8 +2,9 @@
 Description=Hue-shell
 
 [Service]
+Type=forking
 ExecStart=/usr/bin/hueload-default
-ExecStop=/usr/bin/hue stop
+ExecStop=/usr/bin/hue reset
 Restart=always
 
 [Install]
