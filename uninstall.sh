@@ -14,6 +14,7 @@ $RM -rf /etc/hue-shell
 $RM -rf $INSTALL_DIR/lib/hue-shell
 $RM -f $INSTALL_DIR/bin/hue*
 $RM -f /etc/init.d/hue
+$RM -f /etc/systemd/system/hue.service
 $RM -rf /var/tmp/hue-shell
 $RM -rf /usr/share/doc/hue-shell
 $RM -f /etc/triggerhappy/triggers.d/hue.conf

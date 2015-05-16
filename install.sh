@@ -34,7 +34,14 @@ if [ -d '/usr/share/doc' ]; then
 fi
 
 # /etc/init.d
-$CP startup/SysVinit /etc/init.d/hue
+if [ -d '/etc/init.d' ]; then
+	$CP startup/SysVinit /etc/init.d/hue
+fi
+
+# systemd
+if [ -d '/etc/systemd/system' ]; then
+	$CP startup/systemd /etc/systemd/system/hue.service
+fi
 
 # triggerhappy
 if [ -d /etc/triggerhappy/triggers.d ]; then
