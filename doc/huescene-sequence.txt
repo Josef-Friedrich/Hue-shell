@@ -3,7 +3,7 @@
 ########################################################################
 
 USAGE
-	hue-sequence <option>
+	hue-sequence <options>
 
 OPTIONS
 	-b, --brightness

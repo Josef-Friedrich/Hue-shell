@@ -216,7 +216,7 @@ _hue_set() {
 }
 
 ##
-# Set light state with transistion time an sleep.
+# Set the light state with transistion and sleep time.
 #
 # $1 = LIGHTS:
 # $2 = TRANSITIONTIME: in seconds

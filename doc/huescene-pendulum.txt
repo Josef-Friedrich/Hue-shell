@@ -21,7 +21,6 @@ OPTIONS
 	-l2, --lights2
 		Lights group 2 (comma seperated numbers, e. g.: 4,5,6).
 
-
 	-s, --switchtime
 		Time in seconds to switch between the two lights groups.
 

@@ -3,7 +3,7 @@
 ########################################################################
 
 USAGE
-	huescene-breath <option>
+	huescene-breath <options>
 
 OPTIONS
 	-b, --brightness-range
