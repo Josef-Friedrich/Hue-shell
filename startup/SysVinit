@@ -21,13 +21,13 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
 	start)
-		hueload_default
+		hueload-default
 		echo "Starting hue daemon ..."
 		;;
 
 	restart)
 		_hue_reset
-		hueload_default
+		hueload-default
 		echo "Starting hue daemon ..."
 		;;
 
