@@ -1,0 +1,8 @@
+[Unit]
+Description=Hue-shell
+
+[Service]
+ExecStart=/usr/bin/hueload-default
+
+[Install]
+WantedBy=multi-user.target
