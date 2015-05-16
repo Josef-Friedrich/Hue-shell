@@ -1,0 +1,16 @@
+#! /bin/sh
+
+. /etc/hue-shell/hue-shell.conf
+
+case "$1" in
+
+	-h|--help)
+		_hue_usage $(basename $0)
+		;;
+
+esac
+
+eval "$STARTUP_DAEMON"
+
+# vim: set ts=8 sw=8 sts=8 et :
+# sublime: tab_size 8;
