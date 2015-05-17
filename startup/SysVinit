@@ -16,7 +16,7 @@
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Hue-shell"
-NAME=hue
+NAME=hue-shell
 SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
