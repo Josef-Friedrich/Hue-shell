@@ -22,7 +22,7 @@ $CP bin/hue* $INSTALL_DIR/bin
 # /var/tmp
 TMP='/var/tmp/hue-shell'
 mkdir -p $TMP
-TMP_FILES="$TMP/daemon.pidf $TMP/hue-shell.pids $TMP/hue-shell-random.seed"
+TMP_FILES="$TMP/daemon.pid $TMP/hue-shell.pids $TMP/hue-shell-random.seed"
 touch $TMP_FILES
 chmod 666 $TMP_FILES
 
