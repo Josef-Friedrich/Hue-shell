@@ -22,7 +22,7 @@ $CP bin/hue* $INSTALL_DIR/bin
 # /var/tmp
 TMP='/var/tmp/hue-shell'
 mkdir -p $TMP
-TMP_FILES="$TMP/hue-shell.pids $TMP/hue-shell-random.seed"
+TMP_FILES="$TMP/daemon.pidf $TMP/hue-shell.pids $TMP/hue-shell-random.seed"
 touch $TMP_FILES
 chmod 666 $TMP_FILES
 
@@ -35,17 +35,17 @@ fi
 
 # /etc/init.d
 if [ -d '/etc/init.d' ]; then
-	$CP startup/SysVinit /etc/init.d/hue
+	$CP startup/SysVinit /etc/init.d/hue-shell
 fi
 
 # systemd
 if [ -d '/etc/systemd/system' ]; then
-	$CP startup/systemd /etc/systemd/system/hue.service
+	$CP startup/systemd /etc/systemd/system/hue-shell.service
 fi
 
 # triggerhappy
 if [ -d /etc/triggerhappy/triggers.d ]; then
-	$CP triggerhappy/hue.conf /etc/triggerhappy/triggers.d/
+	$CP triggerhappy/hue-shell.conf /etc/triggerhappy/triggers.d/
 fi
 
 # vim: set ts=8 sw=8 sts=8 et :

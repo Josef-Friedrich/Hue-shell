@@ -3,6 +3,7 @@ Description=Hue-shell
 
 [Service]
 Type=forking
+PIDFile=/var/tmp/hue-shell/daemon.pid
 ExecStart=/usr/bin/hueload-default
 ExecStop=/usr/bin/hue reset
 Restart=always
