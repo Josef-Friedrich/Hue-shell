@@ -29,3 +29,8 @@ OPTIONS
 DESCRIPTION
 	'hueload-random' loads a random light scene, which is picked
 	from the config file $CONFIGURATION_PATH/random-scenes.conf.
+
+EXAMPLES
+	hueload-random -l
+	hueload-random --show
+	hueload-random --all

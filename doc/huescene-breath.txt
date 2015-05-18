@@ -24,3 +24,9 @@ OPTIONS
 DESCRIPTION
 	'huescene-breath' fades the lights smoothly up and down, so it
 	seems that they were breathing.
+
+EXAMPLES
+	huescene-breath -H 0:8000
+	huescene-breath -H 12345:23456 -t 2:3 -b 1:5
+	huescene-breath ---hue-range 0:65000 --time-range 1:1 \
+		--brightness-range 2:6
