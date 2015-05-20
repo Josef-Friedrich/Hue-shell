@@ -4,9 +4,7 @@
 
 case "$1" in
 
-	#
 	# Set
-	#
 
 	set)
 		shift
@@ -20,15 +18,7 @@ case "$1" in
 		break
 		;;
 
-	#
-	# Info / debug
-	#
-
-	get)
-		shift
-		_hue_get $@
-		break
-		;;
+	# Info
 
 	alert)
 		shift
@@ -42,9 +32,19 @@ case "$1" in
 		exit
 		;;
 
-	#
+	get)
+		shift
+		_hue_get $@
+		break
+		;;
+
+	help)
+		_hue_usage $(basename $0)
+		break
+		;;
+
+
 	# Stop
-	#
 
 	kill)
 		_hue_kill
@@ -58,15 +58,6 @@ case "$1" in
 
 	stop)
 		_hue_stop
-		break
-		;;
-
-	#
-	# Help
-	#
-
-	help)
-		_hue_usage $(basename $0)
 		break
 		;;
 

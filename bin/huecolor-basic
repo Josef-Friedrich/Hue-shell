@@ -2,11 +2,7 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-##
-# Scene: One color.
-#
-# - $1 = HUE
-##
+# 	$1: HUE
 _all() {
 	_hue_stop
 	_hue_set all --hue $1 --sat 255 --bri 255

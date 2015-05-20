@@ -1,19 +1,13 @@
 #! /bin/sh
 
-##
-# huescene-pendulum switches two group of lights between two colors.
-##
-
 . /etc/hue-shell/hue-shell.conf
 
-##
-# - $1 = LIGHTS1
-# - $2 = LIGHTS2
-# - $3 = COLOR1
-# - $4 = COLOR2
-# - $5 = SWITCH_TIME
-# - $6 = TRANSITION_TIME
-##
+#	$1: LIGHTS1
+#	$2: LIGHTS2
+#	$3: COLOR1
+#	$4: COLOR2
+#	$5: SWITCH_TIME
+#	$6: TRANSITION_TIME
 _pendulum() {
 	_hue_set $1 --hue $3 -t $6
 	_hue_set $2 --hue $4 -t $6
@@ -70,9 +64,7 @@ while true ; do
 	esac
 done
 
-##
 # Defaults
-##
 if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
 
 		OLD_IFS=$IFS; IFS=","

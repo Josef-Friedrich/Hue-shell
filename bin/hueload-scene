@@ -4,9 +4,7 @@
 
 SCENES_PATH="/etc/hue-shell/scenes"
 
-##
 # Show available scenes.
-##
 _info() {
 	echo "Available scenes:"
 	for SCENE in $(find $SCENES_PATH -name "*.scene"); do
@@ -15,11 +13,8 @@ _info() {
 	done
 }
 
-##
-# Execute scene.
-#
-# - $1 = SCENE_TOKEN
-##
+# Execute a scene.
+#	$1: SCENE_TOKEN
 _execute() {
 	local SCENE="$SCENES_PATH/$1.scene"
 
@@ -31,9 +26,6 @@ _execute() {
 	fi
 }
 
-##
-# Switch for scene functions.
-##
 case "$1" in
 
 	-e|--execute)

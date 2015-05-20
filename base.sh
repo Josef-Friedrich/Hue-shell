@@ -1,15 +1,10 @@
 #! /bin/sh
 
-########################################################################
-# Checks
-########################################################################
-
 PIDFILE='/var/tmp/hue-shell/hue-shell.pids'
 SEED_FILE='/var/tmp/hue-shell/hue-shell-random.seed'
 
-##
-# Loop function.
-##
+# Execute hue commands and put them in a while loop.
+#	$*: HUE_COMMANDS
 _hue_loop() {
 	(
 		while true; do
@@ -19,15 +14,12 @@ _hue_loop() {
 	echo $! >> $PIDFILE
 }
 
-##
 # Random range function.
-#
-# - $1 = RANGE (3:7)
+# 	$1: RANGE (3:7)
 #
 # Solution with /dev/urandom:
-# RANDOM=$(tr -cd 0-9 < /dev/urandom | head -c 6)
-# RANDOM="1$RANDOM"
-##
+#	RANDOM=$(tr -cd 0-9 < /dev/urandom | head -c 6)
+#	RANDOM="1$RANDOM"
 _hue_range() {
 	local START=${1%%:*}
 	local END=${1#*:}
@@ -48,13 +40,10 @@ _hue_range() {
 	echo $((NUMBER_IN_RANGE + START))
 }
 
-##
 # Execute the http call over curl.
-#
-# - $1 = HTTP_REQUEST: PUT, GET
-# - $2 = PATH:
-# - $3 = JSON:
-##
+#	$1: HTTP_REQUEST: PUT, GET
+#	$2: PATH
+#	$3: JSON
 _hue_call() {
 
 	if [ -n "$3" ]; then
@@ -64,9 +53,7 @@ _hue_call() {
 	curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | _hue_output
 }
 
-##
 # Stop all hue processes.
-##
 _hue_stop() {
 
 	for PID in $(cat $PIDFILE); do
@@ -76,9 +63,7 @@ _hue_stop() {
 	> $PIDFILE
 }
 
-##
 # Kill all hue processes.
-##
 _hue_kill() {
 	_hue_reset
 
@@ -98,20 +83,15 @@ _hue_kill() {
 		> /dev/null 2>&1
 }
 
-##
 # Stop all hue processes and reset the lights to the default color.
-##
 _hue_reset() {
 	_hue_stop
 	_hue_set all --ct 369 --bri 254
 }
 
-##
 # Set light state.
-#
-# - $1 = LIGHTS
-# - $@ = LIGHT_ATTRIBUTES
-##
+#	$1: LIGHTS
+#	$@: LIGHT_ATTRIBUTES
 _hue_set() {
 	local LIGHTS="$1"
 
@@ -215,12 +195,9 @@ _hue_set() {
 	fi
 }
 
-##
 # Set the light state with transistion and sleep time.
-#
-# $1 = LIGHTS:
-# $2 = TRANSITIONTIME: in seconds
-##
+#	$1: LIGHTS
+#	$2: TRANSITIONTIME
 _hue_set_transit() {
 	local LIGHTS="$1"
 	local TRANSITIONTIME="$2"
@@ -230,11 +207,8 @@ _hue_set_transit() {
 	sleep $TRANSITIONTIME
 }
 
-##
 # Get the state of the lights.
-#
-# - $1 = LIGHTS
-##
+#	$1: LIGHTS
 _hue_get() {
 
 	local LIGHTS="$1"
@@ -259,11 +233,8 @@ _hue_get() {
 
 }
 
-##
 # Perform one breathe cycle.
-#
-# - $1 = LIGHTS
-##
+#	$1: LIGHTS
 _hue_alert() {
 	local LIGHTS="$1"
 	shift
@@ -285,9 +256,7 @@ _hue_alert() {
 	fi
 }
 
-##
 # Print out debug output in three modes.
-##
 _hue_output() {
 	read OUTPUT
 
@@ -296,9 +265,7 @@ _hue_output() {
 	fi
 }
 
-##
 # Show help messages.
-##
 _hue_usage() {
 	cat /usr/share/doc/hue-shell/$1.txt
 	echo ''

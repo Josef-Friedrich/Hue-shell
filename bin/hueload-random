@@ -12,16 +12,12 @@ _edit() {
 	$EDITOR $RANDOM_FILE
 }
 
-##
 # Print out the contents of the random config file to standard output.
-##
 _get() {
 	cat $RANDOM_FILE
 }
 
-##
 # Send one random light scene to standard output.
-##
 _get_random() {
 	local LINES=$(_list | wc -l)
 	local RANDOM=$(_hue_range 1:"$LINES")
@@ -29,16 +25,11 @@ _get_random() {
 	_list | sed -n "$RANDOM"p
 }
 
-##
 # List all light scenes without empty lines and comments.
-##
 _list() {
 	_get | grep -v '^$' | grep -v '#'
 }
 
-##
-#
-##
 _show() {
 	_get
 }

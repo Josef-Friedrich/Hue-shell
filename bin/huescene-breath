@@ -2,14 +2,11 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-##
-# Helper function for random breath scene.
-#
-# - $1 = LIGHT
-# - $2 = HUE_RANGE
-# - $3 = TIME_RANGE
-# - $4 = BRI_RANGE
-##
+# Helper function.
+#	$1: LIGHT
+#	$2: HUE_RANGE
+#	$3: TIME_RANGE
+#	$4: BRI_RANGE
 _breath() {
 	local TRANSTIME=$(_hue_range $3)
 	local BRI_START=${4%%:*}
@@ -18,10 +15,6 @@ _breath() {
 	_hue_set_transit $1 $TRANSTIME --hue $(_hue_range $2) --bri $BRI_END --sat 255
 	_hue_set_transit $1 $TRANSTIME --bri $BRI_START
 }
-
-##
-# Scene: Random breath.
-##
 
 _hue_stop
 
@@ -58,9 +51,7 @@ while true ; do
 	esac
 done
 
-#
 # Default values.
-#
 if [ -z $LIGHTS ] && [ -n $ALL_LIGHTS ]; then
 	LIGHTS=$ALL_LIGHTS
 fi
