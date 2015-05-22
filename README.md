@@ -66,13 +66,13 @@ the install script puts the config file on the right place.
 
 `Hue-shell` supplies a [service file](startup/systemd) for the next
 generation init system of Linux. To run `hueshell-default` on startup 
-enable the hue-shell-service:
+enable the `hue-shell.service`:
 
 ```
 systemctl enable hue-shell.service
 ```
 
-Edit the default scene section in /etc/hue-shell/hue-shell.conf to 
+Edit the default scene section in `/etc/hue-shell/hue-shell.conf` to 
 specify the wanted scene for `hueshell-default`.
 
 ```sh
