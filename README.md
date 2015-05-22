@@ -13,6 +13,18 @@ OpenWRT). `Hue-shell` works well in a small BusyBox environment.
 * shell (sh, ash, dash, bash .. )
 * curl
 
+
+### Using `curl`
+
+```
+curl -kL -o Hue-shell.tar.gz https://github.com/Josef-Friedrich/Hue-shell/archive/master.tar.gz
+tar xfv Hue-shell.tar.gz
+cd Hue-shell-master
+./install.sh
+```
+
+### Using `git`
+
 ```
 git clone git@github.com:Josef-Friedrich/Hue-shell.git
 cd Hue-shell
@@ -53,8 +65,22 @@ the install script puts the config file on the right place.
 ## systemd
 
 `Hue-shell` supplies a [service file](startup/systemd) for the next
-generation init system of Linux systemd.
+generation init system of Linux. To run `hueshell-default` on startup 
+enable the hue-shell-service:
 
+```
+systemctl enable hue-shell.service
+```
+
+Edit the default scene section in /etc/hue-shell/hue-shell.conf to 
+specify the wanted scene for `hueshell-default`.
+
+```sh
+# Default light scene for the startup daemon.                                   
+#DEFAULT_SCENE="huescene-sequence -H 4000,12750,6000,14500 -s 3 -t 1 -b 255"    
+#DEFAULT_SCENE="huescene-breath -H 46000:48000 -b 1:255 -t 15:20"               
+DEFAULT_SCENE="hueload-random" 
+```
 ## SysVinit
 
 `Hue-shell` delivers a [shell script](startup/SysVinit) which can be
