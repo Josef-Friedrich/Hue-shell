@@ -127,7 +127,7 @@ DESCRIPTION
 	Set the light state with transistion and sleep time.
 
 EXAMPLES
-	hue transit all 1 -H 43456
+	hue transit all 1 -h 43456
 	hue transit 1,2,3 5 --hue 2356 --bri 123
 
 ####################################
