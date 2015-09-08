@@ -20,7 +20,7 @@ Raspberry Pi, Cubieboard, BeagleBone etc.
 
 ```
 curl -kL -o Hue-shell.tar.gz https://github.com/Josef-Friedrich/Hue-shell/archive/master.tar.gz
-tar xfv Hue-shell.tar.gz
+tar -xzvf Hue-shell.tar.gz
 cd Hue-shell-master
 ./install.sh
 ```
