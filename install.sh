@@ -27,11 +27,9 @@ touch $TMP_FILES
 chmod 666 $TMP_FILES
 
 # doc
-if [ -d '/usr/share/doc' ]; then
-	DOC='/usr/share/doc/hue-shell'
-	mkdir -p $DOC
-	$CP doc/* $DOC
-fi
+DOC='/usr/share/doc/hue-shell'
+mkdir -p $DOC
+$CP doc/* $DOC
 
 # /etc/init.d
 if [ -d '/etc/init.d' ]; then
