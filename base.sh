@@ -1,7 +1,7 @@
 #! /bin/sh
 
-PIDFILE='/var/tmp/hue-shell/hue-shell.pids'
-SEED_FILE='/var/tmp/hue-shell/hue-shell-random.seed'
+PIDFILE="$HOME/.config/hue-shell/hue-shell.pids"
+SEED_FILE="$HOME/.config/hue-shell/hue-shell-random.seed"
 
 # Execute hue commands and put them in a while loop.
 #	$*: HUE_COMMANDS

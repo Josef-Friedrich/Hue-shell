@@ -19,8 +19,8 @@ $CP base.sh $INSTALL_DIR/lib/hue-shell
 # bin
 $CP bin/hue* $INSTALL_DIR/bin
 
-# /var/tmp
-TMP='/var/tmp/hue-shell'
+# Temp files. The should "survive" reboot.
+TMP="$HOME/.config/hue-shell"
 mkdir -p $TMP
 TMP_FILES="$TMP/daemon.pid $TMP/hue-shell.pids $TMP/hue-shell-random.seed"
 touch $TMP_FILES
