@@ -2,6 +2,8 @@
 
 INSTALL_DIR='/usr'
 CONF_DIR='/etc/hue-shell'
+TMP_DIR="$HOME/.config/hue-shell"
+DOC_DIR='/usr/share/doc/hue-shell'
 
 if cp -v README.md /tmp/hue-shell-test-cp > /dev/null 2>&1 ; then
 	CP='cp -v'
@@ -24,16 +26,14 @@ $CP base.sh $INSTALL_DIR/lib/hue-shell
 $CP bin/hue* $INSTALL_DIR/bin
 
 # Temp files. The should "survive" reboot.
-TMP="$HOME/.config/hue-shell"
-mkdir -p $TMP
-TMP_FILES="$TMP/daemon.pid $TMP/hue-shell.pids $TMP/hue-shell-random.seed"
+mkdir -p $TMP_DIR
+TMP_FILES="$TMP_DIR/daemon.pid $TMP_DIR/hue-shell.pids $TMP_DIR/hue-shell-random.seed"
 touch $TMP_FILES
 chmod 666 $TMP_FILES
 
 # doc
-DOC='/usr/share/doc/hue-shell'
-mkdir -p $DOC
-$CP doc/* $DOC
+mkdir -p $DOC_DIR
+$CP doc/* $DOC_DIR
 
 # /etc/init.d
 if [ -d '/etc/init.d' ]; then
