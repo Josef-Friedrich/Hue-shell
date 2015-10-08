@@ -1,0 +1,9 @@
+---
+title: Hue-shell
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: default
