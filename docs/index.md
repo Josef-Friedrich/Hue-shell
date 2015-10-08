@@ -2,6 +2,10 @@
 title: Documentation
 ---
 
+---
+
+# Commands
+
 ## Basic commands
 
 * [hue]({{ site.baseurl }}/docs/hue.html)
@@ -22,3 +26,13 @@ title: Documentation
 * [huescene-breath]({{ site.baseurl }}/docs/huescene-breath.html)
 * [huescene-pendulum]({{ site.baseurl }}/docs/huescene-pendulum.html)
 * [huescene-sequence]({{ site.baseurl }}/docs/huescene-sequence.html)
+
+---
+
+# Integration
+
+`Hue-shell` integrates well into the UNIX ecosystem:
+
+* [triggerhappy]({{ site.baseurl }}/docs/integration-triggerhappy.html)
+* [systemd]({{ site.baseurl }}/docs/integration-systemd.html)
+* [SysVinit]({{ site.baseurl }}/docs/integration-sysvinit.html)
