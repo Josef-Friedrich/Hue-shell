@@ -7,50 +7,9 @@ OpenWRT). `Hue-shell` works well in a small BusyBox environment. Out
 of the box `Hue-shell` runs on many single-board computer like 
 Raspberry Pi, Cubieboard, BeagleBone etc.
 
-# Installation
---------------
+For further documentation please visit the project site:
 
-## Requirements
-
-* shell (sh, ash, dash, bash .. )
-* curl
-
-
-### Using `curl`
-
-```
-curl -kL -o Hue-shell.tar.gz https://github.com/Josef-Friedrich/Hue-shell/archive/master.tar.gz
-tar -xzvf Hue-shell.tar.gz
-cd Hue-shell-master
-./install.sh
-```
-
-### Using `git`
-
-```
-git clone git@github.com:Josef-Friedrich/Hue-shell.git
-cd Hue-shell
-sudo ./install.sh
-```
-
-You need a working Philips Hue setup, the IP address of your bridge and
-a username to access the bridge. Please read
-http://www.developers.meethue.com/documentation/getting-started for more
-informations to achieve that. Than edit the file '/etc/hue-shell/hue-
-shell.conf' and fill in the values for IP and USERNAME. For some scene
-commands you need the `ALL_LIGHTS` variable. Use `hue get all` to
-retrieve the ids of your connected Hue lights and put the comma
-separated id list in the configuration file.
-
-```
-vim /etc/hue-shell/hue-shell.conf
-```
-
-```
-IP="192.168.1.2"
-USERNAME="yourusername"
-ALL_LIGHTS="1,2,3"
-```
+http://josef-friedrich.github.io/Hue-shell/
 
 # Integration
 -------------
@@ -88,26 +47,3 @@ DEFAULT_SCENE="hueload-random"
 `Hue-shell` delivers a [shell script](startup/SysVinit) which can be
 used for SysVint.
 
-# Commands
-----------
-
-## Basic commands
-
-* [hue](doc/hue.txt)
-
-## Load commands
-
-* [hueload-default](doc/hueload-default.txt)
-* [hueload-random](doc/hueload-random.txt)
-* [hueload-scene](doc/hueload-scene.txt)
-
-## One color commands
-
-* [huecolor-basic](doc/huecolor-basic.txt)
-* [huecolor-recipe](doc/huecolor-recipe.txt)
-
-## Scene commands
-
-* [huescene-breath](doc/huescene-breath.txt)
-* [huescene-pendulum](doc/huescene-pendulum.txt)
-* [huescene-sequence](doc/huescene-sequence.txt)
