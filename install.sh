@@ -1,6 +1,7 @@
 #! /bin/sh
 
 INSTALL_DIR='/usr'
+CONF_DIR='/etc/hue-shell'
 
 if cp -v README.md /tmp/hue-shell-test-cp > /dev/null 2>&1 ; then
 	CP='cp -v'
@@ -9,8 +10,11 @@ else
 fi
 
 # etc
-mkdir -p /etc/hue-shell
-$CP -r config/* /etc/hue-shell
+mkdir -p $CONF_DIR
+if [ -f $CONF_DIR/hue-shell.conf ]; then
+        $CP -f $CONF_DIR/hue-shell.conf $CONF_DIR/hue-shell.conf.bak
+fi
+$CP -rf config/* $CONF_DIR
 
 # lib
 mkdir -p $INSTALL_DIR/lib/hue-shell
