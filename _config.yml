@@ -1,5 +1,7 @@
 ---
 title: Hue-shell
+tagline: A collection of UNIX shell scripts to control the Hue LED lamps from Philips.
+repository: https://github.com/Josef-Friedrich/Hue-shell
 baseurl: /Hue-shell
 
 defaults:
