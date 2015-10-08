@@ -1,0 +1,38 @@
+---
+title: huescene-breath
+---
+
+```
+########################################################################
+# huescene-breath
+########################################################################
+
+USAGE
+	huescene-breath <options>
+
+OPTIONS
+	-b, --brightness-range
+		Two brightness values (e. g. 10:255).
+
+	-h, --help
+		Show this help message.
+
+	-H, --hue-range
+		Two hue color values (e. g. 23461:40123)
+
+	-l, --lights
+		Lights to use (comma seperated numbers, e. g.: 1,2,3).
+
+	-t, --time-range
+		A time range in seconds separated by a colon.
+
+DESCRIPTION
+	'huescene-breath' fades the lights smoothly up and down, so it
+	seems that they were breathing.
+
+EXAMPLES
+	huescene-breath -H 0:8000
+	huescene-breath -H 12345:23456 -t 2:3 -b 1:5
+	huescene-breath ---hue-range 0:65000 --time-range 1:1 \
+		--brightness-range 2:6
+```

@@ -1,0 +1,42 @@
+---
+title: hueload-random
+---
+
+```
+########################################################################
+# hueload-random
+########################################################################
+
+USAGE
+	hueload-random <option>
+
+OPTIONS
+	-a, --all
+		Execute all scenes line by line without random.
+
+	-d, --debug
+		Enable debug mode, which puts out the executed scene
+		command.
+
+	-e, --edit
+		Edit the random scenes file in the default text editor.
+
+	-h, --help
+		Show this help message.
+
+	-l, --list
+		List all scenes commands without blank lines and without
+		comments.
+
+	-s, --show
+		Show the random scenes file.
+
+DESCRIPTION
+	'hueload-random' loads a random light scene, which is picked
+	from the config file $CONFIGURATION_PATH/random-scenes.conf.
+
+EXAMPLES
+	hueload-random -l
+	hueload-random --show
+	hueload-random --all
+```

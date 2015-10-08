@@ -1,0 +1,214 @@
+---
+title: hue
+---
+
+```
+########################################################################
+# hue
+########################################################################
+
+USAGE
+	hue <subcommand>
+
+SUBCOMMANDS
+
+	SET SUBCOMMANDS
+
+		set <lights> <options>
+		transit <lights> <options>
+
+	INFO SUBCOMMANDS
+
+		alert <lights>
+		config
+		get <lights>
+		help
+
+	STOP SUBCOMMANDS
+
+		kill
+		reset
+		stop
+
+DESCRIPTION
+	Basic command to control the Hue lights.
+
+####################################
+# hue set
+####################################
+
+USAGE
+	hue set <lights> <options>
+
+LIGHTS
+	IDs of the lights separated by commas ("1,2,3") or "all".
+
+OPTIONS
+
+	--on
+		On state of the light.
+
+	--off
+		Off state of the light.
+
+	-b, --bri, --brightness
+		The brightness value to set the light to. Brightness is
+		a scale from 0 (the minimum the light is capable of) to
+		255 (the maximum). Note: a brightness of 0 is not off.
+
+	-h, --hue
+		The hue value to set light to. The hue value is a
+		wrapping value between 0 and 65535. Both 0 and 65535 are
+		red, 25500 is green and 46920 is blue.
+
+	-H, --help
+		Show this help text.
+
+	-s, --sat, --saturation
+		Saturation of the light. 255 is the most saturated
+		(colored) and 0 is the least saturated (white).
+
+	-x
+		The x coordinates in CIE color space.
+
+	-y
+		The y coordinates in CIE color space.
+
+		Both x and y must be between 0 and 1. If the specified
+		coordinates are not in the CIE color space, the closest
+		color to the coordinates will be chosen.
+
+	-c, --ct
+		The Mired Color temperature of the light. 2012 connected
+		lights are capable of 153 (6500K) to 500 (2000K).
+
+	-a, --alert
+		The alert effect, is a temporary change to the bulb’s
+		state, and has one of the following values:
+			“none” – The light is not performing an alert
+			effect.
+
+			“select” – The light is performing one breathe
+			 cycle.
+
+			“lselect” – The light is performing breathe
+			cycles for 30 seconds or until an “none” command
+			is received.
+
+	-e, --effect
+		The dynamic effect of the light. Currently “none” and
+		“colorloop” are supported. Other values will generate an
+		error of type 7.
+		Setting the effect to colorloop will cycle through all
+		hues using the current brightness and saturation
+		settings.
+
+	-t, --transitiontime
+		The duration of the transition from the light’s current
+		state to the new state. This is given as a multiple of
+		100ms and defaults to 4 (400ms).
+
+EXAMPLES
+	hue set 1,2,3 --alert
+	hue set all --hue 23456 --bri 123 --sat 234
+
+####################################
+# hue transit
+####################################
+
+USAGE
+	hue transit <lights> <transitiontime> <options>
+
+LIGHTS
+	IDs of the lights separated by commas ("1,2,3") or "all".
+
+TRANSITIONTIME
+	Transition time in seconds.
+
+OPTIONS
+	The same options as "hue set".
+
+DESCRIPTION
+	Set the light state with transistion and sleep time.
+
+EXAMPLES
+	hue transit all 1 -h 43456
+	hue transit 1,2,3 5 --hue 2356 --bri 123
+
+####################################
+# hue alert <lights>
+####################################
+
+USAGE
+	hue alert <lights>
+
+LIGHTS
+	IDs of the lights separated by commas ("1,2,3") or "all".
+
+DESCRIPTION
+	The light flashes briefly, so you can identify the light.
+
+####################################
+# hue config
+####################################
+
+USAGE
+	hue config
+
+DESCRIPTION
+	Puts out the content of the configuration file.
+
+####################################
+# hue get
+####################################
+
+USAGE
+	hue get <lights>
+
+LIGHTS
+	IDs of the lights separated by commas ("1,2,3") or "all".
+
+DESCRIPTION
+	Get informations of the lights.
+
+####################################
+# hue help
+####################################
+
+USAGE
+	hue help
+
+DESCRIPTION
+	Show this help message.
+
+####################################
+# hue kill
+####################################
+
+USAGE
+	hue kill
+
+DESCRIPTION
+	Kill all hue processes.
+
+####################################
+# hue reset
+####################################
+
+USAGE
+	hue reset
+
+DESCRIPTION
+	Stop all hue processes and reset the lights to the default
+	color.
+
+####################################
+# hue stop
+####################################
+
+USAGE
+	hue stop
+
+DESCRIPTION
+	Stop all hue processes.
+```
