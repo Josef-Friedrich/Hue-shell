@@ -29,7 +29,7 @@ _hue_range() {
 
 	# http://rosettacode.org/wiki/Linear_congruential_generator
 
-	SEED=$(cat $SEED_FILE)
+	SEED=$(cat $SEED_FILE | head -n 1)
 	SEED=$(((123 * $SEED + 23456) % 345678))
 	echo $SEED > $SEED_FILE
 
