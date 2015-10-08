@@ -1,5 +1,6 @@
 ---
 title: Hue-shell
+baseurl: /Hue-shell
 
 defaults:
   -
@@ -8,3 +9,5 @@ defaults:
       type: "pages"
     values:
       layout: default
+
+markdown: redcarpet
