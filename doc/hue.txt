@@ -124,7 +124,7 @@ OPTIONS
 	The same options as "hue set".
 
 DESCRIPTION
-	Set the light state with transistion and sleep time.
+	Set the light state with transition and sleep time.
 
 EXAMPLES
 	hue transit all 1 -h 43456
