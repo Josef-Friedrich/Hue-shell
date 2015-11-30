@@ -1,0 +1,21 @@
+#! /bin/sh
+
+. /etc/hue-shell/hue-shell.conf
+
+case "$1" in
+
+	-h|--help)
+		_hue_usage $(basename $0)
+		;;
+
+esac
+
+ping -c 1 $IP > /dev/null 2>&1
+
+if [ $? -eq 0 ]; then
+	echo $$ > $HOME/.config/hue-shell/daemon.pid
+	eval "$DEFAULT_SCENE"
+fi
+
+# vim: set ts=8 sw=8 sts=8 et :
+# sublime: tab_size 8;
