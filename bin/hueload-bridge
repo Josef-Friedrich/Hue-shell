@@ -1,4 +1,4 @@
-#! /bin/sh
+# /bin/sh
 
 . /etc/hue-shell/hue-shell.conf
 
@@ -10,11 +10,18 @@ case "$1" in
 
 esac
 
+if [ -f /tmp/hueload-bridge.pid ]; then
+	exit 1
+fi
+
 ping -c 1 $IP > /dev/null 2>&1
 
 if [ $? -eq 0 ]; then
-	echo $$ > $HOME/.config/hue-shell/daemon.pid
+	echo $$ > /tmp/hueload-bridge.pid
 	eval "$DEFAULT_SCENE"
+else
+	_hue kill
+	rm -f /tmp/hueload-bridge.pid
 fi
 
 # vim: set ts=8 sw=8 sts=8 et :
