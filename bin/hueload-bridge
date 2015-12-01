@@ -20,7 +20,7 @@ if [ $? -eq 0 ]; then
 	echo $$ > /tmp/hueload-bridge.pid
 	eval "$DEFAULT_SCENE"
 else
-	_hue kill
+	_hue_stop
 	rm -f /tmp/hueload-bridge.pid
 fi
 
