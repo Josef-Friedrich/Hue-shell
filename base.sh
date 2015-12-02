@@ -233,6 +233,18 @@ _hue_get() {
 
 }
 
+_hue_get_lights_on() {
+
+        local LIGHTS=$(_hue_call GET lights | grep 'on.*true' | sed 's/[^0-9]*//g')
+
+        local LIGHT_STRING
+        for LIGHT in $LIGHTS; do
+                LIGHT_STRING="$LIGHT_STRING,$LIGHT"
+        done
+
+        echo $LIGHT_STRING | sed 's/^,//'
+}
+
 # Perform one breathe cycle.
 #	$1: LIGHTS
 _hue_alert() {
