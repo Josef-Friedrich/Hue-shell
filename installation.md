@@ -11,7 +11,7 @@ title: Installation
 ### Using `curl`
 
 ```
-curl -kL -o Hue-shell.tar.gz https://github.com/Josef-Friedrich/Hue-shell/archive/master.tar.gz
+curl -kL -o Hue-shell.tar.gz https://github.com/Josef-Friedrich/Hue-shell/archive/1.1.tar.gz
 tar -xzvf Hue-shell.tar.gz
 cd Hue-shell-master
 ./install.sh
@@ -22,6 +22,7 @@ cd Hue-shell-master
 ```
 git clone git@github.com:Josef-Friedrich/Hue-shell.git
 cd Hue-shell
+git checkout 1.1
 sudo ./install.sh
 ```
 
