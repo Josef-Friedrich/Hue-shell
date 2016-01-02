@@ -1,0 +1,33 @@
+########################################################################
+# huetrigger-bridgeon
+########################################################################
+
+USAGE
+	huetrigger-bridgeon <options>
+
+OPTIONS
+
+    -c, --command
+        Command to trigger everytime the Hue bridge goes online. You must  
+        use quotes if your command contains whitespaces. By default the
+        DEFAULT_SCENE as specifed in the Hue-shell configuration file is 
+        executed.
+
+	-h, --help
+		Show this help message.
+
+    -r, --refresh-rate
+        Time interval after which the command is executed. By default 
+        every 3 seconds the Hue bridge is searched.
+
+DESCRIPTION
+
+    'huetrigger-bridgeon' triggers a command everytime the Hue bridge 
+    goes online and is reachable via the ping command. The command is
+    designed to run as a background daemon.
+
+
+
+EXAMPLES
+	huetrigger-bridgeon -c "huecolor-basic --blue" -r 60
+	huetrigger-bridgeon --help

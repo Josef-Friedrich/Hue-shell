@@ -1,0 +1,61 @@
+#! /bin/sh
+
+. /etc/hue-shell/hue-shell.conf
+
+COMMAND="$DEFAULT_SCENE"
+REFRESH_RATE=3
+
+TRIGGERED=0
+
+PID_FILE=/tmp/$(basename $0).pid
+
+while true ; do
+	case "$1" in
+
+		-c|--command)
+			COMMAND=$2
+			shift 2
+			;;
+
+		-h|--help)
+			_hue_usage $(basename $0)
+			;;
+
+		-r|--refresh-rate)
+			REFRESH_RATE=$2
+			shift 2
+			;;
+
+		*)
+			break
+			;;
+
+	esac
+done
+
+_search() {
+	ping -c 1 -W 1 -w 1 $IP > /dev/null 2>&1
+
+	if [ $? -eq 0 ]; then
+		if [ "$TRIGGERED" = 0 ]; then
+			TRIGGERED=1
+			eval "$COMMAND"
+			echo "Hue bridge is online."
+		fi
+	else
+		if [ "$TRIGGERED" = 1 ]; then
+			echo "Hue bridge is offline. ..."
+		fi
+                TRIGGERED=0
+	fi
+}
+
+trap "hue reset; exit" 1 2
+
+while true; do
+	_search
+	sleep $REFRESH_RATE
+done
+
+# vim: set ts=8 sw=8 sts=8 et :
+# sublime: tab_size 8;
