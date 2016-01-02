@@ -10,23 +10,37 @@ case "$1" in
 
 esac
 
-if [ -f /tmp/hueload-bridge.pid ]; then
-	echo "$(basename $0) is running."
-	exit 1
+PID_FILE=/tmp/hueload-bridge.pid
 
-fi
-
-ping -c 1 $IP > /dev/null 2>&1
-
-if [ $? -eq 0 ]; then
-	echo $$ > /tmp/hueload-bridge.pid
-	eval "$DEFAULT_SCENE"
-	echo "Hue bridge is online."
-else
+_stop() {
 	_hue_stop
-	rm -f /tmp/hueload-bridge.pid
-	echo "Hue bridge is offline."
-fi
+	rm -f $PID_FILE
+}
+
+_search() {
+	if [ -f $PID_FILE ]; then
+		echo "$(basename $0) is running."
+		return 1
+	fi
+
+	ping -c 1 $IP > /dev/null 2>&1
+
+	if [ $? -eq 0 ]; then
+		echo $$ > $PID_FILE
+		eval "$DEFAULT_SCENE"
+		echo "Hue bridge is online."
+	else
+		_stop
+		echo "Hue bridge is offline."
+	fi
+}
+
+trap "_stop; exit" INT TERM EXIT
+
+while true; do
+	_search
+	sleep 3
+done
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;
