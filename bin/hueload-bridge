@@ -18,24 +18,25 @@ _stop() {
 }
 
 _search() {
-	if [ -f $PID_FILE ]; then
-		echo "$(basename $0) is running."
-		return 1
-	fi
+
 
 	ping -c 1 $IP > /dev/null 2>&1
 
 	if [ $? -eq 0 ]; then
-		echo $$ > $PID_FILE
-		eval "$DEFAULT_SCENE"
-		echo "Hue bridge is online."
+		if [ -f $PID_FILE ]; then
+			echo "$(basename $0) is running."
+		else
+			echo $$ > $PID_FILE
+			eval "$DEFAULT_SCENE"
+			echo "Hue bridge is online."
+		fi
 	else
 		_stop
 		echo "Hue bridge is offline."
 	fi
 }
 
-trap "_stop; exit" INT TERM EXIT
+trap "_stop; exit" 1 2
 
 while true; do
 	_search
