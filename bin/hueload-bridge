@@ -1,4 +1,4 @@
-# /bin/sh
+#! /bin/sh
 
 . /etc/hue-shell/hue-shell.conf
 
@@ -11,7 +11,9 @@ case "$1" in
 esac
 
 if [ -f /tmp/hueload-bridge.pid ]; then
+	echo "$(basename $0) is running."
 	exit 1
+
 fi
 
 ping -c 1 $IP > /dev/null 2>&1
@@ -19,9 +21,11 @@ ping -c 1 $IP > /dev/null 2>&1
 if [ $? -eq 0 ]; then
 	echo $$ > /tmp/hueload-bridge.pid
 	eval "$DEFAULT_SCENE"
+	echo "Hue bridge is online."
 else
 	_hue_stop
 	rm -f /tmp/hueload-bridge.pid
+	echo "Hue bridge is offline."
 fi
 
 # vim: set ts=8 sw=8 sts=8 et :
