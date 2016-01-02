@@ -94,9 +94,7 @@ _hue_reset() {
 #	$@: LIGHT_ATTRIBUTES
 _hue_set() {
 	local LIGHTS="$1"
-
 	shift
-
 	local JSON=""
 
 	while true ; do
@@ -179,19 +177,13 @@ _hue_set() {
 	JSON="{$JSON}"
 
 	if [ "$LIGHTS" = "all" ]; then
-
 		_hue_call PUT groups/0/action $JSON
-
 	else
-
 		OLD_IFS=$IFS; IFS=","
-
 		for LIGHT in $LIGHTS; do
 			IFS=$OLD_IFS
-
 			_hue_call PUT lights/$LIGHT/state "$JSON"
 		done
-
 	fi
 }
 
@@ -247,19 +239,13 @@ _hue_alert() {
 	shift
 
 	if [ "$LIGHTS" = "all" ]; then
-
 		_hue_call PUT groups/0/action '{"alert":"select"}'
-
 	else
-
 		OLD_IFS=$IFS; IFS=","
-
 		for LIGHT in $LIGHTS; do
 			IFS=$OLD_IFS
-
 			_hue_call PUT lights/$LIGHT/state '{"alert":"select"}'
 		done
-
 	fi
 }
 
