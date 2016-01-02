@@ -210,34 +210,29 @@ _hue_set_transit() {
 # Get the state of the lights.
 #	$1: LIGHTS
 _hue_get() {
-
 	local LIGHTS="$1"
 	shift
 
 	DEBUG="YES"
 
 	if [ "$LIGHTS" = "all" ]; then
-
 		_hue_call GET lights
+	elif [ "$LIGHTS" = "on" ]; then
+		_hue_get_on
 	else
-
 		OLD_IFS=$IFS; IFS=","
-
 		for LIGHT in $LIGHTS; do
 			IFS=$OLD_IFS
-
 			_hue_call GET lights/$LIGHT
 		done
-
 	fi
-
 }
 
-_hue_get_lights_on() {
+# Queries for lights, which are online.
+_hue_get_on() {
+	local LIGHTS LIGHT_STRING
+        LIGHTS=$(_hue_call GET lights | grep 'on.*true' | sed 's/[^0-9]*//g')
 
-        local LIGHTS=$(_hue_call GET lights | grep 'on.*true' | sed 's/[^0-9]*//g')
-
-        local LIGHT_STRING
         for LIGHT in $LIGHTS; do
                 LIGHT_STRING="$LIGHT_STRING,$LIGHT"
         done
