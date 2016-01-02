@@ -222,6 +222,8 @@ _hue_get() {
 
 # Queries for lights, which are online.
 _hue_get_on() {
+	#curl --silent --request GET http://$IP/api/$USERNAME/lights | sed 's/"\([0-9]*\)":{"state":/\n\1\n/g'
+	#exit
 	local LIGHTS LIGHT_STRING
         LIGHTS=$(_hue_call GET lights | grep 'on.*true' | sed 's/[^0-9]*//g')
 
