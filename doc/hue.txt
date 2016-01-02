@@ -16,7 +16,7 @@ SUBCOMMANDS
 
 		alert <lights>
 		config
-		get <lights>
+		get <lights> or "all" or "on"
 		help
 
 	STOP SUBCOMMANDS
