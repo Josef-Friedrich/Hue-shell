@@ -234,7 +234,7 @@ _hue_get_on() {
 			IS_LIGHT=1
 			IS_REACHABLE=$(echo $LINE | grep '"reachable":true')
 			if [ -n "$IS_REACHABLE" ]; then
-				OUTPUT="$OUTPUT$LIGHT,"
+				OUTPUT="$OUTPUT,$LIGHT"
 			fi
 		else
 			IS_LIGHT=0
