@@ -1,9 +1,9 @@
 #! /bin/sh
 
-INSTALL_DIR='/usr'
-CONF_DIR='/etc/hue-shell'
-TMP_DIR="$HOME/.config/hue-shell"
-DOC_DIR='/usr/share/doc/hue-shell'
+INSTALL='/usr'
+ETC='/etc/hue-shell'
+CONF="$HOME/.config/hue-shell"
+DOC='/usr/share/doc/hue-shell'
 
 if cp -v README.md /tmp/hue-shell-test-cp > /dev/null 2>&1 ; then
 	CP='cp -v'
@@ -12,28 +12,28 @@ else
 fi
 
 # etc
-mkdir -p $CONF_DIR
-if [ -f $CONF_DIR/hue-shell.conf ]; then
-        $CP -f $CONF_DIR/hue-shell.conf $CONF_DIR/hue-shell.conf.bak
+mkdir -p $ETC
+if [ -f $ETC/hue-shell.conf ]; then
+        $CP -f $ETC/hue-shell.conf $ETC/hue-shell.conf.bak
 fi
-$CP -rf config/* $CONF_DIR
+$CP -rf config/* $ETC
 
 # lib
-mkdir -p $INSTALL_DIR/lib/hue-shell
-$CP base.sh $INSTALL_DIR/lib/hue-shell
+mkdir -p $INSTALL/lib/hue-shell
+$CP base.sh $INSTALL/lib/hue-shell
 
 # bin
-$CP bin/hue* $INSTALL_DIR/bin
+$CP bin/hue* $INSTALL/bin
 
-# Temp files. The should "survive" reboot.
-mkdir -p $TMP_DIR
-TMP_FILES="$TMP_DIR/daemon.pid $TMP_DIR/hue-shell.pids $TMP_DIR/hue-shell-random.seed"
-touch $TMP_FILES
-chmod 666 $TMP_FILES
+# By Hue-shell generated run files that should "survive" reboot.
+mkdir -p $CONF
+CONF_FILES="$CONF/daemon.pid $CONF/hue-shell.pids $CONF/hue-shell-random.seed"
+touch $CONF_FILES
+chmod 666 $CONF_FILES
 
 # doc
-mkdir -p $DOC_DIR
-$CP doc/* $DOC_DIR
+mkdir -p $DOC
+$CP doc/* $DOC
 
 # /etc/init.d
 if [ -d '/etc/init.d' ]; then
