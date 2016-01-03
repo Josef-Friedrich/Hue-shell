@@ -1,0 +1,50 @@
+#! /bin/sh
+
+. /etc/hue-shell/hue-shell.conf
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="Hue daemon which detects the online and reachable lights."
+NAME=hue-detect-online-lights
+SCRIPTNAME=/etc/init.d/$NAME
+
+_detect() {
+	while true; do
+		_hue_get_on > $HOME/.config/hue-shell/all-lights
+		sleep 30
+	done
+}
+
+_status() {
+	while true; do
+		ALL_LIGHTS=$(cat $HOME/.config/hue-shell/all-lights)
+		DATE=$(date)
+		echo "$DATE: The reachable lights are: $ALL_LIGHTS"
+		sleep 3
+	done
+}
+
+case "$1" in
+	start)
+		_detect &
+		echo "Starting the service '$NAME' ..."
+		;;
+	status)
+		echo "Status of the service '$NAME' ..."
+		_status
+		;;
+
+	stop)
+		pkill $(basename $0)
+		echo "Stopping the service '$NAME' ..."
+		;;
+
+	*)
+	echo "Usage: $SCRIPTNAME {start|status|stop}" >&2
+	exit 3
+	;;
+esac
+
+exit 0
+
+# vim: set ts=8 sw=8 sts=8 et :
+# sublime: tab_size 8;

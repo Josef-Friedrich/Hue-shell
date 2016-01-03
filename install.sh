@@ -27,7 +27,7 @@ $CP bin/hue* $INSTALL/bin
 
 # By Hue-shell generated run files that should "survive" reboot.
 mkdir -p $CONF
-CONF_FILES="$CONF/daemon.pid $CONF/hue-shell.pids $CONF/hue-shell-random.seed"
+CONF_FILES="$CONF/daemon.pid $CONF/hue-shell.pids $CONF/hue-shell-random.seed $CONF/all-lights"
 touch $CONF_FILES
 chmod 666 $CONF_FILES
 
@@ -38,6 +38,7 @@ $CP doc/* $DOC
 # /etc/init.d
 if [ -d '/etc/init.d' ]; then
 	$CP startup/SysVinit /etc/init.d/hue-shell
+	$CP startup/hue-detect-online-lights /etc/init.d/
 fi
 
 # systemd
