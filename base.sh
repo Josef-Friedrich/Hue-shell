@@ -222,16 +222,27 @@ _hue_get() {
 
 # Queries for lights, which are online.
 _hue_get_on() {
-	#curl --silent --request GET http://$IP/api/$USERNAME/lights | sed 's/"\([0-9]*\)":{"state":/\n\1\n/g'
-	#exit
-	local LIGHTS LIGHT_STRING
-        LIGHTS=$(_hue_call GET lights | grep 'on.*true' | sed 's/[^0-9]*//g')
+	local JSON IS_LIGHT IS_REACHABLE OUTPUT LINE
 
-        for LIGHT in $LIGHTS; do
-                LIGHT_STRING="$LIGHT_STRING,$LIGHT"
-        done
+	JSON=$(curl --silent --request GET http://$IP/api/$USERNAME/lights | sed 's/"\([0-9]*\)":{"state":/%\1%/g')
 
-        echo $LIGHT_STRING | sed 's/^,//'
+	OLD_IFS=$IFS; IFS="%"
+	IS_LIGHT=0
+	for LINE in $JSON; do
+		IFS=$OLD_IFS
+		if [ "$IS_LIGHT" = 0 ]; then
+			IS_LIGHT=1
+			IS_REACHABLE=$(echo $LINE | grep '"reachable":true')
+			if [ -n "$IS_REACHABLE" ]; then
+				OUTPUT="$OUTPUT$LIGHT,"
+			fi
+		else
+			IS_LIGHT=0
+			LIGHT=$LINE
+		fi
+	done
+
+        echo $OUTPUT | sed 's/^,//'
 }
 
 # Perform one breathe cycle.
