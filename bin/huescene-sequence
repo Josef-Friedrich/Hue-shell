@@ -2,6 +2,13 @@
 
 . /etc/hue-shell/hue-shell.conf
 
+# Defaults
+HUE_SEQUENCE='0,12750,25500,46920,56100'
+SLEEP_TIME='5'
+TRANSITION_TIME='1'
+BRIGHTNESS='255'
+
+
 #	$1: HUE_SEQUENCE
 #	$2: SLEEP_TIME
 #	$3: TRANSITION_TIME
@@ -54,23 +61,6 @@ while true ; do
 			;;
 	esac
 done
-
-# Defaults
-if [ -z $HUE_SEQUENCE ]; then
-	HUE_SEQUENCE='0,12750,25500,46920,56100'
-fi
-
-if [ -z $SLEEP_TIME ]; then
-	SLEEP_TIME='5'
-fi
-
-if [ -z $TRANSITION_TIME ]; then
-	TRANSITION_TIME='1'
-fi
-
-if [ -z $BRIGHTNESS ]; then
-	BRIGHTNESS='255'
-fi
 
 _hue_loop _sequence $HUE_SEQUENCE $SLEEP_TIME $TRANSITION_TIME $BRIGHTNESS
 

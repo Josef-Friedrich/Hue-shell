@@ -4,6 +4,12 @@
 
 _hue_trap
 
+# Defaults
+COLOR1=$(_hue_range 0:65535)
+COLOR2=$(_hue_range 0:65535)
+SWITCH_TIME=$(_hue_range 1:10)
+TRANSITION_TIME=$(_hue_range 5:50)
+
 _calculate_lights() {
 	if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
 		LIGHTS=$(_hue_get_light_ids)
@@ -89,23 +95,6 @@ while true ; do
 			;;
 	esac
 done
-
-# Defaults
-if [ -z "$COLOR1" ]; then
-	COLOR1=$(_hue_range 0:65535)
-fi
-
-if [ -z "$COLOR2" ]; then
-	COLOR2=$(_hue_range 0:65535)
-fi
-
-if [ -z "$SWITCH_TIME" ]; then
-	SWITCH_TIME=$(_hue_range 1:10)
-fi
-
-if [ -z "$TRANSITION_TIME" ]; then
-	TRANSITION_TIME=$(_hue_range 5:50)
-fi
 
 _hue_stop
 
