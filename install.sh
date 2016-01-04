@@ -27,6 +27,7 @@ $CP bin/hue* $INSTALL/bin
 
 # By Hue-shell generated run files that should "survive" reboot.
 mkdir -p $CONF
+chmod 777 $CONF
 CONF_FILES="$CONF/daemon.pid $CONF/hue-shell.pids $CONF/hue-shell-random.seed $CONF/all-lights"
 touch $CONF_FILES
 chmod 666 $CONF_FILES

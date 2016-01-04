@@ -7,6 +7,8 @@ DESC="Hue daemon which detects the online and reachable lights."
 NAME=hue-detect-online-lights
 SCRIPTNAME=/etc/init.d/$NAME
 
+PID=$HOME/.config/hue-shell/hue-detect-online-lights.pid
+
 _detect() {
 	while true; do
 		_hue_get_on > $HOME/.config/hue-shell/all-lights
@@ -26,15 +28,22 @@ _status() {
 case "$1" in
 	start)
 		_detect &
+		echo $! > $PID
 		echo "Starting the service '$NAME' ..."
 		;;
 	status)
+ 		STATUS=$(cat $PID)
+
+ 		if [ -z $STATUS ]; then
+ 			echo Not running
+ 		fi
 		echo "Status of the service '$NAME' ..."
 		_status
 		;;
 
 	stop)
-		pkill $(basename $0)
+		kill $(cat $PID)
+		echo > $PID
 		echo "Stopping the service '$NAME' ..."
 		;;
 
