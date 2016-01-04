@@ -1,0 +1,51 @@
+#! /bin/sh
+
+. /etc/hue-shell/hue-shell.conf
+
+PID=$HOME/.config/hue-shell/hueservice-detect-reachable.pid
+
+_usage() {
+	echo "Usage: $(basename $0) {start|status|stop}" >&2
+	exit 3
+}
+
+_start() {
+	(
+	while true; do
+		_hue_get_on > $HOME/.config/hue-shell/all-lights
+		sleep 30
+	done
+	) &
+
+	echo $! > $PID
+	echo "Starting the service '$(basename $0)'."
+}
+
+_status() {
+	kill -0 $(cat $PID) > /dev/null 2>&1
+
+	if [ "$?" = 0 ]; then
+		echo "The service '$(basename $0)' is running."
+		echo "The reachable lights are: "$(_hue_get_light_ids)
+	else
+		echo "The service '$(basename $0)' is not running."
+	fi
+}
+
+_stop() {
+		kill $(cat $PID) > /dev/null 2>&1
+		echo > $PID
+		echo "Stopping the service '$(basename $0)'."
+}
+
+case "$1" in
+	start) _start ;;
+	status) _status ;;
+	stop) _stop ;;
+	*) _usage ;;
+esac
+
+exit 0
+
+# vim: set ts=8 sw=8 sts=8 et :
+# sublime: tab_size 8;
