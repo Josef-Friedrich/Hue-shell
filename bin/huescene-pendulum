@@ -2,7 +2,7 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-trap "_hue_reset; echo; exit" 1 2
+_hue_trap
 
 _calculate_lights() {
 	if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
