@@ -245,6 +245,18 @@ _hue_get_on() {
         echo $OUTPUT | sed 's/^,//'
 }
 
+# This funtion checks if there reachable lights and returns it.
+# Otherwise it returns the value of the $ALL_LIGHTS variable.
+_hue_get_light_ids() {
+	local LIGHTS
+	LIGHTS=$(cat $HOME/.config/hue-shell/all-lights)
+	if [ -z "LIGHTS" ]; then
+		echo $ALL_LIGHTS
+	else
+		echo $LIGHTS
+	fi
+}
+
 # Perform one breathe cycle.
 #	$1: LIGHTS
 _hue_alert() {

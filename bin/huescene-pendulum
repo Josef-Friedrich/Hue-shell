@@ -2,6 +2,34 @@
 
 . /etc/hue-shell/hue-shell.conf
 
+trap "_hue_reset; echo; exit" 1 2
+
+_calculate_lights() {
+	if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
+		LIGHTS=$(_hue_get_light_ids)
+		OLD_IFS=$IFS; IFS=","
+
+		COUNT=1
+		for LIGHT in $LIGHTS; do
+			IFS=$OLD_IFS
+
+			NUMBER=$(_hue_range 1:2)
+
+			if [ "$COUNT" = 1 ]; then
+				L1="$LIGHT"
+			elif [ "$COUNT" = 2 ]; then
+				L2="$LIGHT"
+			elif [ "$NUMBER" = 1 ]; then
+				L1="$L1,$LIGHT"
+			else
+				L2="$L2,$LIGHT"
+			fi
+			COUNT=$((COUNT + 1))
+		done
+
+	fi
+}
+
 #	$1: LIGHTS1
 #	$2: LIGHTS2
 #	$3: COLOR1
@@ -9,16 +37,14 @@
 #	$5: SWITCH_TIME
 #	$6: TRANSITION_TIME
 _pendulum() {
-	_hue_set $1 --hue $3 -t $6
-	_hue_set $2 --hue $4 -t $6
+	_hue_set $1 --hue $3 -t $6 --sat 255 --bri 255
+	_hue_set $2 --hue $4 -t $6 --sat 255 --bri 255
 	sleep $5
 
-	_hue_set $2 --hue $3 -t $6
-	_hue_set $1 --hue $4 -t $6
+	_hue_set $2 --hue $3 -t $6 --sat 255 --bri 255
+	_hue_set $1 --hue $4 -t $6 --sat 255 --bri 255
 	sleep $5
 }
-
-_hue_stop
 
 while true ; do
 	case "$1" in
@@ -65,27 +91,6 @@ while true ; do
 done
 
 # Defaults
-if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
-
-		OLD_IFS=$IFS; IFS=","
-
-		for LIGHT in $ALL_LIGHTS; do
-			IFS=$OLD_IFS
-
-			NUMBER=$(_hue_range 1:2)
-
-			if [ "$NUMBER" = 1 ]; then
-				LIGHTS1="$LIGHTS1,$LIGHT"
-			else
-				LIGHTS2="$LIGHTS2,$LIGHT"
-			fi
-
-		done
-
-	LIGHTS1=$(echo "$LIGHTS1" | tail -c +2)
-	LIGHTS2=$(echo "$LIGHTS2" | tail -c +2)
-fi
-
 if [ -z "$COLOR1" ]; then
 	COLOR1=$(_hue_range 0:65535)
 fi
@@ -102,9 +107,12 @@ if [ -z "$TRANSITION_TIME" ]; then
 	TRANSITION_TIME=$(_hue_range 5:50)
 fi
 
-_hue_set all --sat 255 --bri 255
+_hue_stop
 
-_hue_loop _pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME $TRANSITION_TIME
+while true; do
+	_calculate_lights
+	_pendulum $L1 $L2 $COLOR1 $COLOR2 $SWITCH_TIME $TRANSITION_TIME
+done
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;
