@@ -9,22 +9,29 @@ _usage() {
 	exit 3
 }
 
-_start() {
-	(
-	while true; do
-		_hue_get_on > $HOME/.config/hue-shell/all-lights
-		sleep 30
-	done
-	) &
+_is_running() {
+	kill -0 $(cat $PID) > /dev/null 2>&1
+	echo $?
+}
 
-	echo $! > $PID
-	echo "Starting the service '$(basename $0)'."
+_start() {
+	if [ "$(_is_running)" = 0 ]; then
+		echo "The service is alreading running."
+	else
+		(
+		while true; do
+			_hue_get_on > $HOME/.config/hue-shell/all-lights
+			sleep 30
+		done
+		) &
+
+		echo $! > $PID
+		echo "Starting the service '$(basename $0)'."
+	fi
 }
 
 _status() {
-	kill -0 $(cat $PID) > /dev/null 2>&1
-
-	if [ "$?" = 0 ]; then
+	if [ "$(_is_running)" = 0 ]; then
 		echo "The service '$(basename $0)' is running."
 		echo "The reachable lights are: "$(_hue_get_light_ids)
 	else
