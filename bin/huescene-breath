@@ -2,7 +2,8 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-_hue_trap
+hueservice-detect-lights start > /dev/null
+sleep 1
 
 # Defaul values
 HUE_RANGE='52000:58000'
@@ -63,13 +64,76 @@ if [ -z $LIGHTS ] && [ -n $ALL_LIGHTS ]; then
 	LIGHTS=$ALL_LIGHTS
 fi
 
-OLD_IFS=$IFS; IFS=","
+LIGHTS_ALL=$ALL_LIGHTS
 
-for LIGHT in $LIGHTS ; do
-	IFS=$OLD_IFS
+_loop_breath() {
+	eval HAS_PID=\$PID${LIGHT}
+	eval IS_REACHABLE=\$REACHABLE${LIGHT}
 
-	_hue_loop _breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
+	# -n STRING: the length of STRING is nonzero
+	# -z STRING: the length of STRING is zero
+
+	# Start lights
+	# -z "$HAS_PID": has no PID
+	# -n "$IS_REACHABLE": is reachable
+	if [ -z "$HAS_PID" ] && [ -n "$IS_REACHABLE" ]; then
+		(
+			while true; do
+				_breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
+			done
+		) &
+		eval PID${LIGHT}=$!
+	fi
+
+	# Stop lights
+	# -n "$HAS_PID": has PID
+	# -z "$IS_REACHABLE": is not reachable
+	if [ -n "$HAS_PID" ] && [ -z "$IS_REACHABLE" ]; then
+		eval kill \$PID${LIGHT}
+		eval PID${LIGHT}=''
+	fi
+}
+
+_kill_all() {
+	OLD_IFS=$IFS; IFS=","
+	for LIGHT in $LIGHTS_REACHABLE ; do
+		IFS=$OLD_IFS
+		eval kill \$PID${LIGHT} > /dev/null 2>&1
+	done
+}
+
+trap "_kill_all; _hue_reset; echo; exit" 1 2
+
+
+_detect_lights() {
+	LIGHTS_REACHABLE="$(_hue_get_light_ids)"
+
+	# Unset all REACHABLEX variables
+	OLD_IFS=$IFS; IFS=","
+	for LIGHT in $LIGHTS_ALL ; do
+		IFS=$OLD_IFS
+		eval REACHABLE${LIGHT}=''
+	done
+
+	# Create for each reachable Light X a variable: REACHABLEX
+	OLD_IFS=$IFS; IFS=","
+	for LIGHT in $LIGHTS_REACHABLE ; do
+		IFS=$OLD_IFS
+		eval REACHABLE${LIGHT}=1
+	done
+
+	OLD_IFS=$IFS; IFS=","
+	for LIGHT in $LIGHTS_ALL ; do
+		IFS=$OLD_IFS
+		_loop_breath
+	done
+}
+
+while true; do
+	_detect_lights
+	sleep $REFRESH_INTERVAL
 done
+
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;

@@ -21,7 +21,7 @@ _start() {
 		(
 		while true; do
 			_hue_get_on > $HOME/.config/hue-shell/all-lights
-			sleep 30
+			sleep $REFRESH_INTERVAL
 		done
 		) &
 
