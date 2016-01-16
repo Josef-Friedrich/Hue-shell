@@ -39,7 +39,6 @@ $CP doc/* $DOC
 # /etc/init.d
 if [ -d '/etc/init.d' ]; then
 	$CP startup/SysVinit /etc/init.d/hue-shell
-	$CP startup/hue-detect-online-lights /etc/init.d/
 fi
 
 # systemd
