@@ -1,9 +1,6 @@
 #! /bin/sh
 
-INSTALL='/usr'
-ETC='/etc/hue-shell'
-CONF="$HOME/.config/hue-shell"
-DOC='/usr/share/doc/hue-shell'
+. ./config/hue-shell.conf
 
 if cp -v README.md /tmp/hue-shell-test-cp > /dev/null 2>&1 ; then
 	CP='cp -v'
@@ -12,29 +9,29 @@ else
 fi
 
 # etc
-mkdir -p $ETC
-if [ -f $ETC/hue-shell.conf ]; then
-        $CP -f $ETC/hue-shell.conf $ETC/hue-shell.conf.bak
+mkdir -p $DIR_CONF
+if [ -f $DIR_CONF/hue-shell.conf ]; then
+        $CP -f $DIR_CONF/hue-shell.conf $DIR_CONF/hue-shell.conf.bak
 fi
-$CP -rf config/* $ETC
+$CP -rf config/* $DIR_CONF
 
 # lib
-mkdir -p $INSTALL/lib/hue-shell
-$CP base.sh $INSTALL/lib/hue-shell
+mkdir -p $DIR_LIB
+$CP base.sh $DIR_LIB
 
 # bin
-$CP bin/hue* $INSTALL/bin
+$CP bin/hue* $DIR_BIN
 
 # By Hue-shell generated run files that should "survive" reboot.
-mkdir -p $CONF
-chmod 777 $CONF
-CONF_FILES="$CONF/daemon.pid $CONF/hue-shell.pids $CONF/hue-shell-random.seed $CONF/all-lights"
+mkdir -p $DIR_RUN_PERM
+chmod 777 $DIR_RUN_PERM
+CONF_FILES="$DIR_RUN_PERM/daemon.pid $DIR_RUN_PERM/hue-shell.pids $DIR_RUN_PERM/hue-shell-random.seed $CONF/all-lights"
 touch $CONF_FILES
 chmod 666 $CONF_FILES
 
 # doc
-mkdir -p $DOC
-$CP doc/* $DOC
+mkdir -p $DIR_DOC
+$CP doc/* $DIR_DOC
 
 # /etc/init.d
 if [ -d '/etc/init.d' ]; then

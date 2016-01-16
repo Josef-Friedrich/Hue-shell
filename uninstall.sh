@@ -1,6 +1,6 @@
 #! /bin/sh
 
-INSTALL_DIR='/usr'
+. ./config/hue-shell.conf
 
 cp README.md /tmp/hue-shell-test-cp > /dev/null 2>&1
 
@@ -10,14 +10,14 @@ else
 	RM='rm'
 fi
 
-$RM -rf /etc/hue-shell
-$RM -rf $INSTALL_DIR/lib/hue-shell
-$RM -f $INSTALL_DIR/bin/hue*
+$RM -rf $DIR_CONF
+$RM -rf $DIR_LIB
+$RM -f $DIR_BIN/hue*
+$RM -rf $DIR_RUN_PERM
+$RM -rf $DIR_DOC
+$RM -f /etc/triggerhappy/triggers.d/hue-shell.conf
 $RM -f /etc/init.d/hue-shell
 $RM -f /etc/systemd/system/hue-shell.service
-$RM -rf $HOME/.config/hue-shell
-$RM -rf /usr/share/doc/hue-shell
-$RM -f /etc/triggerhappy/triggers.d/hue-shell.conf
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;
