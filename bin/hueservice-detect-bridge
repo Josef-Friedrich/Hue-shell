@@ -3,11 +3,10 @@
 . /etc/hue-shell/hue-shell.conf
 
 COMMAND="$DEFAULT_SCENE"
-REFRESH_RATE=3
 
 TRIGGERED=0
 
-PID_FILE=/tmp/$(basename $0).pid
+PID=$DIR_RUN_TMP/$(basename $0).pid
 
 while true ; do
 	case "$1" in
@@ -21,8 +20,8 @@ while true ; do
 			_hue_usage $(basename $0)
 			;;
 
-		-r|--refresh-rate)
-			REFRESH_RATE=$2
+		-r|--refresh-interval)
+			REFRESH_INTERVAL=$2
 			shift 2
 			;;
 
@@ -39,7 +38,8 @@ _search() {
 	if [ $? -eq 0 ]; then
 		if [ "$TRIGGERED" = 0 ]; then
 			TRIGGERED=1
-			eval "$COMMAND"
+			eval "$COMMAND &"
+			echo $! > $PID
 			echo "Hue bridge is online."
 		fi
 	else
@@ -54,7 +54,7 @@ trap "hue reset; exit" 1 2
 
 while true; do
 	_search
-	sleep $REFRESH_RATE
+	sleep $REFRESH_INTERVAL
 done
 
 # vim: set ts=8 sw=8 sts=8 et :
