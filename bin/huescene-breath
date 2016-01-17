@@ -106,7 +106,7 @@ trap "_kill_all; _hue_reset; echo; exit" 1 2
 
 
 _detect_lights() {
-	LIGHTS_REACHABLE="$(_hue_get_light_ids)"
+	LIGHTS_REACHABLE="$(_hue_get_lights_reachable)"
 
 	# Unset all REACHABLEX variables
 	OLD_IFS=$IFS; IFS=","

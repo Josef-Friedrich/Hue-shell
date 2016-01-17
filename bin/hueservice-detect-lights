@@ -20,7 +20,7 @@ _start() {
 	else
 		(
 		while true; do
-			_hue_get_on > $DIR_RUN_TMP/all-lights
+			_hue_get_on > $FILE_LIGHTS_REACHABLE
 			sleep $REFRESH_INTERVAL
 		done
 		) &
@@ -33,7 +33,7 @@ _start() {
 _status() {
 	if [ "$(_is_running)" = 0 ]; then
 		echo "The service '$(basename $0)' is running."
-		echo "The reachable lights are: "$(_hue_get_light_ids)
+		echo "The reachable lights are: "$(_hue_get_lights_reachable)
 	else
 		echo "The service '$(basename $0)' is not running."
 	fi

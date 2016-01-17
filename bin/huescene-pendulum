@@ -12,7 +12,7 @@ TRANSITION_TIME=$(_hue_range 5:50)
 
 _calculate_lights() {
 	if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
-		LIGHTS=$(_hue_get_light_ids)
+		LIGHTS=$(_hue_get_lights_reachable)
 		OLD_IFS=$IFS; IFS=","
 
 		COUNT=1

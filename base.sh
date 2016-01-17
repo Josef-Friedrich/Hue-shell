@@ -1,7 +1,6 @@
 #! /bin/sh
 
 PIDFILE="$HOME/.config/hue-shell/hue-shell.pids"
-SEED_FILE="$HOME/.config/hue-shell/hue-shell-random.seed"
 
 # Execute hue commands and put them in a while loop.
 #	$*: HUE_COMMANDS
@@ -29,9 +28,9 @@ _hue_range() {
 
 	# http://rosettacode.org/wiki/Linear_congruential_generator
 
-	SEED=$(cat $SEED_FILE | head -n 1)
+	SEED=$(cat $FILE_RANDOM_SEED | head -n 1)
 	SEED=$(((123 * $SEED + 23456) % 345678))
-	echo $SEED > $SEED_FILE
+	echo $SEED > $FILE_RANDOM_SEED
 
 	RANDOM=$(($SEED / 2))
 
@@ -247,9 +246,9 @@ _hue_get_on() {
 
 # This funtion checks if there reachable lights and returns it.
 # Otherwise it returns the value of the $ALL_LIGHTS variable.
-_hue_get_light_ids() {
+_hue_get_lights_reachable() {
 	local LIGHTS
-	LIGHTS=$(cat $HOME/.config/hue-shell/all-lights)
+	LIGHTS=$(cat $FILE_LIGHTS_REACHABLE)
 	if [ -z "LIGHTS" ]; then
 		echo $ALL_LIGHTS
 	else

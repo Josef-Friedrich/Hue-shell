@@ -25,9 +25,8 @@ $CP bin/hue* $DIR_BIN
 # By Hue-shell generated run files that should "survive" reboot.
 mkdir -p $DIR_RUN_PERM
 chmod 777 $DIR_RUN_PERM
-CONF_FILES="$DIR_RUN_PERM/daemon.pid $DIR_RUN_PERM/hue-shell.pids $DIR_RUN_PERM/hue-shell-random.seed $CONF/all-lights"
-touch $CONF_FILES
-chmod 666 $CONF_FILES
+touch $FILE_RANDOM_SEED
+chmod 666 $FILE_RANDOM_SEED
 
 # doc
 mkdir -p $DIR_DOC
