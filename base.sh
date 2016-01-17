@@ -276,7 +276,13 @@ _hue_alert() {
 # Trap function for scene scripts. If you hit Ctrl+c, the light scence
 # will be interrupted and all lights will be reset to the default color.
 _hue_trap() {
-	trap "_hue_reset; echo; exit" 1 2
+	local TRAP
+	if [ -z "$1" ]; then
+		TRAP="_hue_reset; echo; exit"
+	else
+		TRAP="$1"
+	fi
+	trap "$TRAP" $DEFAULT_TRAP_SIGNALS
 }
 
 # Print out debug output in three modes.

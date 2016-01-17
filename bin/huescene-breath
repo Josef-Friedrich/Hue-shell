@@ -125,7 +125,7 @@ _detect_lights() {
 }
 
 # We can not use the _hue_trap function from the library
-trap "_kill_all; _hue_reset; echo; exit" 1 2
+_hue_trap "_kill_all; _hue_reset; echo; exit"
 _hue_stop
 
 while true; do

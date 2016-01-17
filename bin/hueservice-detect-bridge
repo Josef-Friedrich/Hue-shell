@@ -3,13 +3,91 @@
 . /etc/hue-shell/hue-shell.conf
 
 COMMAND="$DEFAULT_SCENE"
-
 TRIGGERED=0
+FILE_PID=$DIR_RUN_TMP/$(basename $0).pid
+FILE_PID_COMMAND=$DIR_RUN_TMP/$(basename $0)-command.pid
 
-PID=$DIR_RUN_TMP/$(basename $0).pid
+_detect_bridge() {
+	ping -c 1 -W 1 -w 1 $IP > /dev/null 2>&1
+
+	if [ $? -eq 0 ]; then
+		if [ "$TRIGGERED" = 0 ]; then
+			TRIGGERED=1
+			eval "$COMMAND &"
+			echo $! > $FILE_PID_COMMAND
+			if [ "$DEBUG" = "YES" ]; then
+				echo "Executing command: $COMMAND."
+			fi
+		fi
+	else
+		if [ "$TRIGGERED" = 1 ]; then
+			kill $(cat $FILE_PID_COMMAND)
+			echo > $FILE_PID_COMMAND
+			if [ "$DEBUG" = "YES" ]; then
+				echo "Killing command: $COMMAND."
+			fi
+		fi
+		TRIGGERED=0
+	fi
+}
+
+_usage() {
+	echo "Usage: $(basename $0) {start|status|stop}" >&2
+	exit 3
+}
+
+_is_running() {
+	kill -0 $(cat $FILE_PID) > /dev/null 2>&1
+	echo $?
+}
+
+_start() {
+	if [ "$(_is_running)" = 0 ]; then
+		echo "The service is alreading running."
+	else
+		(
+		while true; do
+			_detect_bridge
+			sleep $REFRESH_INTERVAL
+		done
+		) &
+		echo $! > $FILE_PID
+		echo "Starting the service '$(basename $0)'."
+	fi
+}
+
+_status() {
+	if [ "$(_is_running)" = 0 ]; then
+		echo "The service '$(basename $0)' is running."
+		echo "This command is executed: $COMMAND"
+	else
+		echo "The service '$(basename $0)' is not running."
+	fi
+}
+
+_stop() {
+		kill $(cat $FILE_PID) > /dev/null 2>&1
+		echo > $FILE_PID
+		echo "Stopping the service '$(basename $0)'."
+}
 
 while true ; do
 	case "$1" in
+
+		start)
+			_start
+			shift
+			;;
+
+		status)
+			_status
+			shift
+			;;
+
+		stop)
+			_stop
+			shift
+			;;
 
 		-c|--command)
 			COMMAND=$2
@@ -32,30 +110,6 @@ while true ; do
 	esac
 done
 
-_search() {
-	ping -c 1 -W 1 -w 1 $IP > /dev/null 2>&1
-
-	if [ $? -eq 0 ]; then
-		if [ "$TRIGGERED" = 0 ]; then
-			TRIGGERED=1
-			eval "$COMMAND &"
-			echo $! > $PID
-			echo "Hue bridge is online."
-		fi
-	else
-		if [ "$TRIGGERED" = 1 ]; then
-			echo "Hue bridge is offline. ..."
-		fi
-                TRIGGERED=0
-	fi
-}
-
-trap "hue reset; exit" 1 2
-
-while true; do
-	_search
-	sleep $REFRESH_INTERVAL
-done
-
+exit 0
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;
