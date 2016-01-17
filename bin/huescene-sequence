@@ -65,6 +65,7 @@ while true ; do
 	esac
 done
 
+_hue_trap
 _hue_stop
 
 while true; do

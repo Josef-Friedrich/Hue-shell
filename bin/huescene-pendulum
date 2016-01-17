@@ -2,8 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-_hue_trap
-
 # Defaults
 COLOR1=$(_hue_range 0:65535)
 COLOR2=$(_hue_range 0:65535)
@@ -96,6 +94,7 @@ while true ; do
 	esac
 done
 
+_hue_trap
 _hue_stop
 
 while true; do
