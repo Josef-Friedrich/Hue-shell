@@ -2,7 +2,7 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-PID=$HOME/.config/hue-shell/hueservice-detect-reachable.pid
+PID=$DIR_RUN_TMP/$(basename $0).pid
 
 _usage() {
 	echo "Usage: $(basename $0) {start|status|stop}" >&2
@@ -20,7 +20,7 @@ _start() {
 	else
 		(
 		while true; do
-			_hue_get_on > $HOME/.config/hue-shell/all-lights
+			_hue_get_on > $DIR_RUN_TMP/all-lights
 			sleep $REFRESH_INTERVAL
 		done
 		) &
