@@ -2,6 +2,8 @@
 
 . /etc/hue-shell/hue-shell.conf
 
+_hue_trap
+
 hueservice-detect-lights start > /dev/null
 sleep 1
 
@@ -101,9 +103,6 @@ _kill_all() {
 		eval kill \$PID${LIGHT} > /dev/null 2>&1
 	done
 }
-
-trap "_kill_all; _hue_reset; echo; exit" 1 2
-
 
 _detect_lights() {
 	LIGHTS_REACHABLE="$(_hue_get_lights_reachable)"

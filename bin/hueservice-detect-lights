@@ -20,7 +20,7 @@ _start() {
 	else
 		(
 		while true; do
-			_hue_get_on > $FILE_LIGHTS_REACHABLE
+			_hue_get_on > FILE_LIGHTS_REACHABLE
 			sleep $REFRESH_INTERVAL
 		done
 		) &
