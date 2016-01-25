@@ -98,6 +98,7 @@ if [ "$DEBUG" = "YES" ]; then
 fi
 
 eval "$RANDOM_SCENE"
+echo $! >> $DIR_RUN_TMP/hue-background-$PPID
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;

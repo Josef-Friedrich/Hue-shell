@@ -80,6 +80,7 @@ _loop_breath() {
 				_breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
 			done
 		) &
+		echo $! >> $DIR_RUN_TMP/hue-background-$PPID
 		eval PID${LIGHT}=$!
 	fi
 
