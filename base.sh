@@ -285,6 +285,14 @@ _hue_trap() {
 	trap "$TRAP" $DEFAULT_TRAP_SIGNALS
 }
 
+# Append a PID (Process ID) to a text file which collects all PIDs
+# corresponding to a master PID.
+#	$1: MASTER_PID
+#	$2: PID
+_hue_write_to_master_pid() {
+	echo $2 >> $DIR_RUN_TMP/hue-shell_master-pid_$1
+}
+
 # Print out debug output in three modes.
 _hue_output() {
 	read OUTPUT

@@ -46,6 +46,11 @@ while true ; do
 			shift 2
 			;;
 
+		-m|--master-pid)
+			MASTER_PID=$2
+			shift 2
+			;;
+
 		-t|--time-range)
 			TIME_RANGE=$2
 			shift 2
@@ -80,7 +85,9 @@ _loop_breath() {
 				_breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
 			done
 		) &
-		echo $! >> $DIR_RUN_TMP/hue-background-$PPID
+		if [ -n "$MASTER_PID" ]; then
+			_hue_write_to_master_pid $MASTER_PID $!
+		fi
 		eval PID${LIGHT}=$!
 	fi
 
@@ -128,6 +135,10 @@ _detect_lights() {
 # We can not use the _hue_trap function from the library
 _hue_trap "_kill_all; _hue_reset; echo; exit"
 _hue_stop
+
+if [ -n "$MASTER_PID" ]; then
+	_hue_write_to_master_pid $MASTER_PID $$
+fi
 
 while true; do
 	_detect_lights
