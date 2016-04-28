@@ -6,9 +6,9 @@ START=99
 STOP=01
 
 start() {
-	/usr/bin/hueservice-detect-lights start	
-}                 
- 
-stop() {          
+	/usr/bin/hueservice-detect-lights start
+}
+
+stop() {
 	/usr/bin/hueservice-detect-lights stop
 }

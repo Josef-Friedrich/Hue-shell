@@ -47,5 +47,10 @@ if [ -d /etc/triggerhappy/triggers.d ]; then
 	$CP triggerhappy/hue-shell.conf /etc/triggerhappy/triggers.d/
 fi
 
+# OpenWrt
+if [ -f /etc/openwrt_version ]; then
+	$CP/service/detect-lights_openwrt.initd /etc/init.d/hue-detect-lights
+fi
+
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;

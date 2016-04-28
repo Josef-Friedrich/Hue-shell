@@ -16,7 +16,7 @@ $RM -f $DIR_BIN/hue*
 $RM -rf $DIR_RUN_PERM
 $RM -rf $DIR_DOC
 $RM -f /etc/triggerhappy/triggers.d/hue-shell.conf
-$RM -f /etc/init.d/hue-shell
+$RM -f /etc/init.d/hue-*
 $RM -f /etc/systemd/system/hue-shell.service
 
 # vim: set ts=8 sw=8 sts=8 et :
