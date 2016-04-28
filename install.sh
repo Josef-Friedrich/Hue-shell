@@ -32,14 +32,22 @@ chmod 666 $FILE_RANDOM_SEED
 mkdir -p $DIR_DOC
 $CP doc/* $DIR_DOC
 
-# /etc/init.d
-if [ -d '/etc/init.d' ]; then
-	$CP startup/SysVinit /etc/init.d/hue-shell
-fi
+##
+# Service
+##
+
+# OpenWrt
+if [ -f /etc/openwrt_version ]; then
+	$CP service/detect-lights_openwrt.initd /etc/init.d/hue-detect-lights
+	$CP service/detect-bridge_openwrt.initd /etc/init.d/hue-detect-bridge
 
 # systemd
-if [ -d '/etc/systemd/system' ]; then
-	$CP startup/systemd /etc/systemd/system/hue-shell.service
+elif [ -d '/etc/systemd/system' ]; then
+	$CP service/load-default_systemd /etc/systemd/system/hue-load-default.service
+
+# SysVinit
+elif [ -d '/etc/init.d' ]; then
+	$CP service/load-default_SysVinit /etc/init.d/hue-load-default
 fi
 
 # triggerhappy
@@ -47,11 +55,7 @@ if [ -d /etc/triggerhappy/triggers.d ]; then
 	$CP triggerhappy/hue-shell.conf /etc/triggerhappy/triggers.d/
 fi
 
-# OpenWrt
-if [ -f /etc/openwrt_version ]; then
-	$CP service/detect-lights_openwrt.initd /etc/init.d/hue-detect-lights
-	$CP service/detect-bridge_openwrt.initd /etc/init.d/hue-detect-bridge
-fi
+
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;
