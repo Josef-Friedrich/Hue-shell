@@ -1,0 +1,14 @@
+#!/bin/sh /etc/rc.common
+
+# https://wiki.openwrt.org/doc/techref/initscripts
+
+START=98
+STOP=02
+
+start() {
+	/usr/bin/hueservice-detect-bridge start
+}
+
+stop() {
+	/usr/bin/hueservice-detect-bridge stop
+}

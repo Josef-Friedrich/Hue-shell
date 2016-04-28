@@ -50,6 +50,7 @@ fi
 # OpenWrt
 if [ -f /etc/openwrt_version ]; then
 	$CP service/detect-lights_openwrt.initd /etc/init.d/hue-detect-lights
+	$CP service/detect-bridge_openwrt.initd /etc/init.d/hue-detect-bridge
 fi
 
 # vim: set ts=8 sw=8 sts=8 et :
