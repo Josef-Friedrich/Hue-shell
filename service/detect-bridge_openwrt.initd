@@ -8,7 +8,7 @@ STOP=02
 EXTRA_COMMANDS="status"
 EXTRA_HELP="	status	Show status informations about the service"
 
-$_EXEC=/usr/bin/hueservice-detect-bridge
+_EXEC=/usr/bin/hueservice-detect-bridge
 
 start() {
 	$_EXEC start
