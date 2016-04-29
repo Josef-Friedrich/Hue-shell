@@ -28,7 +28,7 @@ $RM -f /etc/triggerhappy/triggers.d/hue-shell.conf
 # OpenWrt
 if [ -f /etc/openwrt_version ]; then
 	_disable() {
-		/etc/init.d/hue-$1 disalbe
+		/etc/init.d/hue-$1 disable
 	}
 	_disable load-default
 	_disable detect-lights
