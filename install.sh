@@ -45,8 +45,8 @@ if [ -f /etc/openwrt_version ]; then
 elif command -v systemctl > /dev/null 2>&1; then
 	echo "Install systemd services ..."
 	_enable() {
-		mv service/$1_systemd service/hue-$1.service
-		systemctl enable $(pwd)/service/hue-$1.service
+		$CP service/$1_systemd /etc/systemd/system/hue-$1.service
+		systemctl enable /etc/systemd/system/hue-$1.service
 	}
 	_enable load-default
 	_enable detect-lights
