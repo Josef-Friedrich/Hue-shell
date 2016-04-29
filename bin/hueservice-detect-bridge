@@ -96,7 +96,6 @@ while true ; do
 			;;
 
 		*)
-			_usage
 			break
 			;;
 
