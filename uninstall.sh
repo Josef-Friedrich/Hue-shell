@@ -17,7 +17,16 @@ $RM -rf $DIR_RUN_PERM
 $RM -rf $DIR_DOC
 $RM -f /etc/triggerhappy/triggers.d/hue-shell.conf
 $RM -f /etc/init.d/hue-*
-$RM -f /etc/systemd/system/hue-shell.service
+
+if command -v systemctl > /dev/null 2>&1; then
+	echo "Uninstall systemd services ..."
+	_disable() {
+		systemctl disable hue-$1.service
+	}
+	_disable load-default
+	_disable detect-lights
+	_disable detect-bridge
+fi
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;

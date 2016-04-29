@@ -1,5 +1,5 @@
 [Unit]
-Description=Hue-shell
+Description=Hue-shell: load default scene
 
 [Service]
 Type=forking

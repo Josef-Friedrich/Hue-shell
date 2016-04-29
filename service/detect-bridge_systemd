@@ -1,0 +1,11 @@
+[Unit]
+Description=Hue-shell: Detect bridge
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/hueservice-detect-bridge start
+ExecStop=/usr/bin/hueservice-detect-bridge stop
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

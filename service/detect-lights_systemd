@@ -1,0 +1,11 @@
+[Unit]
+Description=Hue-shell: Detect lights
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/hueservice-detect-lights start
+ExecStop=/usr/bin/hueservice-detect-lights stop
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

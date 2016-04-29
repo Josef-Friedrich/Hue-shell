@@ -42,8 +42,15 @@ if [ -f /etc/openwrt_version ]; then
 	$CP service/detect-bridge_openwrt.initd /etc/init.d/hue-detect-bridge
 
 # systemd
-elif [ -d '/etc/systemd/system' ]; then
-	$CP service/load-default_systemd /etc/systemd/system/hue-load-default.service
+elif command -v systemctl > /dev/null 2>&1; then
+	echo "Install systemd services ..."
+	_enable() {
+		mv service/$1_systemd service/hue-$1.service
+		systemctl enable $(pwd)/service/hue-$1.service
+	}
+	_enable load-default
+	_enable detect-lights
+	_enable detect-bridge
 
 # SysVinit
 elif [ -d '/etc/init.d' ]; then
