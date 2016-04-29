@@ -21,6 +21,7 @@ $CP base.sh $DIR_LIB
 
 # bin
 $CP bin/hue* $DIR_BIN
+$CP uninstall.sh $DIR_BIN/hue-uninstall
 
 # By Hue-shell generated run files that should "survive" reboot.
 mkdir -p $DIR_RUN_PERM

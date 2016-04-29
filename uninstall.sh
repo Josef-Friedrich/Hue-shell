@@ -1,6 +1,14 @@
 #! /bin/sh
 
-. ./config/hue-shell.conf
+. /etc/hue-shell/hue-shell.conf
+
+echo 'Uninstall hue-shell? (y|n): '
+
+read COMFIRMATION
+
+if [ ! "$COMFIRMATION" = 'y' ]; then
+	exit 1
+fi
 
 cp README.md /tmp/hue-shell-test-cp > /dev/null 2>&1
 
