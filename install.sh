@@ -46,7 +46,7 @@ elif command -v systemctl > /dev/null 2>&1; then
 	echo "Install systemd services ..."
 	_enable() {
 		$CP service/$1_systemd /etc/systemd/system/hue-$1.service
-		systemctl enable /etc/systemd/system/hue-$1.service
+		$CP service/$1_systemd /etc/systemd/system/multi-user.target.wants/hue-$1.service
 	}
 	_enable load-default
 	_enable detect-lights
