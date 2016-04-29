@@ -50,8 +50,8 @@ if [ -f /etc/openwrt_version ]; then
 elif command -v systemctl > /dev/null 2>&1; then
 	echo "Installing systemd services ..."
 	_install() {
-		$CP service/systemd/$1 /etc/systemd/system/hue-$1.service
-		$CP service/systemd/$1 /etc/systemd/system/multi-user.target.wants/hue-$1.service
+		$CP service/systemd/$1 /lib/systemd/system/hue-$1.service
+		systemctl enable /lib/systemd/system/hue-$1.service
 	}
 	_install load-default
 	_install detect-lights
