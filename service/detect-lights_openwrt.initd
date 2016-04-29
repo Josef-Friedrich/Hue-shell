@@ -5,10 +5,19 @@
 START=99
 STOP=01
 
+EXTRA_COMMANDS="status"
+EXTRA_HELP="	status	Show status informations about the service"
+
+_EXEC=/usr/bin/hueservice-detect-lights
+
 start() {
-	/usr/bin/hueservice-detect-lights start
+	$_EXEC start
+}
+
+status() {
+	$_EXEC status
 }
 
 stop() {
-	/usr/bin/hueservice-detect-lights stop
+	$_EXEC stop
 }
