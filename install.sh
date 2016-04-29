@@ -38,23 +38,32 @@ $CP doc/* $DIR_DOC
 
 # OpenWrt
 if [ -f /etc/openwrt_version ]; then
-	$CP service/detect-lights_openwrt.initd /etc/init.d/hue-detect-lights
-	$CP service/detect-bridge_openwrt.initd /etc/init.d/hue-detect-bridge
+	echo "Installing init.d services ..."
+	_install() {
+		$CP service/openwrt.initd/$1 /etc/init.d/$1
+	}
+	_install load-default
+	_install detect-lights
+	_install detect-bridge
 
 # systemd
 elif command -v systemctl > /dev/null 2>&1; then
-	echo "Install systemd services ..."
-	_enable() {
-		$CP service/$1_systemd /etc/systemd/system/hue-$1.service
-		$CP service/$1_systemd /etc/systemd/system/multi-user.target.wants/hue-$1.service
+	echo "Installing systemd services ..."
+	_install() {
+		$CP service/systemd/$1 /etc/systemd/system/hue-$1.service
+		$CP service/systemd/$1 /etc/systemd/system/multi-user.target.wants/hue-$1.service
 	}
-	_enable load-default
-	_enable detect-lights
-	_enable detect-bridge
+	_install load-default
+	_install detect-lights
+	_install detect-bridge
 
 # SysVinit
 elif [ -d '/etc/init.d' ]; then
-	$CP service/load-default_SysVinit /etc/init.d/hue-load-default
+	echo "Installing SysVinit services ..."
+	_install() {
+		$CP service/SysVinit/$1 /etc/init.d/$1
+	}
+	_install load-default
 fi
 
 # triggerhappy
