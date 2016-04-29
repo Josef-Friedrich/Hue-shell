@@ -41,6 +41,7 @@ if [ -f /etc/openwrt_version ]; then
 	echo "Installing init.d services ..."
 	_install() {
 		$CP service/openwrt.initd/$1 /etc/init.d/$1
+		/etc/init.d/$1 enable
 	}
 	_install load-default
 	_install detect-lights
