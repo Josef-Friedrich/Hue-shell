@@ -2,8 +2,8 @@
 
 # https://wiki.openwrt.org/doc/techref/initscripts
 
-START=99
-STOP=01
+START=98
+STOP=02
 
 EXTRA_COMMANDS="status"
 EXTRA_HELP="	status	Show status informations about the service"
