@@ -26,6 +26,7 @@ if command -v systemctl > /dev/null 2>&1; then
 	_disable load-default
 	_disable detect-lights
 	_disable detect-bridge
+	rm -f /lib/systemd/system/hue*
 fi
 
 # vim: set ts=8 sw=8 sts=8 et :
