@@ -16,8 +16,6 @@ from Philips.
 
 ```
 
-
-
 It is designed for embedded operating systems with very
 limited resources (successfully tested on the old and outdated wifi
 router "Linksys WRT54GL").
@@ -31,26 +29,3 @@ Raspberry Pi, Cubieboard, BeagleBone etc.
 For further documentation please visit the project site:
 
 http://josef-friedrich.github.io/Hue-shell/
-
-
-    __________________________    ____________________________
-   /                          \  /                            \
-  |    ___________________    ||    ______________________    |
-  |   /                    \  ||   /                      \   |
-  |   | _ $ hue set 1 --on |  ||   |                      |   |
-  |   |                    |  ||   |                      |   |
-  |   |                    |  ||   |                      |   |
-  |   \___________________/   ||   \______________________/   |
-  |  /|\               _      ||  /|\ ATARI  SC1224      _    |
-   \_________________________/  \____________________________/
-     !______________________!      !________________________!
-
-
-                                           .
-                                 .    +    ,
-                                  \   '   /
-    ,+.                            ` ,+. '
-   (   )                        +-+ (   ) +-+
-    \ /  --> $ hue set 1 --on -->    \ /
-   _+=+_                            _+=+_
-  +_____+                          +_____+
