@@ -1,9 +1,9 @@
 ########################################################################
-# huetrigger-bridgeon
+# hueservice-detect-bridge
 ########################################################################
 
 USAGE
-	huetrigger-bridgeon <options>
+	hueservice-detect-bridge <options>
 
 OPTIONS
 
@@ -22,12 +22,12 @@ OPTIONS
 
 DESCRIPTION
 
-    'huetrigger-bridgeon' triggers a command everytime the Hue bridge 
+    'hueservice-detect-bridge' triggers a command everytime the Hue bridge 
     goes online and is reachable via the ping command. The command is
     designed to run as a background daemon.
 
 
 
 EXAMPLES
-	huetrigger-bridgeon -c "huecolor-basic --blue" -r 60
-	huetrigger-bridgeon --help
+	hueservice-detect-bridge -c "huecolor-basic --blue" -r 60
+	hueservice-detect-bridge --help

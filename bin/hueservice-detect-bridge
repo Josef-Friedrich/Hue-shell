@@ -26,11 +26,6 @@ _detect_bridge() {
 	fi
 }
 
-_usage() {
-	echo "Usage: $(basename $0) {start|status|stop}" >&2
-	exit 3
-}
-
 _is_running() {
 	kill -0 $(cat $FILE_PID) > /dev/null 2>&1
 	echo $?
@@ -92,7 +87,7 @@ while true ; do
 			;;
 
 		-h|--help)
-			_usage
+			_hue_usage $(basename $0)
 			;;
 
 		-r|--refresh-interval)
