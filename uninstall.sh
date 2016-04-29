@@ -16,9 +16,17 @@ $RM -f $DIR_BIN/hue*
 $RM -rf $DIR_RUN_PERM
 $RM -rf $DIR_DOC
 $RM -f /etc/triggerhappy/triggers.d/hue-shell.conf
-$RM -f /etc/init.d/hue-*
 
-if command -v systemctl > /dev/null 2>&1; then
+# OpenWrt
+if [ -f /etc/openwrt_version ]; then
+	_disable() {
+		/etc/init.d/hue-$1 disalbe
+	}
+	_disable load-default
+	_disable detect-lights
+	_disable detect-bridge
+
+elif command -v systemctl > /dev/null 2>&1; then
 	echo "Uninstall systemd services ..."
 	_disable() {
 		systemctl disable hue-$1.service
@@ -28,6 +36,8 @@ if command -v systemctl > /dev/null 2>&1; then
 	_disable detect-bridge
 	rm -f /lib/systemd/system/hue*
 fi
+
+$RM -f /etc/init.d/hue-*
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;
