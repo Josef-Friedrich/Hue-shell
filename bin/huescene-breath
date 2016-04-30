@@ -144,6 +144,13 @@ if [ -n "$MASTER_PID" ]; then
 	_hue_write_to_master_pid $MASTER_PID $$
 fi
 
+if [ "$DEBUG" -ge 1 ]; then
+	echo "HUE_RANGE: $HUE_RANGE"
+	echo "TIME_RANGE: $TIME_RANGE"
+	echo "BRI_RANGE: $BRI_RANGE"
+	echo "LIGHTS: $LIGHTS_ALL"
+fi
+
 while true; do
 	_detect_lights
 	sleep $REFRESH_INTERVAL

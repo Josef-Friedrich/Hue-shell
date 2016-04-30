@@ -175,6 +175,10 @@ _hue_set() {
 	JSON=$(echo "$JSON" | tail -c +2)
 	JSON="{$JSON}"
 
+	if [ "$DEBUG" -ge 2 ]; then
+		echo $JSON
+	fi
+
 	if [ "$LIGHTS" = "all" ]; then
 		_hue_call PUT groups/0/action $JSON
 	else
