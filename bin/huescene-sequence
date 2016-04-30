@@ -5,11 +5,10 @@
 _hue_trap
 
 # Defaults
-HUE_SEQUENCE='0,12750,25500,46920,56100'
-SLEEP_TIME='5'
-TRANSITION_TIME='1'
-BRIGHTNESS='255'
-
+HUE_SEQUENCE="$(_hue_range 0:65535),$(_hue_range 0:65535),$(_hue_range 0:65535),$(_hue_range 0:65535)"
+SLEEP_TIME="$(_hue_range 4:8)"
+TRANSITION_TIME="$(_hue_range 1:3)"
+BRIGHTNESS="$(_hue_range 100:255)"
 
 #	$1: HUE_SEQUENCE
 #	$2: SLEEP_TIME
