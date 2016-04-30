@@ -34,7 +34,7 @@ while true ; do
 			;;
 
 		-l|--lights)
-			LIGHTS=$2
+			LIGHTS_INPUT=$2
 			shift 2
 			;;
 
@@ -67,11 +67,11 @@ if [ -z "$BRI_RANGE" ]; then
 	BRI_RANGE="$(_hue_range 1:100):$(_hue_range 100:255)"
 fi
 
-if [ -z $LIGHTS ] && [ -n $ALL_LIGHTS ]; then
+if [ -z $LIGHTS_INPUT ] && [ -n $ALL_LIGHTS ]; then
 	LIGHTS=$ALL_LIGHTS
 fi
 
-LIGHTS_ALL=$ALL_LIGHTS
+LIGHTS_CONF=$ALL_LIGHTS
 
 _loop_breath() {
 	eval HAS_PID=\$PID${LIGHT}

@@ -313,6 +313,10 @@ _hue_log() {
 	if [ "$LOG" -ge "$1" ]; then
 		echo "$(date) [$BASENAME] $2" >> $FILE_LOG
 	fi
+
+	if [ "$DEBUG" -ge "$1" ]; then
+		echo "$2"
+	fi
 }
 
 # Show help messages.
