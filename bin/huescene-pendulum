@@ -30,8 +30,9 @@ _calculate_lights() {
 			fi
 			COUNT=$((COUNT + 1))
 		done
-		LIGHTS1="$L1"
-		LIGHTS2="$L2"
+	else
+		L1="$LIGHTS1"
+		L2="$LIGHTS2"
 	fi
 }
 
@@ -100,7 +101,7 @@ _hue_stop
 
 while true; do
 	_calculate_lights
-	_pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME $TRANSITION_TIME
+	_pendulum $L1 $L2 $COLOR1 $COLOR2 $SWITCH_TIME $TRANSITION_TIME
 done
 
 # vim: set ts=8 sw=8 sts=8 et :
