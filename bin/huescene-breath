@@ -74,10 +74,10 @@ else
 fi
 
 _kill_all() {
-	OLD_IFS=$IFS; IFS=","
+	IFS=","
 	for LIGHT in $LIGHTS_REACHABLE ; do
 		IFS=$OLD_IFS
-		eval kill \$PID${LIGHT} > /dev/null 2>&1
+		eval "kill \$PID${LIGHT} > /dev/null 2>&1"
 	done
 }
 
@@ -131,7 +131,6 @@ _detect_lights() {
 	for LIGHT in $ALL_LIGHTS ; do
 		IFS="$OLD_IFS"
 		eval "REACHABLE${LIGHT}=''"
-		echo "Unset RECHABLE $LIGHT"
 	done
 
 	# Create for each reachable Light X a variable: REACHABLEX
@@ -139,7 +138,6 @@ _detect_lights() {
 	for LIGHT in $LIGHTS_REACHABLE ; do
 		IFS=$OLD_IFS
 		eval "REACHABLE${LIGHT}=1"
-		echo "Set RECHABLE=1 Light: $LIGHT"
 	done
 
 	IFS=","
