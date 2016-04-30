@@ -2,9 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-hueservice-detect-lights start > /dev/null
-sleep 1
-
 # Defaul values
 HUE_RANGE='52000:58000'
 TIME_RANGE='2:4'

@@ -2,8 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-hueservice-detect-lights start > /dev/null
-
 # Defaults
 COLOR1=$(_hue_range 0:65535)
 COLOR2=$(_hue_range 0:65535)

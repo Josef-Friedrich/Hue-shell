@@ -4,9 +4,6 @@
 
 _hue_trap
 
-hueservice-detect-lights start > /dev/null
-sleep 1
-
 # Defaults
 HUE_SEQUENCE='0,12750,25500,46920,56100'
 SLEEP_TIME='5'
