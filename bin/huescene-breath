@@ -2,11 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-# Defaul values
-HUE_RANGE='52000:58000'
-TIME_RANGE='2:4'
-BRI_RANGE='50:255'
-
 # Helper function.
 #	$1: LIGHT
 #	$2: HUE_RANGE
@@ -60,6 +55,18 @@ while true ; do
 done
 
 # Default values.
+if [ -z "$HUE_RANGE" ]; then
+	HUE_RANGE="$(_hue_range 0:32766):$(_hue_range 32767:65535)"
+fi
+
+if [ -z "$TIME_RANGE" ]; then
+	TIME_RANGE="$(_hue_range 1:4):$(_hue_range 5:8)"
+fi
+
+if [ -z "$BRI_RANGE" ]; then
+	BRI_RANGE="$(_hue_range 1:100):$(_hue_range 100:255)"
+fi
+
 if [ -z $LIGHTS ] && [ -n $ALL_LIGHTS ]; then
 	LIGHTS=$ALL_LIGHTS
 fi
