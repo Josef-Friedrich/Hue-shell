@@ -2,10 +2,11 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-PID=$DIR_RUN_TMP/$(basename $0).pid
+BASENAME=$(basename $0)
+PID=$DIR_RUN_TMP/${BASENAME}.pid
 
 _usage() {
-	echo "Usage: $(basename $0) {start|status|stop}" >&2
+	echo "Usage: ${BASENAME} {start|status|stop}" >&2
 	exit 3
 }
 
@@ -27,6 +28,7 @@ _start() {
 
 		echo $! > $PID
 		echo "Starting the service '$(basename $0)'."
+		_hue_log 1 "Starting"
 	fi
 }
 
@@ -43,6 +45,7 @@ _stop() {
 		kill $(cat $PID) > /dev/null 2>&1
 		echo > $PID
 		echo "Stopping the service '$(basename $0)'."
+		_hue_log 1 "Stopping"
 }
 
 case "$1" in

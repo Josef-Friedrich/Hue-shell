@@ -4,7 +4,8 @@
 
 COMMAND="$DEFAULT_SCENE"
 TRIGGERED=0
-FILE_PID=$DIR_RUN_TMP/$(basename $0).pid
+BASENAME=$(basename $0)
+FILE_PID=$DIR_RUN_TMP/${BASENAME}.pid
 
 _detect_bridge() {
 	ping -c 1 -W 1 -w 1 $IP > /dev/null 2>&1
@@ -13,12 +14,14 @@ _detect_bridge() {
 		if [ "$TRIGGERED" = 0 ]; then
 			TRIGGERED=1
 			echo "Starting: $COMMAND (\$\$: $$)"
+			_hue_log 1 "Starting: $COMMAND"
 			eval "$COMMAND &"
 			echo $! >> $DIR_RUN_TMP/hue-background-$PPID
 		fi
 	else
 		if [ "$TRIGGERED" = 1 ]; then
 			echo "Stopping: $COMMAND"
+			_hue_log 1 "Stopping: $COMMAND"
 			_hue_stop
 			_hue_kill
 		fi
@@ -33,7 +36,7 @@ _is_running() {
 
 _start() {
 	if [ "$(_is_running)" = 0 ]; then
-		echo "The service is alreading running."
+		echo "The service is already running."
 	else
 		(
 		while true; do

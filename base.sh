@@ -306,6 +306,15 @@ _hue_output() {
 	fi
 }
 
+# Log messages to a log file.
+#	$1: LOG_LEVEL
+#	$2: LOG_MESSAGE
+_hue_log() {
+	if [ "$LOG" -ge "$1" ]; then
+		echo "$(date) [$BASENAME] $2" >> $FILE_LOG
+	fi
+}
+
 # Show help messages.
 _hue_usage() {
 	cat /usr/share/doc/hue-shell/$1.txt

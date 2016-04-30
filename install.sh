@@ -33,6 +33,10 @@ chmod 666 $FILE_RANDOM_SEED
 mkdir -p $DIR_DOC
 $CP doc/* $DIR_DOC
 
+# log
+touch $FILE_LOG
+chmod 666 $FILE_LOG
+
 ##
 # Service
 ##
