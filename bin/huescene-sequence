@@ -17,8 +17,7 @@ BRIGHTNESS="$(_hue_range 100:255)"
 _sequence() {
 	HUE_SEQUENCE=$1
 
-	OLD_IFS=$IFS; IFS=","
-
+	IFS=","
 	for HUE in $HUE_SEQUENCE ; do
 		IFS=$OLD_IFS
 

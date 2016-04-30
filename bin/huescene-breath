@@ -19,7 +19,7 @@ _breath() {
 while true ; do
 	case "$1" in
 		-b|--brightness-range)
-			BRI_RANGE=$2
+			ARG_BRI_RANGE=$2
 			shift 2
 			;;
 
@@ -29,12 +29,12 @@ while true ; do
 			;;
 
 		-H|--hue-range)
-			HUE_RANGE=$2
+			ARG_HUE_RANGE=$2
 			shift 2
 			;;
 
 		-l|--lights)
-			LIGHTS_INPUT=$2
+			ARG_LIGHTS=$2
 			shift 2
 			;;
 
@@ -44,7 +44,7 @@ while true ; do
 			;;
 
 		-t|--time-range)
-			TIME_RANGE=$2
+			ARG_TIME_RANGE=$2
 			shift 2
 			;;
 
@@ -55,84 +55,29 @@ while true ; do
 done
 
 # Default values.
-if [ -z "$HUE_RANGE" ]; then
+if [ -z "$ARG_HUE_RANGE" ]; then
 	HUE_RANGE="$(_hue_range 0:32766):$(_hue_range 32767:65535)"
+else
+	HUE_RANGE="$ARG_HUE_RANGE"
 fi
 
-if [ -z "$TIME_RANGE" ]; then
+if [ -z "$ARG_TIME_RANGE" ]; then
 	TIME_RANGE="$(_hue_range 1:4):$(_hue_range 5:8)"
+else
+	TIME_RANGE="$ARG_TIME_RANGE"
 fi
 
-if [ -z "$BRI_RANGE" ]; then
+if [ -z "$ARG_BRI_RANGE" ]; then
 	BRI_RANGE="$(_hue_range 1:100):$(_hue_range 100:255)"
+else
+	BRI_RANGE="$ARG_BRI_RANGE"
 fi
-
-if [ -z $LIGHTS_INPUT ] && [ -n $ALL_LIGHTS ]; then
-	LIGHTS=$ALL_LIGHTS
-fi
-
-LIGHTS_CONF=$ALL_LIGHTS
-
-_loop_breath() {
-	eval HAS_PID=\$PID${LIGHT}
-	eval IS_REACHABLE=\$REACHABLE${LIGHT}
-
-	# -n STRING: the length of STRING is nonzero
-	# -z STRING: the length of STRING is zero
-
-	# Start lights
-	# -z "$HAS_PID": has no PID
-	# -n "$IS_REACHABLE": is reachable
-	if [ -z "$HAS_PID" ] && [ -n "$IS_REACHABLE" ]; then
-		(
-			while true; do
-				_breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
-			done
-		) &
-		if [ -n "$MASTER_PID" ]; then
-			_hue_write_to_master_pid $MASTER_PID $!
-		fi
-		eval PID${LIGHT}=$!
-	fi
-
-	# Stop lights
-	# -n "$HAS_PID": has PID
-	# -z "$IS_REACHABLE": is not reachable
-	if [ -n "$HAS_PID" ] && [ -z "$IS_REACHABLE" ]; then
-		eval kill \$PID${LIGHT}
-		eval PID${LIGHT}=''
-	fi
-}
 
 _kill_all() {
 	OLD_IFS=$IFS; IFS=","
 	for LIGHT in $LIGHTS_REACHABLE ; do
 		IFS=$OLD_IFS
 		eval kill \$PID${LIGHT} > /dev/null 2>&1
-	done
-}
-
-_detect_lights() {
-	LIGHTS_REACHABLE="$(_hue_get_lights_reachable)"
-
-	# Unset all REACHABLEX variables
-	OLD_IFS=$IFS; IFS=","
-	for LIGHT in $LIGHTS_ALL ; do
-		IFS=$OLD_IFS
-		eval REACHABLE${LIGHT}=''
-	done
-
-	# Create for each reachable Light X a variable: REACHABLEX
-	OLD_IFS=$IFS; IFS=","
-	for LIGHT in $LIGHTS_REACHABLE ; do
-		IFS=$OLD_IFS
-		eval REACHABLE${LIGHT}=1
-	done
-
-	OLD_IFS=$IFS; IFS=","
-	for LIGHT in $LIGHTS_ALL ; do
-		IFS=$OLD_IFS
-		_loop_breath
 	done
 }
 
@@ -144,12 +89,70 @@ if [ -n "$MASTER_PID" ]; then
 	_hue_write_to_master_pid $MASTER_PID $$
 fi
 
-if [ "$DEBUG" -ge 1 ]; then
-	echo "HUE_RANGE: $HUE_RANGE"
-	echo "TIME_RANGE: $TIME_RANGE"
-	echo "BRI_RANGE: $BRI_RANGE"
-	echo "LIGHTS: $LIGHTS_ALL"
-fi
+_loop_breath() {
+	eval "HAS_PID=\$PID${LIGHT}"
+	eval "IS_REACHABLE=\"\$REACHABLE${LIGHT}\""
+
+	# -n STRING: the length of STRING is nonzero
+	# -z STRING: the length of STRING is zero
+
+	# Start lights
+	# -z "$HAS_PID": has no PID
+	# -n "$IS_REACHABLE": is reachable
+	if [ -z "$HAS_PID" ] && [ -n "$IS_REACHABLE" ]; then
+		_hue_log 1 "Go online light ${LIGHT}"
+		_hue_log 2 "SET L: $LIGHT H: $HUE_RANGE T: $TIME_RANGE B: $BRI_RANGE"
+		(
+			while true; do
+				_breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
+			done
+		) &
+		if [ -n "$MASTER_PID" ]; then
+			_hue_write_to_master_pid $MASTER_PID $!
+		fi
+		eval "PID${LIGHT}=$!"
+	fi
+
+	# Stop lights
+	# -n "$HAS_PID": has PID
+	# -z "$IS_REACHABLE": is not reachable
+	if [ -n "$HAS_PID" ] && [ -z "$IS_REACHABLE" ]; then
+		_hue_log 1 "Kill light ${LIGHT}"
+		eval "kill \$PID${LIGHT}"
+		eval "PID${LIGHT}=''"
+	fi
+}
+
+_detect_lights() {
+	LIGHTS_REACHABLE="$(_hue_get_lights_reachable)"
+
+	# Unset all REACHABLEX variables
+	IFS=","
+	for LIGHT in $ALL_LIGHTS ; do
+		IFS="$OLD_IFS"
+		eval "REACHABLE${LIGHT}=''"
+		echo "Unset RECHABLE $LIGHT"
+	done
+
+	# Create for each reachable Light X a variable: REACHABLEX
+	IFS=","
+	for LIGHT in $LIGHTS_REACHABLE ; do
+		IFS=$OLD_IFS
+		eval "REACHABLE${LIGHT}=1"
+		echo "Set RECHABLE=1 Light: $LIGHT"
+	done
+
+	IFS=","
+	for LIGHT in $ALL_LIGHTS ; do
+		IFS="$OLD_IFS"
+		_loop_breath
+	done
+}
+
+_hue_log 1 "HUE_RANGE: $HUE_RANGE \
+TIME_RANGE: $TIME_RANGE \
+BRI_RANGE: $BRI_RANGE \
+LIGHTS: $LIGHTS"
 
 while true; do
 	_detect_lights

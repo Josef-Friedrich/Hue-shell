@@ -16,7 +16,7 @@ _calculate_lights() {
 
 	if [ ! "$LIGHTS" = '' ]; then
 
-		OLD_IFS=$IFS; IFS=","
+		IFS=","
 		COUNT=1
 		for LIGHT in $LIGHTS; do
 			IFS=$OLD_IFS

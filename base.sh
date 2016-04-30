@@ -2,6 +2,10 @@
 
 PIDFILE="$HOME/.config/hue-shell/hue-shell.pids"
 
+OLD_IFS="$IFS"
+
+BASENAME=$(basename $0)
+
 # Execute hue commands and put them in a while loop.
 #	$*: HUE_COMMANDS
 _hue_loop() {
@@ -46,10 +50,11 @@ _hue_range() {
 _hue_call() {
 
 	if [ -n "$3" ]; then
-		local DATA="--data $3"
+		local DATA_OPT="--data"
+		local DATA="$3"
 	fi
-
-	curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | _hue_output
+	_hue_log 2 "$1 PATH: $2 DATA: $3"
+	curl --silent --request $1 $DATA_OPT "$DATA" http://$IP/api/$USERNAME/$2 | _hue_output
 }
 
 # Stop all hue processes.
@@ -182,7 +187,7 @@ _hue_set() {
 	if [ "$LIGHTS" = "all" ]; then
 		_hue_call PUT groups/0/action $JSON
 	else
-		OLD_IFS=$IFS; IFS=","
+		IFS=","
 		for LIGHT in $LIGHTS; do
 			IFS=$OLD_IFS
 			_hue_call PUT lights/$LIGHT/state "$JSON"
@@ -215,7 +220,7 @@ _hue_get() {
 	elif [ "$LIGHTS" = "on" ]; then
 		_hue_get_on
 	else
-		OLD_IFS=$IFS; IFS=","
+		IFS=","
 		for LIGHT in $LIGHTS; do
 			IFS=$OLD_IFS
 			_hue_call GET lights/$LIGHT
@@ -229,7 +234,7 @@ _hue_get_on() {
 
 	JSON=$(curl --silent --request GET http://$IP/api/$USERNAME/lights | sed 's/"\([0-9]*\)":{"state":/%\1%/g')
 
-	OLD_IFS=$IFS; IFS="%"
+	IFS="%"
 	IS_LIGHT=0
 	for LINE in $JSON; do
 		IFS=$OLD_IFS
@@ -263,7 +268,7 @@ _hue_alert() {
 	if [ "$LIGHTS" = "all" ]; then
 		_hue_call PUT groups/0/action '{"alert":"select"}'
 	else
-		OLD_IFS=$IFS; IFS=","
+		IFS=","
 		for LIGHT in $LIGHTS; do
 			IFS=$OLD_IFS
 			_hue_call PUT lights/$LIGHT/state '{"alert":"select"}'
@@ -319,8 +324,6 @@ _hue_usage() {
 	echo ''
 	exit 0
 }
-
-BASENAME=$(basename $0)
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;
