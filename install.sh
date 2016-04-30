@@ -73,7 +73,5 @@ if [ -d /etc/triggerhappy/triggers.d ]; then
 	$CP triggerhappy/hue-shell.conf /etc/triggerhappy/triggers.d/
 fi
 
-
-
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;
