@@ -9,10 +9,17 @@ SWITCH_TIME=$(_hue_range 1:10)
 TRANSITION_TIME=$(_hue_range 5:50)
 
 _calculate_lights() {
-	if [ -z "$LIGHTS1" ] || [ -z "$LIGHTS2" ]; then
-		LIGHTS=$(_hue_get_lights_reachable)
-		OLD_IFS=$IFS; IFS=","
+	if [ -n "$LIGHTS1" ] && [ -n "$LIGHTS2" ]; then
+		L1="$LIGHTS1"
+		L2="$LIGHTS2"
+		return
+	fi
 
+	LIGHTS=$(_hue_get_lights_reachable)
+
+	if [ ! "$LIGHTS" = '' ]; then
+
+		OLD_IFS=$IFS; IFS=","
 		COUNT=1
 		for LIGHT in $LIGHTS; do
 			IFS=$OLD_IFS
@@ -31,17 +38,10 @@ _calculate_lights() {
 			COUNT=$((COUNT + 1))
 		done
 	else
-		L1="$LIGHTS1"
-		L2="$LIGHTS2"
-	fi
-
-	if [ -z "$L1" ]; then
 		L1=0
-	fi
-
-	if [ -z "$L2" ]; then
 		L2=0
 	fi
+
 }
 
 #	$1: LIGHTS1
@@ -79,7 +79,7 @@ while true ; do
 			;;
 
 		-h|--help)
-			_hue_usage $(basename $0)
+			_hue_usage $BASENAME
 			break
 			;;
 

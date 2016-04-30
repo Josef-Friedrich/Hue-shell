@@ -251,13 +251,7 @@ _hue_get_on() {
 # This funtion checks if there reachable lights and returns it.
 # Otherwise it returns the value of the $ALL_LIGHTS variable.
 _hue_get_lights_reachable() {
-	local LIGHTS
-	LIGHTS=$(cat $FILE_LIGHTS_REACHABLE)
-	if [ -z "LIGHTS" ]; then
-		echo $ALL_LIGHTS
-	else
-		echo $LIGHTS
-	fi
+	echo $(cat $FILE_LIGHTS_REACHABLE)
 }
 
 # Perform one breathe cycle.
@@ -325,6 +319,8 @@ _hue_usage() {
 	echo ''
 	exit 0
 }
+
+BASENAME=$(basename $0)
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;

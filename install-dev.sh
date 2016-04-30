@@ -5,6 +5,8 @@
 IP="192.168.2.31"
 USERNAME="joseffriedrich"
 ALL_LIGHTS="1,2,3,4,5,6,7,8,9"
+DEBUG=2
+LOG=2
 
 _replace() {
 	sed -i "s;$1;$2;" /etc/hue-shell/hue-shell.conf
@@ -27,4 +29,5 @@ fi
 _replace 'IP="192.168.1.2"' "IP=\"$IP\""
 _replace 'USERNAME="yourusername"' "USERNAME=\"$USERNAME\""
 _replace 'ALL_LIGHTS="1,2,3"' "ALL_LIGHTS=\"$ALL_LIGHTS\""
-
+_replace 'DEBUG=0' "DEBUG=$DEBUG"
+_replace 'LOG=0' "LOG=$LOG"
