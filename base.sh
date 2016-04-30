@@ -204,7 +204,7 @@ _hue_get() {
 	local LIGHTS="$1"
 	shift
 
-	DEBUG="YES"
+	DEBUG=1
 
 	if [ "$LIGHTS" = "all" ]; then
 		_hue_call GET lights
@@ -297,7 +297,7 @@ _hue_write_to_master_pid() {
 _hue_output() {
 	read OUTPUT
 
-	if [ $DEBUG = "YES" ]; then
+	if [ "$DEBUG" -ge 1 ]; then
 		echo $OUTPUT | tr ',' '\n'
 	fi
 }
