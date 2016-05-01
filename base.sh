@@ -50,11 +50,10 @@ _hue_range() {
 _hue_call() {
 
 	if [ -n "$3" ]; then
-		local DATA_OPT="--data"
-		local DATA="$3"
+		local DATA="--data $3"
 	fi
-	_hue_log 2 "$1 PATH: $2 DATA: $3"
-	curl --silent --request $1 $DATA_OPT "$DATA" http://$IP/api/$USERNAME/$2 | _hue_output
+	_hue_log 2 "HTTP_REQUEST: $1 PATH: $2 DATA: $3"
+	curl --silent --request $1 $DATA http://$IP/api/$USERNAME/$2 | _hue_output
 }
 
 # Stop all hue processes.
