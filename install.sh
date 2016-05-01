@@ -2,6 +2,9 @@
 
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/Josef-Friedrich/Hue-shell/master/install.sh) install"
 
+if [ -z "$OPT" ]; then
+	OPT=$1
+fi
 
 if type sudo > /dev/null ; then
 	_sudo() {
@@ -187,7 +190,7 @@ _uninstall() {
 	$RM -f /etc/init.d/hue-*
 }
 
-case "$1" in
+case "$OPT" in
 
 	install)
 		_install
