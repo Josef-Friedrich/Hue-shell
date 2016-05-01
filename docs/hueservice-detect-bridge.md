@@ -1,0 +1,52 @@
+---
+title: hueservice-detect-bridge
+---
+
+```
+########################################################################
+# hueservice-detect-bridge
+########################################################################
+
+USAGE
+	hueservice-detect-bridge (start|status|stop) <options>
+
+SUBCOMMANDS
+
+	start
+		Start the service.
+
+	status
+		Display status informations. Indicates whether the 
+		service is still running.
+
+	stop
+		Stop the service.
+
+OPTIONS
+
+	-c, --command
+		Command to trigger everytime the Hue bridge goes online.
+		You must use quotes if your command contains 
+		whitespaces. By default the DEFAULT_SCENE as specifed
+		in the Hue-shell configuration file is executed.
+
+	-h, --help
+		Show this help message.
+
+	-r, --refresh-interval
+		Time interval to search for the bridge. By default the 
+		REFRESH_INTERVAL value from the configuration file is
+		used.
+
+DESCRIPTION
+
+	'hueservice-detect-bridge' triggers a command everytime the Hue
+	bridge goes online and is reachable via the ping command. The 
+	command is designed to run as a background daemon.
+
+EXAMPLES
+	hueservice-detect-bridge start -c "huecolor-basic --blue" -r 60
+	hueservice-detect-bridge status
+	hueservice-detect-bridge stop
+	hueservice-detect-bridge --help
+```
