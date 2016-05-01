@@ -24,7 +24,7 @@ while true ; do
 			;;
 
 		-h|--help)
-			_hue_usage ${BASENAME}
+			_hue_usage
 			;;
 
 		-r|--red)
@@ -43,7 +43,7 @@ while true ; do
 			if [ -n "$1" ]; then
 				_all $1
 			else
-				_hue_usage ${BASENAME}
+				_hue_usage
 			fi
 			;;
 

@@ -5,7 +5,7 @@
 case "$1" in
 
 	-h|--help)
-		_hue_usage ${BASENAME}
+		_hue_usage
 		;;
 
 esac

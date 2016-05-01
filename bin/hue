@@ -39,7 +39,7 @@ case "$1" in
 		;;
 
 	help)
-		_hue_usage ${BASENAME}
+		_hue_usage
 		break
 		;;
 
@@ -62,7 +62,7 @@ case "$1" in
 		;;
 
 	*)
-		_hue_usage ${BASENAME}
+		_hue_usage
 		break
 		;;
 

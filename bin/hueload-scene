@@ -33,7 +33,7 @@ case "$1" in
 		;;
 
 	-h|--help)
-		_hue_usage ${BASENAME}
+		_hue_usage
 		;;
 
 	-i|--info)
@@ -49,7 +49,7 @@ case "$1" in
 		;;
 
 	*)
-		_hue_usage ${BASENAME}
+		_hue_usage
 		;;
 
 esac

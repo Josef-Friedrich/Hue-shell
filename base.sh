@@ -316,7 +316,7 @@ _hue_log() {
 
 # Show help messages.
 _hue_usage() {
-	cat /usr/share/doc/hue-shell/$1.txt
+	cat /usr/share/doc/hue-shell/${BASENAME}.txt
 	echo ''
 	exit 0
 }

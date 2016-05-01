@@ -89,7 +89,7 @@ while true ; do
 			;;
 
 		-h|--help)
-			_hue_usage ${BASENAME}
+			_hue_usage
 			;;
 
 		-r|--refresh-interval)
