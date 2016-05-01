@@ -2,7 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-BASENAME=$(basename $0)
 PID=$DIR_RUN_TMP/${BASENAME}.pid
 
 _usage() {

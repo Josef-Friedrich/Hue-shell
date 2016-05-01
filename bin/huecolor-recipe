@@ -24,7 +24,7 @@ while true ; do
 			;;
 
 		-h|--help)
-			_hue_usage $(basename $0)
+			_hue_usage ${BASENAME}
 			;;
 
 		-R|--reading)
@@ -36,7 +36,7 @@ while true ; do
 			;;
 
 		*)
-			_hue_usage $(basename $0)
+			_hue_usage ${BASENAME}
 			;;
 
 	esac

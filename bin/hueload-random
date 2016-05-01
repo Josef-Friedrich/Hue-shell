@@ -69,7 +69,7 @@ while true ; do
 			;;
 
 		-h|--help)
-			_hue_usage $(basename $0)
+			_hue_usage ${BASENAME}
 			exit 0
 			;;
 

@@ -4,7 +4,6 @@
 
 COMMAND="$DEFAULT_SCENE"
 TRIGGERED=0
-BASENAME=$(basename $0)
 FILE_PID=$DIR_RUN_TMP/${BASENAME}.pid
 
 _detect_bridge() {
@@ -45,23 +44,23 @@ _start() {
 		done
 		) &
 		echo $! > $FILE_PID
-		echo "Starting the service '$(basename $0)'."
+		echo "Starting the service '${BASENAME}'."
 	fi
 }
 
 _status() {
 	if [ "$(_is_running)" = 0 ]; then
-		echo "The service '$(basename $0)' is running."
+		echo "The service '${BASENAME}' is running."
 		echo "This command is executed: $COMMAND"
 	else
-		echo "The service '$(basename $0)' is not running."
+		echo "The service '${BASENAME}' is not running."
 	fi
 }
 
 _stop() {
 		kill $(cat $FILE_PID) > /dev/null 2>&1
 		echo > $FILE_PID
-		echo "Stopping the service '$(basename $0)'."
+		echo "Stopping the service '${BASENAME}'."
 		_hue_stop
 		_hue_kill
 }
@@ -90,7 +89,7 @@ while true ; do
 			;;
 
 		-h|--help)
-			_hue_usage $(basename $0)
+			_hue_usage ${BASENAME}
 			;;
 
 		-r|--refresh-interval)
