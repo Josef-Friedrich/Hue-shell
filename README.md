@@ -34,7 +34,7 @@ sh -c "OPT=install; $(curl -fsSL https://raw.github.com/Josef-Friedrich/Hue-shel
 
 # Features
 
-* Versatile basis command `hue set ...`
+* Versatile basic command `hue set ...`
 * Requires very little resources, runs in small UNIX environments
 * Moving light scenes to create a ambient and decent atmosphere (`huescene-breath` `..-pendulum`, `..-sequence`)
 * Background services to detect reachable bridge and blubs.
