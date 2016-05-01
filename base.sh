@@ -222,7 +222,7 @@ _hue_get() {
 	else
 		IFS=","
 		for LIGHT in $LIGHTS; do
-			IFS=$OLD_IFS
+			IFS="$OLD_IFS"
 			_hue_call GET lights/$LIGHT
 		done
 	fi
@@ -237,7 +237,7 @@ _hue_get_on() {
 	IFS="%"
 	IS_LIGHT=0
 	for LINE in $JSON; do
-		IFS=$OLD_IFS
+		IFS="$OLD_IFS"
 		if [ "$IS_LIGHT" = 0 ]; then
 			IS_LIGHT=1
 			IS_REACHABLE=$(echo $LINE | grep '"reachable":true')
@@ -270,7 +270,7 @@ _hue_alert() {
 	else
 		IFS=","
 		for LIGHT in $LIGHTS; do
-			IFS=$OLD_IFS
+			IFS="$OLD_IFS"
 			_hue_call PUT lights/$LIGHT/state '{"alert":"select"}'
 		done
 	fi
