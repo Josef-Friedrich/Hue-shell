@@ -1,9 +1,7 @@
 #! /bin/sh
 
 PIDFILE="$HOME/.config/hue-shell/hue-shell.pids"
-
 OLD_IFS="$IFS"
-
 BASENAME=$(basename $0)
 
 # Execute hue commands and put them in a while loop.
@@ -48,7 +46,6 @@ _hue_range() {
 #	$2: PATH
 #	$3: JSON
 _hue_call() {
-
 	if [ -n "$3" ]; then
 		local DATA="--data $3"
 	fi
