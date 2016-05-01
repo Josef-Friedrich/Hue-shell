@@ -36,3 +36,33 @@ Raspberry Pi, Cubieboard, BeagleBone etc.
 For further documentation please visit the project site:
 
 http://josef-friedrich.github.io/Hue-shell/
+
+
+
+# Commands
+
+## Basic commands
+
+* [hue](http://josef-friedrich.github.io/Hue-shell/docs/hue.html)
+
+## Load commands
+
+* [hueload-default](http://josef-friedrich.github.io/Hue-shell/docs/hueload-default.html)
+* [hueload-random](http://josef-friedrich.github.io/Hue-shell/docs/hueload-random.html)
+* [hueload-scene](http://josef-friedrich.github.io/Hue-shell/docs/hueload-scene.html)
+
+## One color commands
+
+* [huecolor-basic](http://josef-friedrich.github.io/Hue-shell/docs/huecolor-basic.html)
+* [huecolor-recipe](http://josef-friedrich.github.io/Hue-shell/docs/huecolor-recipe.html)
+
+## Scene commands
+
+* [huescene-breath](http://josef-friedrich.github.io/Hue-shell/docs/huescene-breath.html)
+* [huescene-pendulum](http://josef-friedrich.github.io/Hue-shell/docs/huescene-pendulum.html)
+* [huescene-sequence](http://josef-friedrich.github.io/Hue-shell/docs/huescene-sequence.html)
+
+## Service commands
+
+* [hueservice-detect-bridge](http://josef-friedrich.github.io/Hue-shell/docs/hueservice-detect-bridge.html)
+* [hueservice-detect-lights](http://josef-friedrich.github.io/Hue-shell/docs/hueservice-detect-lights.html)
