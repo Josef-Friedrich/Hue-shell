@@ -4,11 +4,6 @@
 
 PID=$DIR_RUN_TMP/${BASENAME}.pid
 
-_usage() {
-	echo "Usage: ${BASENAME} {start|status|stop}" >&2
-	exit 3
-}
-
 _is_running() {
 	kill -0 $(cat $PID) > /dev/null 2>&1
 	echo $?
@@ -52,7 +47,8 @@ case "$1" in
 	start) _start ;;
 	status) _status ;;
 	stop) _stop ;;
-	*) _usage ;;
+	-h|--help) _hue_usage ;;
+	*) _hue_usage ;;
 esac
 
 exit 0
