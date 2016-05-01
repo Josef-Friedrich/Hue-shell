@@ -29,7 +29,7 @@ Raspberry Pi, Cubieboard, BeagleBone etc.
 # Installation
 
 ```sh
-sh -c "OPT=install; $(curl -fsSL http://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
+sh -c "OPT=install; $(curl -fsSkL http://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
 ```
 
 # Features

@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# sh -c "OPT=install; $(curl -fsSL http://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
+# sh -c "OPT=install; $(curl -fsSkL http://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
 
 if [ -z "$OPT" ]; then
 	OPT=$1
@@ -36,7 +36,7 @@ _usage() {
 
 _download() {
 	cd /tmp
-	curl -fsSL -o Hue-shell.tar.gz http://github.com/Josef-Friedrich/Hue-shell/archive/master.tar.gz
+	curl -fsSkL -o Hue-shell.tar.gz http://github.com/Josef-Friedrich/Hue-shell/archive/master.tar.gz
 	tar -xzvf Hue-shell.tar.gz
 	cd Hue-shell-master
 }
