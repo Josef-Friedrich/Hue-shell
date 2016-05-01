@@ -29,7 +29,7 @@ Raspberry Pi, Cubieboard, BeagleBone etc.
 # Features
 
 * Versatile basis command `hue set ...`
-* Requires very little resources, runs in a small UNIX environments
+* Requires very little resources, runs in small UNIX environments
 * Moving light scenes to create a ambient and decent atmosphere (`huescene-breath` `..-pendulum`, `..-sequence`)
 * Background services to detect reachable bridge and blubs.
 
