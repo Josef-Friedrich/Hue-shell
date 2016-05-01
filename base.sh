@@ -189,7 +189,7 @@ _hue_set() {
 	else
 		IFS=","
 		for LIGHT in $LIGHTS; do
-			IFS=$OLD_IFS
+			IFS="$OLD_IFS"
 			_hue_call PUT lights/$LIGHT/state "$JSON"
 		done
 	fi

@@ -19,7 +19,7 @@ _calculate_lights() {
 		IFS=","
 		COUNT=1
 		for LIGHT in $LIGHTS; do
-			IFS=$OLD_IFS
+			IFS="$OLD_IFS"
 
 			NUMBER=$(_hue_range 1:2)
 

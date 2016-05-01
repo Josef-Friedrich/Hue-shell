@@ -37,10 +37,10 @@ _show() {
 _execute_line_by_line() {
 	COMMANDS=$(_list)
 
-	OLD_IFS=$IFS; IFS='
+	IFS='
 '
 	for COMMAND in $COMMANDS; do
-		IFS=$OLD_IFS
+		IFS="$OLD_IFS"
 		echo "
 #####
 "

@@ -76,7 +76,7 @@ fi
 _kill_all() {
 	IFS=","
 	for LIGHT in $LIGHTS_REACHABLE ; do
-		IFS=$OLD_IFS
+		IFS="$OLD_IFS"
 		eval "kill \$PID${LIGHT} > /dev/null 2>&1"
 	done
 }
@@ -136,7 +136,7 @@ _detect_lights() {
 	# Create for each reachable Light X a variable: REACHABLEX
 	IFS=","
 	for LIGHT in $LIGHTS_REACHABLE ; do
-		IFS=$OLD_IFS
+		IFS="$OLD_IFS"
 		eval "REACHABLE${LIGHT}=1"
 	done
 

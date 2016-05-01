@@ -19,7 +19,7 @@ _sequence() {
 
 	IFS=","
 	for HUE in $HUE_SEQUENCE ; do
-		IFS=$OLD_IFS
+		IFS="$OLD_IFS"
 
 		_hue_set all --sat 255 --hue $HUE -t $(($3 * 10)) --bri $4
 		sleep $2
