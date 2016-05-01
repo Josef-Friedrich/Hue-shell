@@ -1,5 +1,9 @@
 #! /bin/sh
 
+_usage() {
+	echo "Usage: $(basename $0) (install|upgrade|uninstall)"
+}
+
 _download() {
 	cd /tmp
 	curl -kL -o Hue-shell.tar.gz https://github.com/Josef-Friedrich/Hue-shell/archive/master.tar.gz
@@ -119,9 +123,9 @@ _uninstall() {
 	cp README.md /tmp/hue-shell-test-cp > /dev/null 2>&1
 
 	if rm -v /tmp/hue-shell-test-cp > /dev/null 2>&1 ; then
-		RM='rm -v'
+		RM='sudo rm -v'
 	else
-		RM='rm'
+		RM='sudo rm'
 	fi
 
 	$RM -rf $DIR_CONF
@@ -154,6 +158,29 @@ _uninstall() {
 	$RM -f /etc/init.d/hue-*
 }
 
+case "$1" in
+
+	install)
+		shift
+		_hue_set $@
+		break
+		;;
+	upgrade)
+		_upgrade
+		break
+		;;
+
+	uninstall)
+		_uninstall
+		break
+		;;
+
+	*)
+		_usage
+		break
+		;;
+
+esac
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;
