@@ -2,20 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-# Helper function.
-#	$1: LIGHT
-#	$2: HUE_RANGE
-#	$3: TIME_RANGE
-#	$4: BRI_RANGE
-_breath() {
-	local TRANSTIME=$(_hue_range $3)
-	local BRI_START=${4%%:*}
-	local BRI_END=${4#*:}
-
-	_hue_set_transit $1 $TRANSTIME --hue $(_hue_range $2) --bri $BRI_END --sat 255
-	_hue_set_transit $1 $TRANSTIME --bri $BRI_START
-}
-
 while true ; do
 	case "$1" in
 		-b|--brightness-range)
@@ -75,7 +61,7 @@ fi
 
 _kill_all() {
 	IFS=","
-	for LIGHT in $LIGHTS_REACHABLE ; do
+	for LIGHT in $ALL_LIGHTS ; do
 		IFS="$OLD_IFS"
 		eval "kill \$PID${LIGHT} > /dev/null 2>&1"
 	done
@@ -88,6 +74,20 @@ _hue_stop
 if [ -n "$MASTER_PID" ]; then
 	_hue_write_to_master_pid $MASTER_PID $$
 fi
+
+# Helper function.
+#	$1: LIGHT
+#	$2: HUE_RANGE
+#	$3: TIME_RANGE
+#	$4: BRI_RANGE
+_breath() {
+	local TRANSTIME=$(_hue_range $3)
+	local BRI_START=${4%%:*}
+	local BRI_END=${4#*:}
+
+	_hue_set_transit $1 $TRANSTIME --hue $(_hue_range $2) --bri $BRI_END --sat 255
+	_hue_set_transit $1 $TRANSTIME --bri $BRI_START
+}
 
 _loop_breath() {
 	eval "HAS_PID=\$PID${LIGHT}"
@@ -140,8 +140,15 @@ _detect_lights() {
 		eval "REACHABLE${LIGHT}=1"
 	done
 
+	local LOOP_LIGHTS
+	if [ -n "$ARG_LIGHTS" ]; then
+		LOOP_LIGHTS="$ARG_LIGHTS"
+	else
+		LOOP_LIGHTS="$ALL_LIGHTS"
+	fi
+
 	IFS=","
-	for LIGHT in $ALL_LIGHTS ; do
+	for LIGHT in $LOOP_LIGHTS ; do
 		IFS="$OLD_IFS"
 		_loop_breath
 	done
@@ -152,10 +159,12 @@ TIME_RANGE: $TIME_RANGE \
 BRI_RANGE: $BRI_RANGE \
 LIGHTS: $LIGHTS"
 
+
 while true; do
 	_detect_lights
 	sleep $REFRESH_INTERVAL
 done
+
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;
