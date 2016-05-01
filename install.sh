@@ -2,6 +2,9 @@
 
 # sh -c "OPT=install; $(curl -fsSkL http://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
 
+# To restore values on upgrade
+# sh -c "OPT=install;R_IP=192.168.2.31;R_USERNAME=joseffriedrich;R_ALL_LIGHTS=1,2,3,4,5,6,7,8,9;R_DEBUG=0;R_LOG=0; $(curl -fsSkL http://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
+
 if [ -z "$OPT" ]; then
 	OPT=$1
 fi
@@ -16,18 +19,19 @@ else
 	}
 fi
 
-if cp -v /etc/hosts /dev/null > /dev/null 2>&1 ; then
-	_cp() {
-		_sudo cp -v $@
-	}
-else
-	_cp() {
-		_sudo cp $@
-	}
-fi
+_cp() {
+	echo "install: $@"
+	_sudo cp $@
+}
 
 _mkdir() {
+	echo "mkdir: $@"
 	_sudo mkdir $@
+}
+
+_rm() {
+	echo "uninstall: $@"
+	_sudo rm -rf $@
 }
 
 _usage() {
@@ -57,7 +61,7 @@ _install_base() {
 
 	# bin
 	_cp bin/hue* $DIR_BIN
-	_cp uninstall.sh $DIR_BIN/hue-uninstall
+	_cp install.sh $DIR_BIN/hue-manager
 
 	# By Hue-shell generated run files that should "survive" reboot.
 	_mkdir -p $DIR_RUN_PERM
@@ -113,6 +117,12 @@ _install_triggerhappy() {
 	fi
 }
 
+
+_cleanup() {
+	_rm /tmp/Hue-shell-master
+	_rm /tmp/Hue-shell.tar.gz
+}
+
 _install() {
 	if [ ! -f ./bin/hue ]; then
 		_download
@@ -120,30 +130,31 @@ _install() {
 	_install_base
 	_install_services
 	_install_triggerhappy
+	_cleanup
 }
 
-_change_settings() {
+_restore_configuration() {
 	_replace() {
-		sed -i "s;$1;$2;" /etc/hue-shell/hue-shell.conf
+		_sudo sed -i "s;$1;$2;" /etc/hue-shell/hue-shell.conf
 	}
-	IP="192.168.2.31"
-	USERNAME="joseffriedrich"
-	ALL_LIGHTS="1,2,3,4,5,6,7,8,9"
-	DEBUG=2
-	LOG=2
-	_replace 'IP="192.168.1.2"' "IP=\"$IP\""
-	_replace 'USERNAME="yourusername"' "USERNAME=\"$USERNAME\""
-	_replace 'ALL_LIGHTS="1,2,3"' "ALL_LIGHTS=\"$ALL_LIGHTS\""
-	_replace 'DEBUG=0' "DEBUG=$DEBUG"
-	_replace 'LOG=0' "LOG=$LOG"
-}
 
-_cleanup() {
-	rm -rf /tmp/Hue-shell-master
-	rm -f /tmp/Hue-shell.tar.gz
+	if [ -n "$R_IP" ]; then _replace 'IP="192.168.1.2"' "IP=\"$R_IP\"" ; fi
+	if [ -n "$R_USERNAME" ]; then _replace 'USERNAME="yourusername"' "USERNAME=\"$R_USERNAME\"" ; fi
+	if [ -n "$R_ALL_LIGHTS" ]; then _replace 'ALL_LIGHTS="1,2,3"' "ALL_LIGHTS=\"$R_ALL_LIGHTS\"" ; fi
+	if [ -n "$R_DEBUG" ]; then _replace 'DEBUG=0' "DEBUG=$R_DEBUG" ; fi
+	if [ -n "$R_LOG" ]; then _replace 'LOG=0' "LOG=$R_LOG" ; fi
 }
 
 _uninstall() {
+	if [ -f /etc/hue-shell/hue-shell.conf ]; then
+		. /etc/hue-shell/hue-shell.conf
+	elif [ -f /etc/hue-shell/hue-shell.conf ]; then
+		. ./config/hue-shell.conf
+	else
+		echo "Nothing to uninstall!"
+		exit 1
+	fi
+
 	echo 'Uninstall hue-shell? (y|n): '
 
 	read COMFIRMATION
@@ -152,20 +163,12 @@ _uninstall() {
 		exit 1
 	fi
 
-	cp README.md /tmp/hue-shell-test-cp > /dev/null 2>&1
-
-	if rm -v /tmp/hue-shell-test-cp > /dev/null 2>&1 ; then
-		RM='sudo rm -v'
-	else
-		RM='sudo rm'
-	fi
-
-	$RM -rf $DIR_CONF
-	$RM -rf $DIR_LIB
-	$RM -f $DIR_BIN/hue*
-	$RM -rf $DIR_RUN_PERM
-	$RM -rf $DIR_DOC
-	$RM -f /etc/triggerhappy/triggers.d/hue-shell.conf
+	_rm $DIR_CONF
+	_rm $DIR_LIB
+	_rm $DIR_BIN/hue*
+	_rm $DIR_RUN_PERM
+	_rm $DIR_DOC
+	_rm /etc/triggerhappy/triggers.d/hue-shell.conf
 
 	# OpenWrt
 	if [ -f /etc/openwrt_version ]; then
@@ -179,7 +182,7 @@ _uninstall() {
 	elif command -v systemctl > /dev/null 2>&1; then
 		echo "Uninstall systemd services ..."
 		_disable() {
-			systemctl disable hue-$1.service
+			_sudo systemctl disable hue-$1.service
 		}
 		_disable load-default
 		_disable detect-lights
@@ -187,17 +190,19 @@ _uninstall() {
 		rm -f /lib/systemd/system/hue*
 	fi
 
-	$RM -f /etc/init.d/hue-*
+	_rm /etc/init.d/hue-*
 }
 
 case "$OPT" in
 
 	install)
 		_install
+		_restore_configuration
 		break
 		;;
 	upgrade)
 		_upgrade
+		_restore_configuration
 		break
 		;;
 
