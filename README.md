@@ -26,6 +26,12 @@ OpenWrt). `Hue-shell` works well in a small BusyBox environment. Out
 of the box `Hue-shell` runs on many single-board computer like 
 Raspberry Pi, Cubieboard, BeagleBone etc.
 
+# Installation
+
+```sh
+sh -c "OPT=install; $(curl -fsSL https://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
+```
+
 # Features
 
 * Versatile basis command `hue set ...`
@@ -33,11 +39,9 @@ Raspberry Pi, Cubieboard, BeagleBone etc.
 * Moving light scenes to create a ambient and decent atmosphere (`huescene-breath` `..-pendulum`, `..-sequence`)
 * Background services to detect reachable bridge and blubs.
 
-For further documentation please visit the project site:
+For further documentation please visit the [project site](http://josef-friedrich.github.io/Hue-shell/):
 
 http://josef-friedrich.github.io/Hue-shell/
-
-
 
 # Commands
 

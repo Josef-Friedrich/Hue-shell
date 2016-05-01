@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/Josef-Friedrich/Hue-shell/master/install.sh) install"
+# sh -c "OPT=install; $(curl -fsSL https://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
 
 if [ -z "$OPT" ]; then
 	OPT=$1
@@ -91,7 +91,7 @@ _install_services() {
 		echo "Installing systemd services ..."
 		_install() {
 			_cp service/systemd/$1 /lib/systemd/system/hue-$1.service
-			systemctl enable /lib/systemd/system/hue-$1.service
+			_sudo systemctl enable /lib/systemd/system/hue-$1.service
 		}
 		_install load-default
 		_install detect-lights
