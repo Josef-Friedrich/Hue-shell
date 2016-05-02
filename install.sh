@@ -5,6 +5,14 @@
 # To restore values on upgrade
 # sh -c "OPT=install;R_IP=192.168.2.31;R_USERNAME=joseffriedrich;R_ALL_LIGHTS=1,2,3,4,5,6,7,8,9;R_DEBUG=0;R_LOG=0; $(curl -fsSkL http://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
 
+if [ -f /etc/hue-shell/hue-shell.conf ]; then
+	. /etc/hue-shell/hue-shell.conf
+elif [ -f ./config/hue-shell.conf ]; then
+	. ./config/hue-shell.conf
+else
+	NO_CONFIG=1
+fi
+
 if [ -z "$OPT" ]; then
 	OPT=$1
 fi
@@ -35,7 +43,11 @@ _rm() {
 }
 
 _usage() {
-	echo "Usage: $(basename $0) (install|upgrade|uninstall)"
+	if type _hue_usage > /dev/null 2>&1; then
+		_hue_usage
+	else
+		echo "Usage: $(basename $0) (install|upgrade|uninstall)"
+	fi
 }
 
 _download() {
@@ -46,8 +58,6 @@ _download() {
 }
 
 _install_base() {
-	. ./config/hue-shell.conf
-
 	# etc
 	_sudo mkdir -p $DIR_CONF
 	if [ -f $DIR_CONF/hue-shell.conf ]; then
@@ -146,15 +156,6 @@ _restore_configuration() {
 }
 
 _uninstall() {
-	if [ -f /etc/hue-shell/hue-shell.conf ]; then
-		. /etc/hue-shell/hue-shell.conf
-	elif [ -f /etc/hue-shell/hue-shell.conf ]; then
-		. ./config/hue-shell.conf
-	else
-		echo "Nothing to uninstall!"
-		exit 1
-	fi
-
 	echo 'Uninstall hue-shell? (y|n): '
 
 	read COMFIRMATION
