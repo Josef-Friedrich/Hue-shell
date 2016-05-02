@@ -1,0 +1,33 @@
+########################################################################
+# hue-manager
+########################################################################
+
+USAGE
+	hue-manager (install|upgrade|uninstall) <options>
+
+SUBCOMMANDS
+
+	install
+		Install Hue-shell.
+
+	upgrade
+		Upgrade Hue-shell.
+
+	uninstall
+		Uninstall Hue-shell
+
+OPTIONS
+
+	-h, --help
+		Show this help message.
+
+DESCRIPTION
+
+	'hue-manager' is a command to install, upgrade or uninstall
+	Hue-shell.
+
+EXAMPLES
+	hue-manager install
+	hue-manager upgrade
+	hue-manager uninstall
+	hue-manager --help
