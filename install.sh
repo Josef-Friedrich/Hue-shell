@@ -127,13 +127,22 @@ _install_triggerhappy() {
 	fi
 }
 
-
 _cleanup() {
 	_rm /tmp/Hue-shell-master
 	_rm /tmp/Hue-shell.tar.gz
 }
 
 _install() {
+	if [ ! -f ./bin/hue ]; then
+		_download
+	fi
+	_install_base
+	_install_services
+	_install_triggerhappy
+	_cleanup
+}
+
+_upgrade() {
 	if [ ! -f ./bin/hue ]; then
 		_download
 	fi
