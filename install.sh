@@ -29,12 +29,12 @@ fi
 
 _cp() {
 	echo "install: $@"
-	_sudo cp $@
+	_sudo cp -f $@
 }
 
 _mkdir() {
 	echo "mkdir: $@"
-	_sudo mkdir $@
+	_sudo mkdir -p $@
 }
 
 _rm() {
@@ -61,12 +61,12 @@ _install_base() {
 	# etc
 	_sudo mkdir -p $DIR_CONF
 	if [ -f $DIR_CONF/hue-shell.conf ]; then
-		_cp -f $DIR_CONF/hue-shell.conf $DIR_CONF/hue-shell.conf.bak
+		_cp $DIR_CONF/hue-shell.conf $DIR_CONF/hue-shell.conf.bak
 	fi
-	_cp -rf config/* $DIR_CONF
+	_cp -r config/* $DIR_CONF
 
 	# lib
-	_mkdir -p $DIR_LIB
+	_mkdir $DIR_LIB
 	_cp base.sh $DIR_LIB
 
 	# bin
@@ -74,13 +74,13 @@ _install_base() {
 	_cp install.sh $DIR_BIN/hue-manager
 
 	# By Hue-shell generated run files that should "survive" reboot.
-	_mkdir -p $DIR_RUN_PERM
+	_mkdir $DIR_RUN_PERM
 	_sudo chmod 777 $DIR_RUN_PERM
 	_sudo touch $FILE_RANDOM_SEED
 	_sudo chmod 666 $FILE_RANDOM_SEED
 
 	# doc
-	_mkdir -p $DIR_DOC
+	_mkdir $DIR_DOC
 	_cp doc/* $DIR_DOC
 
 	# log
@@ -142,16 +142,6 @@ _install() {
 	_cleanup
 }
 
-_upgrade() {
-	if [ ! -f ./bin/hue ]; then
-		_download
-	fi
-	_install_base
-	_install_services
-	_install_triggerhappy
-	_cleanup
-}
-
 _restore_configuration() {
 	_replace() {
 		_sudo sed -i "s;$1;$2;" /etc/hue-shell/hue-shell.conf
@@ -197,7 +187,7 @@ _uninstall() {
 		_disable load-default
 		_disable detect-lights
 		_disable detect-bridge
-		rm -f /lib/systemd/system/hue*
+		_rm /lib/systemd/system/hue*
 	fi
 
 	_rm /etc/init.d/hue-*
@@ -211,8 +201,7 @@ case "$OPT" in
 		break
 		;;
 	upgrade)
-		_upgrade
-		_restore_configuration
+		_install upgrade
 		break
 		;;
 
