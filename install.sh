@@ -58,12 +58,22 @@ _download() {
 }
 
 _install_base() {
-	# etc
+	# conf
 	_sudo mkdir -p $DIR_CONF
-	if [ -f $DIR_CONF/hue-shell.conf ]; then
-		_cp $DIR_CONF/hue-shell.conf $DIR_CONF/hue-shell.conf.bak
+	if [ "$1" = 'upgrade' ]; then
+		_new_conf() {
+			_cp $DIR_CONF/$1 $DIR_CONF/$1.new
+		}
+		_new_conf hue-shell.conf
+		_new_conf random-scenes.conf
+		_new_conf scenes/default.scene
 	fi
-	_cp -r config/* $DIR_CONF
+
+		if [ -f $DIR_CONF/hue-shell.conf ]; then
+			_cp $DIR_CONF/hue-shell.conf $DIR_CONF/hue-shell.conf.bak
+		fi
+		_cp -r config/* $DIR_CONF
+	else
 
 	# lib
 	_mkdir $DIR_LIB
@@ -136,7 +146,7 @@ _install() {
 	if [ ! -f ./bin/hue ]; then
 		_download
 	fi
-	_install_base
+	_install_base $1
 	_install_services
 	_install_triggerhappy
 	_cleanup
