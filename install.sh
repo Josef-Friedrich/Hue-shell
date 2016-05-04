@@ -157,6 +157,40 @@ _restore_configuration() {
 		_sudo sed -i "s;$1;$2;" /etc/hue-shell/hue-shell.conf
 	}
 
+	while true ; do
+		case "$1" in
+			-a|--all-lights)
+				R_ALL_LIGHTS=$2
+				shift 2
+				;;
+
+			-d|--debug)
+				R_DEBUG=$2
+				shift 2
+				;;
+
+			-i|--ip)
+				R_IP=$2
+				shift 2
+				;;
+
+			-l|--log)
+				R_LOG=$2
+				shift 2
+				;;
+
+			-u|--username)
+				R_USERNAME=$2
+				shift 2
+				;;
+
+			*)
+				break
+				;;
+		esac
+	done
+
+
 	if [ -n "$R_IP" ]; then _replace 'IP="192.168.1.2"' "IP=\"$R_IP\"" ; fi
 	if [ -n "$R_USERNAME" ]; then _replace 'USERNAME="yourusername"' "USERNAME=\"$R_USERNAME\"" ; fi
 	if [ -n "$R_ALL_LIGHTS" ]; then _replace 'ALL_LIGHTS="1,2,3"' "ALL_LIGHTS=\"$R_ALL_LIGHTS\"" ; fi
@@ -207,7 +241,8 @@ case "$OPT" in
 
 	install)
 		_install
-		_restore_configuration
+		shift
+		_restore_configuration $@
 		break
 		;;
 	upgrade)
