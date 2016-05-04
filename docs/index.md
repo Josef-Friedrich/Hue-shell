@@ -32,6 +32,10 @@ title: Documentation
 * [hueservice-detect-bridge]({{ site.baseurl }}/docs/hueservice-detect-bridge.html)
 * [hueservice-detect-lights]({{ site.baseurl }}/docs/hueservice-detect-lights.html)
 
+## Management commands
+
+* [hue-manager]({{ site.baseurl }}/docs/hue-manager.html)
+
 ---
 
 # Integration

@@ -1,0 +1,60 @@
+########################################################################
+# hue-manager
+########################################################################
+
+USAGE
+    hue-manager (install|upgrade|uninstall) <options>
+
+SUBCOMMANDS
+
+    install
+        Install Hue-shell.
+
+    upgrade
+        Upgrade Hue-shell.
+
+    uninstall
+        Uninstall Hue-shell
+
+OPTIONS
+
+    -a, --all-lights COMMA_SEPERATE_LIST_OF_IDS
+        Set the option 'ALL_LIGHTS' to the given value in the
+        configuration file. This option is only effective with
+        the subcommand 'install'. 
+
+    -d, --debug INTEGER
+        Set the option 'DEBUG' to the given value in the
+        configuration file. This option is only effective with
+        the subcommand 'install'.
+
+    -h, --help
+        Show this help message.
+
+    -i, --ip IP_ADDRESS
+        Set the option 'IP' to the given value in the
+        configuration file. This option is only effective with
+        the subcommand 'install'.
+
+    -l, --log INTEGER
+        Set the option 'LOG' to the given value in the
+        configuration file. This option is only effective with
+        the subcommand 'install'.
+
+    -u, --username USERNAME
+        Set the option 'USERNAME' to the given value in the 
+        configuration file. This option is only effective with
+        the subcommand 'install'.
+
+DESCRIPTION
+
+    'hue-manager' is a command to install, upgrade or uninstall
+    Hue-shell.
+
+EXAMPLES
+    hue-manager install
+    hue-manager install --ip 192.168.2.31 --username joseffriedrich
+    hue-manager install -l 2 -d 1 
+    hue-manager upgrade
+    hue-manager uninstall
+    hue-manager --help
