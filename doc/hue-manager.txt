@@ -53,6 +53,8 @@ DESCRIPTION
 
 EXAMPLES
 	hue-manager install
+	hue-manager install --ip 192.168.2.31 --username joseffriedrich
+	hue-manager install -l 2 -d 1 
 	hue-manager upgrade
 	hue-manager uninstall
 	hue-manager --help
