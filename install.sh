@@ -43,11 +43,12 @@ _rm() {
 }
 
 _usage() {
-	if type _hue_usage > /dev/null 2>&1; then
-		_hue_usage
+	if [ -f /usr/share/doc/hue-shell/hue-manager.txt ] ; then
+		cat /usr/share/doc/hue-shell/hue-manager.txt
 	else
 		echo "Usage: $(basename $0) (install|upgrade|uninstall)"
 	fi
+	exit 1
 }
 
 _download() {
@@ -67,13 +68,12 @@ _install_base() {
 		_new_conf hue-shell.conf
 		_new_conf random-scenes.conf
 		_new_conf scenes/default.scene
-	fi
-
+	else
 		if [ -f $DIR_CONF/hue-shell.conf ]; then
 			_cp $DIR_CONF/hue-shell.conf $DIR_CONF/hue-shell.conf.bak
 		fi
 		_cp -r config/* $DIR_CONF
-	else
+	fi
 
 	# lib
 	_mkdir $DIR_LIB
