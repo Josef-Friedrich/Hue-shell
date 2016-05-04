@@ -70,3 +70,7 @@ http://josef-friedrich.github.io/Hue-shell/
 
 * [hueservice-detect-bridge](http://josef-friedrich.github.io/Hue-shell/docs/hueservice-detect-bridge.html)
 * [hueservice-detect-lights](http://josef-friedrich.github.io/Hue-shell/docs/hueservice-detect-lights.html)
+
+## Management commands
+
+* [hue-manager](http://josef-friedrich.github.io/Hue-shell/docs/hue-manager.html)
