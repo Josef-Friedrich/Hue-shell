@@ -43,6 +43,15 @@ case "$1" in
 		break
 		;;
 
+	log)
+		tail -f $FILE_LOG
+		break
+		;;
+
+	ps)
+		ps w | grep hue | grep -v grep
+		break
+		;;
 
 	# Stop
 
