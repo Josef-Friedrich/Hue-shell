@@ -23,6 +23,8 @@ SUBCOMMANDS
 		config
 		get <lights>
 		help
+		log
+		ps
 
 	STOP SUBCOMMANDS
 
@@ -180,6 +182,26 @@ USAGE
 
 DESCRIPTION
 	Show this help message.
+
+####################################
+# hue log
+####################################
+
+USAGE
+	hue log
+
+DESCRIPTION
+	Show log messages.
+
+####################################
+# hue ps
+####################################
+
+USAGE
+	hue ps
+
+DESCRIPTION
+	Show which processes are running.
 
 ####################################
 # hue kill
