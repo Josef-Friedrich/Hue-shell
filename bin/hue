@@ -44,7 +44,8 @@ case "$1" in
 		;;
 
 	log)
-		tail -f $FILE_LOG
+		shift
+		tail $@ $FILE_LOG
 		break
 		;;
 
