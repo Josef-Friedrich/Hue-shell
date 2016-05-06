@@ -14,7 +14,7 @@ _detect_bridge() {
 		_hue_log 1 "Starting: $COMMAND"
 		eval "$COMMAND &"
 		echo $! >> $DIR_RUN_TMP/hue-background-$PPID
-	elif[ $? -eq 0 ] &&  [ "$TRIGGERED" = 1 ]
+	elif [ $? -eq 0 ] &&  [ "$TRIGGERED" = 1 ]
 		_hue_log 1 "Stopping: $COMMAND"
 		_hue_stop
 		_hue_kill
