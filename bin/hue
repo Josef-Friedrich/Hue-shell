@@ -49,7 +49,7 @@ case "$1" in
 		;;
 
 	ps)
-		ps w | grep hue | grep -v grep
+		ps w | grep hue | grep -v grep | grep -v ps
 		break
 		;;
 
