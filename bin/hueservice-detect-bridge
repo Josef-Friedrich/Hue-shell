@@ -12,14 +12,12 @@ _detect_bridge() {
 	if [ $? -eq 0 ]; then
 		if [ "$TRIGGERED" = 0 ]; then
 			TRIGGERED=1
-			echo "Starting: $COMMAND (\$\$: $$)"
 			_hue_log 1 "Starting: $COMMAND"
 			eval "$COMMAND &"
 			echo $! >> $DIR_RUN_TMP/hue-background-$PPID
 		fi
 	else
 		if [ "$TRIGGERED" = 1 ]; then
-			echo "Stopping: $COMMAND"
 			_hue_log 1 "Stopping: $COMMAND"
 			_hue_stop
 			_hue_kill
