@@ -23,7 +23,7 @@ SUBCOMMANDS
 		config
 		get <lights>
 		help
-		log
+		log <tail-options>
 		ps
 
 	STOP SUBCOMMANDS
@@ -188,10 +188,14 @@ DESCRIPTION
 ####################################
 
 USAGE
-	hue log
+	hue log <tail-options>
 
 DESCRIPTION
 	Show log messages.
+
+EXAMPLES
+	hue log -f
+	hue log -n 100
 
 ####################################
 # hue ps
