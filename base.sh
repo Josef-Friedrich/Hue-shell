@@ -71,7 +71,7 @@ _hue_kill() {
 	# - pkill (not on openwrt, busybox)
 	# - ps -w | grep "hue" | awk '{print $1}'
 
-	killall \
+	killall -9 \
 		hue \
 		huecolor-basic \
 		huecolor-recipe \
