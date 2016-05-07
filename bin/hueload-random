@@ -59,7 +59,7 @@ while true ; do
 			;;
 
 		-d|--debug)
-			DEBUG="YES"
+			DEBUG=1
 			shift
 			;;
 
@@ -93,9 +93,7 @@ _hue_stop
 
 RANDOM_SCENE=$(_get_random)
 
-if [ "$DEBUG" = "YES" ]; then
-	echo $RANDOM_SCENE
-fi
+_hue_log 1 "$RANDOM_SCENE"
 
 eval "$RANDOM_SCENE"
 echo $! >> $DIR_RUN_TMP/hue-background-$PPID
