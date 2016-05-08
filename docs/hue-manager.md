@@ -64,3 +64,4 @@ EXAMPLES
 	hue-manager uninstall
 	hue-manager --help
 ```
+

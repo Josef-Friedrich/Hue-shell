@@ -50,3 +50,4 @@ EXAMPLES
 	hueservice-detect-bridge stop
 	hueservice-detect-bridge --help
 ```
+

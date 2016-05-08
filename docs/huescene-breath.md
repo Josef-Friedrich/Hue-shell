@@ -36,3 +36,4 @@ EXAMPLES
 	huescene-breath ---hue-range 0:65000 --time-range 1:1 \
 		--brightness-range 2:6
 ```
+

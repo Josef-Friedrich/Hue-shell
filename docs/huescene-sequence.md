@@ -36,3 +36,4 @@ EXAMPLES
 	huescene-sequence -H 46920,12750,25500 -t 2 -s 20 -b 255
 	huescene-sequence
 ```
+

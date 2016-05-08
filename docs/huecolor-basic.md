@@ -42,3 +42,4 @@ EXAMPLES
 	huecolor-basic --green
 	huecolor-basic 65535
 ```
+

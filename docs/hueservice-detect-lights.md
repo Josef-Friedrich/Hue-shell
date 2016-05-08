@@ -42,3 +42,4 @@ EXAMPLES
 	hueservice-detect-lights status
 	hueservice-detect-lights stop
 ```
+

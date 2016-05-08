@@ -36,3 +36,4 @@ EXAMPLES
 	hueload-scene -i
 	hueload-scene --stop
 ```
+
