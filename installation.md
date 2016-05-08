@@ -11,10 +11,10 @@ title: Installation
 ### Using `curl`
 
 ```
-curl -kL -o Hue-shell.tar.gz https://github.com/Josef-Friedrich/Hue-shell/archive/1.1.tar.gz
+curl -kL -o Hue-shell.tar.gz https://github.com/Josef-Friedrich/Hue-shell/archive/master.tar.gz
 tar -xzvf Hue-shell.tar.gz
 cd Hue-shell-master
-./install.sh
+./install.sh install
 ```
 
 ### Using `git`
@@ -22,8 +22,7 @@ cd Hue-shell-master
 ```
 git clone git@github.com:Josef-Friedrich/Hue-shell.git
 cd Hue-shell
-git checkout 1.1
-sudo ./install.sh
+sudo ./install.sh install
 ```
 
 You need a working Philips Hue setup, the IP address of your bridge and
