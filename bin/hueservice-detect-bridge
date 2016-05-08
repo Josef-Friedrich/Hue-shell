@@ -33,13 +33,13 @@ _start() {
 	if [ "$(_is_running)" = 0 ]; then
 		echo "The service is already running."
 	else
+		PID=$$
 		(
 		while true; do
 			_detect_bridge
 			sleep $REFRESH_INTERVAL
 		done
 		) &
-		PID=$!
 		echo $PID > $FILE_PID
 		echo "Starting the service '${BASENAME}'."
 	fi
