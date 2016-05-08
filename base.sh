@@ -289,7 +289,13 @@ _hue_trap() {
 #	$1: MASTER_PID
 #	$2: PID
 _hue_write_to_master_pid() {
-	echo $2 >> $DIR_RUN_TMP/hue-shell_master-pid_$1
+	local MASTER
+	if [ -z "$2" ]; then
+		MASTER=$1
+	else
+		MASTER=$2
+	fi
+	echo $MASTER >> $DIR_RUN_TMP/hue-shell_master-pid_$1
 }
 
 # Print out debug output in three modes.

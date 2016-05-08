@@ -78,6 +78,11 @@ while true ; do
 			exit 0
 			;;
 
+		-m|--master-pid)
+			MASTER_PID=$2
+			shift 2
+			;;
+
 		-s|--show)
 			_show
 			exit 0
@@ -95,7 +100,14 @@ RANDOM_SCENE=$(_get_random)
 
 _hue_log 1 "$RANDOM_SCENE"
 
-eval "$RANDOM_SCENE"
+if [ -z "$MASTER_PID" ]; then
+	_hue_write_to_master_pid $!
+	eval "$RANDOM_SCENE --master-pid $!"
+else
+	_hue_write_to_master_pid $MASTER_PID $!
+	eval "$RANDOM_SCENE --master-pid $MASTER_PID"
+fi
+
 echo $! >> $DIR_RUN_TMP/hue-background-$PPID
 
 # vim: set ts=8 sw=8 sts=8 et :
