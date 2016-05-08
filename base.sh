@@ -303,9 +303,9 @@ _hue_write_to_master_pid() {
 _hue_kill_by_master_pid() {
 	if [ -n "$1" ]; then
 		local PROCESS_ID
-		_hue_log 1 "MASTER_PID: $1"
+		_hue_log 1 "kill MASTER_PID: $1"
 		for PROCESS_ID in $(cat $DIR_RUN_TMP/hue-shell_master-pid_$1); do
-			_hue_log 2 "kill PROCESS_ID: $1"
+			_hue_log 2 "kill PROCESS_ID: $PROCESS_ID"
 			kill -9 $PROCESS_ID > /dev/null 2>&1
 		done
 		rm -f $DIR_RUN_TMP/hue-shell_master-pid_$1
