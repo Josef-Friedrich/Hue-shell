@@ -13,8 +13,7 @@ _detect_bridge() {
 		if [ "$TRIGGERED" = 0 ]; then
 			TRIGGERED=1
 			_hue_log 1 "Starting: $COMMAND"
-			eval "$COMMAND &"
-			echo $! >> $DIR_RUN_TMP/hue-background-$PPID
+			eval "$COMMAND --master-pid $PID &"
 		fi
 	else
 		if [ "$TRIGGERED" = 1 ]; then
@@ -40,7 +39,8 @@ _start() {
 			sleep $REFRESH_INTERVAL
 		done
 		) &
-		echo $! > $FILE_PID
+		PID=$!
+		echo $PID > $FILE_PID
 		echo "Starting the service '${BASENAME}'."
 	fi
 }
