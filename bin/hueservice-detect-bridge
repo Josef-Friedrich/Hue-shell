@@ -13,12 +13,12 @@ _detect_bridge() {
 		if [ "$TRIGGERED" = 0 ]; then
 			TRIGGERED=1
 			_hue_log 1 "Starting: $COMMAND"
-			eval "$COMMAND --master-pid $PID &"
+			eval "$COMMAND --master-pid $MASTER_PID &"
 		fi
 	else
 		if [ "$TRIGGERED" = 1 ]; then
 			_hue_log 1 "Stopping: $COMMAND"
-			_hue_kill_by_master_pid $PID
+			_hue_kill_by_master_pid $MASTER_PID
 			#_hue_kill
 		fi
 		TRIGGERED=0
@@ -34,14 +34,14 @@ _start() {
 	if [ "$(_is_running)" = 0 ]; then
 		echo "The service is already running."
 	else
-		PID=$$
+		MASTER_PID=$$
 		(
 		while true; do
 			_detect_bridge
 			sleep $REFRESH_INTERVAL
 		done
 		) &
-		echo $PID > $FILE_PID
+		echo $! > $FILE_PID
 		echo "Starting the service '${BASENAME}'."
 	fi
 }
@@ -59,7 +59,7 @@ _stop() {
 		kill $(cat $FILE_PID) > /dev/null 2>&1
 		echo > $FILE_PID
 		echo "Stopping the service '${BASENAME}'."
-		_hue_kill_by_master_pid $PID
+		_hue_kill_by_master_pid $MASTER_PID
 		#_hue_kill
 }
 
