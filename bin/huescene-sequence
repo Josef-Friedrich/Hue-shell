@@ -69,7 +69,7 @@ _hue_trap
 _hue_stop
 
 if [ -n "$MASTER_PID" ]; then
-	_hue_write_to_master_pid $MASTER_PID $!
+	_hue_write_to_master_pid $MASTER_PID $$
 fi
 
 while true; do
