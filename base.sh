@@ -298,6 +298,18 @@ _hue_write_to_master_pid() {
 	echo $MASTER >> $DIR_RUN_TMP/hue-shell_master-pid_$1
 }
 
+# Stop all hue processes.
+#	$1: MASTER_PID
+_hue_kill_by_master_pid() {
+	if [ -n "$1"]; then
+		local PROCESS_ID
+		for PROCESS_ID in $(cat $DIR_RUN_TMP/hue-shell_master-pid_$1); do
+			kill -9 $PROCESS_ID > /dev/null 2>&1
+		done
+		rm -f $DIR_RUN_TMP/hue-shell_master-pid_$1
+	fi
+}
+
 # Print out debug output in three modes.
 _hue_output() {
 	read OUTPUT
