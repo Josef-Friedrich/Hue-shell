@@ -61,7 +61,7 @@ _download() {
 _install_base() {
 	# conf
 	_sudo mkdir -p $DIR_CONF
-	if [ "$1" = 'upgrade' ]; then
+	if [ "$UPGRADE"=1 ]; then
 		_new_conf() {
 			_cp $DIR_CONF/$1 $DIR_CONF/$1.new
 		}
@@ -104,7 +104,9 @@ _install_services() {
 		echo "Installing init.d services ..."
 		_install() {
 			_cp service/openwrt.initd/$1 /etc/init.d/hue-$1
-			/etc/init.d/hue-$1 enable
+			if [ -z "$UPGRADE" ]; then
+				/etc/init.d/hue-$1 enable
+			fi
 		}
 		_install load-default
 		_install detect-lights
@@ -115,7 +117,9 @@ _install_services() {
 		echo "Installing systemd services ..."
 		_install() {
 			_cp service/systemd/$1 /lib/systemd/system/hue-$1.service
-			_sudo systemctl enable /lib/systemd/system/hue-$1.service
+			if [ -z "$UPGRADE" ]; then
+				_sudo systemctl enable /lib/systemd/system/hue-$1.service
+			fi
 		}
 		_install load-default
 		_install detect-lights
@@ -146,7 +150,7 @@ _install() {
 	if [ ! -f ./bin/hue ]; then
 		_download
 	fi
-	_install_base $1
+	_install_base
 	_install_services
 	_install_triggerhappy
 	_cleanup
@@ -246,7 +250,8 @@ case "$OPT" in
 		break
 		;;
 	upgrade)
-		_install upgrade
+		UPGRADE=1
+		_install
 		break
 		;;
 
