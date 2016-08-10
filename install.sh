@@ -43,8 +43,8 @@ _rm() {
 }
 
 _usage() {
-	if [ -f /usr/share/doc/hue-shell/hue-manager.txt ] ; then
-		cat /usr/share/doc/hue-shell/hue-manager.txt
+	if [ -f ${PREFIX}/share/doc/hue-shell/hue-manager.txt ] ; then
+		cat ${PREFIX}/share/doc/hue-shell/hue-manager.txt
 	else
 		echo "Usage: $(basename $0) (install|upgrade|uninstall)"
 	fi
@@ -61,7 +61,7 @@ _download() {
 _install_base() {
 	# conf
 	_sudo mkdir -p $DIR_CONF
-	if [ "$UPGRADE"=1 ]; then
+	if [ -n "$UPGRADE" ]; then
 		_new_conf() {
 			_cp $DIR_CONF/$1 $DIR_CONF/$1.new
 		}
