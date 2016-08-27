@@ -34,6 +34,22 @@ sh -c "OPT=install; $(curl -fksSkL http://raw.github.com/Josef-Friedrich/Hue-she
 
 # Features
 
+
+```
+              .--------------.
+           ___|  _  _  _  _  |_________________
+          /   |  || || || ||_|___             /;      Hue-shell runs on 
+         /.--------------.      /|___        //     many single-board computer
+        / |  _  _  _  _  |     / ___ \      //     like Raspberry Pi,        
+       /  |  || || || || |____/ ___ \(\)   //     Cubieboard, BeagleBone etc.
+      /   |  || || || || |    | /  \(\)   //
+     /    |______________|____|/   (\)   //
+    / _                                 //
+   / (\) Raspberry Pi                  //
+  /___________________________________//
+  `-----------------------------------' 
+```
+
 * Versatile basic command `hue set ...`
 * Requires very little resources, runs in small UNIX environments
 * Moving light scenes to create a ambient and decent atmosphere (`huescene-breath` `..-pendulum`, `..-sequence`)
