@@ -7,6 +7,11 @@ title: Installation
 * shell (sh, ash, dash, bash .. )
 * curl
 
+### Command to paste in the console
+
+```sh
+sh -c "OPT=install; $(curl -fksSL https://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
+```
 
 ### Using `curl`
 
