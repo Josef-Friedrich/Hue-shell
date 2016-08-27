@@ -32,8 +32,9 @@ Raspberry Pi, Cubieboard, BeagleBone etc.
 sh -c "OPT=install; $(curl -fksSkL http://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
 ```
 
-# Features
+To install `Hue shell` manually please read the [documentation on the project page](http://josef-friedrich.github.io/Hue-shell/installation.html).
 
+# Features
 
 ```
               .--------------.
