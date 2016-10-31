@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Josef-Friedrich/Hue-shell.svg?branch=master)](https://travis-ci.org/Josef-Friedrich)
+[![Build Status](https://travis-ci.org/Josef-Friedrich/Hue-shell.svg?branch=master)](https://travis-ci.org/Josef-Friedrich/Hue-shell)
 
 `Hue-shell` is a collection of shell scripts to control the Hue lamps
 from Philips.
