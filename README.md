@@ -1,5 +1,7 @@
+[![Build Status](https://travis-ci.org/Josef-Friedrich/Hue-shell.svg?branch=master)](https://travis-ci.org/Josef-Friedrich)
+
 `Hue-shell` is a collection of shell scripts to control the Hue lamps
-from Philips. 
+from Philips.
 
 ```
                     _________________________
@@ -22,8 +24,8 @@ router "Linksys WRT54GL").
 
 `Hue-shell` runs on many shells (sh, dash,
 ash, bash) and many UNIX operating systems (Linux, MacOS X, FreeBSD,
-OpenWrt). `Hue-shell` works well in a small BusyBox environment. Out 
-of the box `Hue-shell` runs on many single-board computer like 
+OpenWrt). `Hue-shell` works well in a small BusyBox environment. Out
+of the box `Hue-shell` runs on many single-board computer like
 Raspberry Pi, Cubieboard, BeagleBone etc.
 
 # Installation
@@ -39,7 +41,7 @@ To install `Hue shell` manually please read the [documentation on the project pa
 ```
               .--------------.
            ___|  _  _  _  _  |_________________
-          /   |  || || || ||_|___             /;      Hue-shell runs on 
+          /   |  || || || ||_|___             /;      Hue-shell runs on
          /.--------------.      /|___        //     many single-board computer
         / |  _  _  _  _  |     / ___ \      //     like Raspberry Pi,        
        /  |  || || || || |____/ ___ \(\)   //     Cubieboard, BeagleBone etc.
@@ -48,7 +50,7 @@ To install `Hue shell` manually please read the [documentation on the project pa
     / _                                 //
    / (\) Raspberry Pi                  //
   /___________________________________//
-  `-----------------------------------' 
+  `-----------------------------------'
 ```
 
 * Versatile basic command `hue set ...`
