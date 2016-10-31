@@ -346,11 +346,11 @@ _hue_color_to_hue() {
 	case "$1" in
 		blue) echo 46920 ;;
 		cyan) echo 56100 ;;
-		green) echo 25500
+		green) echo 25500 ;;
 		red) echo 0 ;;
 		white) echo 36210 ;;
 		yellow) echo 12750 ;;
-		*) exit 0 ;;
+		*) echo 0 ;;
 	esac
 }
 
