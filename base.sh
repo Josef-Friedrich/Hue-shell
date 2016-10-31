@@ -341,5 +341,19 @@ _hue_usage() {
 	exit 0
 }
 
+# Convert color strings to hue values.
+_hue_color_to_hue() {
+	case "$1" in
+		blue) echo 46920 ;;
+		cyan) echo 56100 ;;
+		green) echo 25500
+		red) echo 0 ;;
+		white) echo 36210 ;;
+		yellow) echo 12750 ;;
+		*) exit 0 ;;
+	esac
+}
+
+
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;
