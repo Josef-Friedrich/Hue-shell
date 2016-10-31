@@ -8,7 +8,7 @@ teardown() {
   sudo ./install.sh uninstall -y
 }
 
-@test "color to hue" {
+@test "unittest: _hue_color_to_hue" {
     PWD=$(pwd)
     . "$PWD"/base.sh
 
@@ -20,4 +20,13 @@ teardown() {
     [ "${output}" -eq 56100 ]
     run _hue_color_to_hue
     [ "${output}" -eq 0 ]
+}
+
+@test "unittest: _hue_range" {
+    skip
+    PWD=$(pwd)
+    . "$PWD"/base.sh
+
+    run _hue_range 1:200
+    [ "${output}" -eq 1 ]
 }
