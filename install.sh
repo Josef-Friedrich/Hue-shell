@@ -203,12 +203,14 @@ _restore_configuration() {
 }
 
 _uninstall() {
-	echo 'Uninstall hue-shell? (y|n): '
+	if [ ! "$@" = '-y' ]; then
+		echo 'Uninstall hue-shell? (y|n): '
 
-	read COMFIRMATION
+		read COMFIRMATION
 
-	if [ ! "$COMFIRMATION" = 'y' ]; then
-		exit 1
+		if [ ! "$COMFIRMATION" = 'y' ]; then
+			exit 1
+		fi
 	fi
 
 	_rm $DIR_CONF
@@ -256,7 +258,7 @@ case "$OPT" in
 		;;
 
 	uninstall)
-		_uninstall
+		_uninstall $@
 		break
 		;;
 

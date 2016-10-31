@@ -1,5 +1,13 @@
 #!/usr/bin/env bats
 
+setup() {
+  sudo ./install.sh install
+}
+
+teardown() {
+  sudo ./install.sh uninstall -y
+}
+
 @test "color to hue" {
     PWD=$(pwd)
     . "$PWD"/base.sh
