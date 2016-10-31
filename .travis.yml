@@ -1,0 +1,4 @@
+language: bash
+sudo: required
+script:
+  - bats test/test.bats
