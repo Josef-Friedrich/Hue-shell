@@ -349,7 +349,7 @@ _hue_usage() {
 }
 
 # Convert color strings to hue values.
-_hue_color_to_hue() {
+_hue_color() {
 	case "$1" in
 		blue) echo 46920 ;;
 		cyan) echo 56100 ;;

@@ -47,16 +47,16 @@ teardown() {
 	[ "${status}" -eq 0 ]
 }
 
-@test "unittest: _hue_color_to_hue" {
+@test "unittest: _hue_color" {
 	. /etc/hue-shell/hue-shell.conf
 
-	run _hue_color_to_hue green
+	run _hue_color green
 	[ "${output}" -eq 25500 ]
-	run _hue_color_to_hue blue
+	run _hue_color blue
 	[ "${output}" -eq 46920 ]
-	run _hue_color_to_hue cyan
+	run _hue_color cyan
 	[ "${output}" -eq 56100 ]
-	run _hue_color_to_hue
+	run _hue_color
 	[ "${output}" -eq 0 ]
 }
 
