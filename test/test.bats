@@ -1,13 +1,5 @@
 #!/usr/bin/env bats
 
-setup() {
-	sudo ./install.sh install > /dev/null 2>&1
-}
-
-teardown() {
-	sudo ./install.sh uninstall -y > /dev/null 2>&1
-}
-
 @test "Installation: bin" {
 	# lib
 	run test -f /usr/lib/hue-shell/base.sh
@@ -99,27 +91,5 @@ teardown() {
 
 @test "execute: hueload-scene --execute default" {
 	run hueload-scene --execute default
-	[ "${status}" -eq 0 ]
-}
-
-@test "execute: hue-manager" {
-	run hue-manager
-	[ "${lines[1]}" = '# hue-manager' ]
-	[ "${status}" -eq 1 ]
-}
-
-@test "execute: hue-manager help" {
-	run hue-manager help
-	[ "${lines[1]}" = '# hue-manager' ]
-	[ "${status}" -eq 0 ]
-}
-
-@test "execute: hue-manager install" {
-	run hue-manager install
-	[ "${status}" -eq 0 ]
-}
-
-@test "execute: hue-manager uninstall" {
-	run hue-manager uninstall -y
 	[ "${status}" -eq 0 ]
 }

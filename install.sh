@@ -46,7 +46,7 @@ _usage() {
 	if [ -f ${PREFIX}/share/doc/hue-shell/hue-manager.txt ] ; then
 		cat ${PREFIX}/share/doc/hue-shell/hue-manager.txt
 	else
-		echo "Usage: $(basename $0) (install|upgrade|uninstall)"
+		echo "Usage: $(basename $0) (install|reinstall|upgrade|uninstall|help)"
 	fi
 	exit $1
 }
@@ -251,6 +251,15 @@ case "$OPT" in
 		_restore_configuration $@
 		break
 		;;
+
+	reinstall)
+		_uninstall -y
+		_install
+		shift
+		_restore_configuration $@
+		break
+		;;
+
 	upgrade)
 		UPGRADE=1
 		_install
@@ -262,10 +271,10 @@ case "$OPT" in
 		break
 		;;
 
-		help)
-			_usage
-			break
-			;;
+	help)
+		_usage
+		break
+		;;
 
 	*)
 		_usage 1
