@@ -41,6 +41,12 @@
 	[ "${LOG}" -eq 1  ]
 }
 
+@test "execute: hue-manager install --test 1" {
+	run hue-manager install --test 1
+	. /etc/hue-shell/hue-shell.conf
+	[ "${TEST}" -eq 1  ]
+}
+
 @test "execute: hue-manager install --username joseffriedrich" {
 	run hue-manager install --username joseffriedrich
 	. /etc/hue-shell/hue-shell.conf

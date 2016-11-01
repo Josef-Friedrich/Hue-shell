@@ -50,10 +50,14 @@ _hue_call() {
 		local DATA="--data $3"
 	fi
 	_hue_log 2 "HTTP_REQUEST: $1 PATH: $2 DATA: $3"
-	curl \
-		--max-time 1 \
-		--silent \
-		--request $1 $DATA http://$IP/api/$USERNAME/$2 | _hue_output
+	if [ "$TEST" = 1 ]; then
+		echo "HTTP_REQUEST: $1 PATH: $2 DATA: $3"
+	else
+		curl \
+			--max-time 1 \
+			--silent \
+			--request $1 $DATA http://$IP/api/$USERNAME/$2 | _hue_output
+	fi
 }
 
 # Stop all hue processes.

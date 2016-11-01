@@ -183,6 +183,11 @@ _restore_configuration() {
 				shift 2
 				;;
 
+			-t|--test)
+				R_TEST=$2
+				shift 2
+				;;
+
 			-u|--username)
 				R_USERNAME=$2
 				shift 2
@@ -194,12 +199,12 @@ _restore_configuration() {
 		esac
 	done
 
-
 	if [ -n "$R_IP" ]; then _replace 'IP="192.168.1.2"' "IP=\"$R_IP\"" ; fi
 	if [ -n "$R_USERNAME" ]; then _replace 'USERNAME="yourusername"' "USERNAME=\"$R_USERNAME\"" ; fi
 	if [ -n "$R_ALL_LIGHTS" ]; then _replace 'ALL_LIGHTS="1,2,3"' "ALL_LIGHTS=\"$R_ALL_LIGHTS\"" ; fi
 	if [ -n "$R_DEBUG" ]; then _replace 'DEBUG=0' "DEBUG=$R_DEBUG" ; fi
 	if [ -n "$R_LOG" ]; then _replace 'LOG=0' "LOG=$R_LOG" ; fi
+	if [ -n "$R_TEST" ]; then _replace 'TEST=0' "TEST=$R_TEST" ; fi
 }
 
 _uninstall() {
