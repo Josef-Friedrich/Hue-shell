@@ -1,11 +1,36 @@
 #!/usr/bin/env bats
 
 setup() {
-  sudo ./install.sh install
+  sudo ./install.sh install > /dev/null 2>&1
 }
 
 teardown() {
-  sudo ./install.sh uninstall -y
+  sudo ./install.sh uninstall -y > /dev/null 2>&1
+}
+
+@test "Installation: bin" {
+    run test -f /usr/bin/hue
+    [ "${status}" -eq 0 ]
+    run test -f /usr/bin/huecolor-basic
+    [ "${status}" -eq 0 ]
+    run test -f /usr/bin/huecolor-recipe
+    [ "${status}" -eq 0 ]
+    run test -f /usr/bin/hueload-default
+    [ "${status}" -eq 0 ]
+    run test -f /usr/bin/hueload-random
+    [ "${status}" -eq 0 ]
+    run test -f /usr/bin/hueload-scene
+    [ "${status}" -eq 0 ]
+    run test -f /usr/bin/huescene-breath
+    [ "${status}" -eq 0 ]
+    run test -f /usr/bin/huescene-pendulum
+    [ "${status}" -eq 0 ]
+    run test -f /usr/bin/huescene-sequence
+    [ "${status}" -eq 0 ]
+    run test -f /usr/bin/hueservice-detect-bridge
+    [ "${status}" -eq 0 ]
+    run test -f /usr/bin/hueservice-detect-lights
+    [ "${status}" -eq 0 ]
 }
 
 @test "unittest: _hue_color_to_hue" {
