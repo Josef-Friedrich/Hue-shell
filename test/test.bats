@@ -86,6 +86,7 @@ teardown() {
 }
 
 @test "execute: hue set 1 --on" {
+	skip
 	run hue set 1 --on
 	[ "${status}" -eq 0 ]
 }
