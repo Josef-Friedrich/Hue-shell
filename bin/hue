@@ -72,7 +72,7 @@ case "$1" in
 		;;
 
 	*)
-		_hue_usage
+		_hue_usage error
 		break
 		;;
 

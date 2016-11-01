@@ -338,7 +338,11 @@ _hue_log() {
 _hue_usage() {
 	cat ${PREFIX}/share/doc/hue-shell/${BASENAME}.txt
 	echo ''
-	exit 0
+	if [ "$1" = 'error' ]; then
+		exit 1
+	else
+		exit 0
+	fi
 }
 
 # Convert color strings to hue values.
