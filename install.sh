@@ -46,7 +46,7 @@ _usage() {
 	if [ -f ${PREFIX}/share/doc/hue-shell/hue-manager.txt ] ; then
 		cat ${PREFIX}/share/doc/hue-shell/hue-manager.txt
 	else
-		echo "Usage: $(basename $0) (install|reinstall|upgrade|uninstall|help)"
+		echo "Usage: $(basename $0) (help|install|reinstall|upgrade|uninstall)"
 	fi
 	exit $1
 }
@@ -199,12 +199,12 @@ _restore_configuration() {
 		esac
 	done
 
-	if [ -n "$R_IP" ]; then _replace 'IP="192.168.1.2"' "IP=\"$R_IP\"" ; fi
-	if [ -n "$R_USERNAME" ]; then _replace 'USERNAME="yourusername"' "USERNAME=\"$R_USERNAME\"" ; fi
 	if [ -n "$R_ALL_LIGHTS" ]; then _replace 'ALL_LIGHTS="1,2,3"' "ALL_LIGHTS=\"$R_ALL_LIGHTS\"" ; fi
 	if [ -n "$R_DEBUG" ]; then _replace 'DEBUG=0' "DEBUG=$R_DEBUG" ; fi
+	if [ -n "$R_IP" ]; then _replace 'IP="192.168.1.2"' "IP=\"$R_IP\"" ; fi
 	if [ -n "$R_LOG" ]; then _replace 'LOG=0' "LOG=$R_LOG" ; fi
 	if [ -n "$R_TEST" ]; then _replace 'TEST=0' "TEST=$R_TEST" ; fi
+	if [ -n "$R_USERNAME" ]; then _replace 'USERNAME="yourusername"' "USERNAME=\"$R_USERNAME\"" ; fi
 }
 
 _uninstall() {
@@ -250,6 +250,11 @@ _uninstall() {
 
 case "$OPT" in
 
+	help)
+		_usage
+		break
+		;;
+
 	install)
 		_install
 		shift
@@ -273,11 +278,6 @@ case "$OPT" in
 
 	uninstall)
 		_uninstall $@
-		break
-		;;
-
-	help)
-		_usage
 		break
 		;;
 

@@ -3,9 +3,12 @@
 ########################################################################
 
 USAGE
-	hue-manager (install|reinstall|upgrade|uninstall|help) <options>
+	hue-manager (help|install|reinstall|upgrade|uninstall) <options>
 
 SUBCOMMANDS
+
+	help
+		Show this help message.
 
 	install
 		Install Hue-shell.
@@ -18,9 +21,6 @@ SUBCOMMANDS
 
 	uninstall
 		Uninstall Hue-shell.
-
-	help
-		Show this help message.
 
 OPTIONS
 
