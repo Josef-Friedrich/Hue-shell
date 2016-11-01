@@ -3,6 +3,6 @@ sudo: required
 before_install:
   - sudo add-apt-repository ppa:duggan/bats -y
   - sudo apt-get -qq update
-  - sudo apt-get install -y bats
+  - sudo apt-get install -y bats curl
 script:
   - bats test/test.bats
