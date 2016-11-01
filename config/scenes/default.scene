@@ -2,12 +2,6 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-_hue_set all -b 3
-
-sleep 10
-
-_hue_set all -b 200
-
-sleep 10
-
-_hue_set all -b 1
+_hue_set 1 --hue 20000
+_hue_set 2 --hue 40000
+_hue_set 3 --hue 60000

@@ -97,6 +97,11 @@ teardown() {
 	[ "${status}" -eq 0 ]
 }
 
+@test "execute: hueload-scene --execute default" {
+	run hueload-scene --execute default
+	[ "${status}" -eq 0 ]
+}
+
 @test "execute: hue-manager" {
 	run hue-manager
 	[ "${lines[1]}" = '# hue-manager' ]
