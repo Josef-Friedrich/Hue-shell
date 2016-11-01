@@ -41,6 +41,11 @@ _hue_range() {
 	echo $((NUMBER_IN_RANGE + START))
 }
 
+# Print to Stdout for bats tests
+_hue_test() {
+	echo $3
+}
+
 # Execute the http call over curl.
 #	$1: HTTP_REQUEST: PUT, GET
 #	$2: PATH
@@ -51,7 +56,7 @@ _hue_call() {
 	fi
 	_hue_log 2 "HTTP_REQUEST: $1 PATH: $2 DATA: $3"
 	if [ "$TEST" = 1 ]; then
-		echo "HTTP_REQUEST: $1 PATH: $2 DATA: $3"
+		_hue_test $@
 	else
 		curl \
 			--max-time 1 \
@@ -163,13 +168,13 @@ _hue_set() {
 				;;
 
 			-H|--help)
-				_hue_set_help
+				_hue_usage
 				break
 				;;
 
 			*)
 				if [ -n "$1" ]; then
-					_hue_set_help
+					_hue_usage error
 				fi
 				break
 				;;

@@ -77,11 +77,6 @@
 	[ "${status}" -eq 0 ]
 }
 
-@test "execute: hue set 1 --on" {
-	run hue set 1 --on
-	[ "${status}" -eq 0 ]
-}
-
 @test "execute: hueload-scene --info" {
 	run hueload-scene --info
 	[ "${lines[0]}" = 'Available scenes:' ]
