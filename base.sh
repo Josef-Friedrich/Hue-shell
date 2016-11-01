@@ -249,7 +249,7 @@ _hue_get_on() {
 		fi
 	done
 
-        echo $OUTPUT | sed 's/^,//'
+	echo $OUTPUT | sed 's/^,//'
 }
 
 # This funtion checks if there reachable lights and returns it.
