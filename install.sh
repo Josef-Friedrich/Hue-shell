@@ -48,7 +48,7 @@ _usage() {
 	else
 		echo "Usage: $(basename $0) (install|upgrade|uninstall)"
 	fi
-	exit 1
+	exit $1
 }
 
 _download() {
@@ -262,8 +262,13 @@ case "$OPT" in
 		break
 		;;
 
+		help)
+			_usage
+			break
+			;;
+
 	*)
-		_usage
+		_usage 1
 		break
 		;;
 

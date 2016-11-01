@@ -77,10 +77,39 @@ teardown() {
 	[ "${SEED1}" != "${SEED2}" ]
 }
 
-@test "hue doc" {
+@test "execute: hue" {
 	run hue
 	[ "${lines[1]}" = '# hue' ]
 	[ "${status}" -eq 1 ]
 	run hue help
+	[ "${status}" -eq 0 ]
+}
+
+@test "execute: hueload-scene --info" {
+	run hueload-scene --info
+	[ "${lines[0]}" = 'Available scenes:' ]
+	[ "${lines[1]}" = ' -> default' ]
+	[ "${status}" -eq 0 ]
+}
+
+@test "execute: hue-manager" {
+	run hue-manager
+	[ "${lines[1]}" = '# hue-manager' ]
+	[ "${status}" -eq 1 ]
+}
+
+@test "execute: hue-manager help" {
+	run hue-manager help
+	[ "${lines[1]}" = '# hue-manager' ]
+	[ "${status}" -eq 0 ]
+}
+
+@test "execute: hue-manager install" {
+	run hue-manager install
+	[ "${status}" -eq 0 ]
+}
+
+@test "execute: hue-manager uninstall" {
+	run hue-manager uninstall -y
 	[ "${status}" -eq 0 ]
 }
