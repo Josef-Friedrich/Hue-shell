@@ -48,3 +48,4 @@ EXAMPLES
 	hue recipe --reading
 	hue recipe -r
 ```
+

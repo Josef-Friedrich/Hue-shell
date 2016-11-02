@@ -1,0 +1,45 @@
+---
+title: hueservice-detect-lights
+---
+
+```
+########################################################################
+# hueservice-detect-lights
+########################################################################
+
+USAGE
+	hueservice-detect-lights (start|status|stop) <options>
+
+SUBCOMMANDS
+
+	start
+		Start the service.
+
+	status
+		Display status informations. Indicates whether the 
+		service is still running and displays the online
+		lights.
+
+	stop
+		Stop the service.
+
+OPTIONS
+
+	-h, --help
+		Show this help message.
+
+DESCRIPTION
+
+	'hueservice-detect-lights' searches for reachable/online lamps.
+	It writes the IDs of the online lamps as a comma separated list
+	(e. g. 1,2,3) to the file '/tmp/hue-shell-lights-reachable'.
+	The scene commands can process this file and send only HTTP
+	requests to online lights. This command is designed to run
+	as a background daemon.
+
+EXAMPLES
+	hueservice-detect-lights start
+	hueservice-detect-lights status
+	hueservice-detect-lights stop
+```
+

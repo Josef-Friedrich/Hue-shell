@@ -40,3 +40,4 @@ EXAMPLES
 	hueload-random --show
 	hueload-random --all
 ```
+

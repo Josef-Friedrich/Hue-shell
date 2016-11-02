@@ -12,5 +12,3 @@ defaults:
       type: "pages"
     values:
       layout: default
-
-markdown: redcarpet

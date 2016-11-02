@@ -21,8 +21,10 @@ SUBCOMMANDS
 
 		alert <lights>
 		config
-		get <lights>
+		get <lights> or "all" or "on"
 		help
+		log <tail-options>
+		ps
 
 	STOP SUBCOMMANDS
 
@@ -166,10 +168,11 @@ USAGE
 	hue get <lights>
 
 LIGHTS
-	IDs of the lights separated by commas ("1,2,3") or "all".
+	IDs of the lights separated by commas ("1,2,3") or "all" or "on".
 
 DESCRIPTION
-	Get informations of the lights.
+	Get informations of the lights. A special form of the command is
+	"hue get on", which returns the online lights in the format "1,2,3".
 
 ####################################
 # hue help
@@ -180,6 +183,30 @@ USAGE
 
 DESCRIPTION
 	Show this help message.
+
+####################################
+# hue log
+####################################
+
+USAGE
+	hue log <tail-options>
+
+DESCRIPTION
+	Show log messages.
+
+EXAMPLES
+	hue log -f
+	hue log -n 100
+
+####################################
+# hue ps
+####################################
+
+USAGE
+	hue ps
+
+DESCRIPTION
+	Show which processes are running.
 
 ####################################
 # hue kill
@@ -212,3 +239,4 @@ USAGE
 DESCRIPTION
 	Stop all hue processes.
 ```
+
