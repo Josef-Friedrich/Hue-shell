@@ -29,11 +29,3 @@
 	SEED2=$(cat $FILE_RANDOM_SEED)
 	[ "${SEED1}" != "${SEED2}" ]
 }
-
-@test "execute: hue" {
-	run hue
-	[ "${lines[1]}" = '# hue' ]
-	[ "${status}" -eq 1 ]
-	run hue help
-	[ "${status}" -eq 0 ]
-}
