@@ -47,6 +47,12 @@ OPTIONS
 		configuration file. This option is only effective with
 		the subcommand 'install'.
 
+	-t, --test INTEGER
+		Set `Hue-shell` in test mode. Possible values are `0` or `1`.
+		In test mode the generated json code is not sent to `curl`, but
+		instead to `jq`. This option is only effective with
+		the subcommand 'install'.
+
 	-u, --username USERNAME
 		Set the option 'USERNAME' to the given value in the
 		configuration file. This option is only effective with
