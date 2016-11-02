@@ -59,6 +59,10 @@ _download() {
 }
 
 _install_base() {
+	# bin
+	_cp bin/hue* $DIR_BIN
+	_cp install.sh $DIR_BIN/hue-manager
+
 	# conf
 	_sudo mkdir -p $DIR_CONF
 	if [ -n "$UPGRADE" ]; then
@@ -75,27 +79,24 @@ _install_base() {
 		_cp -r config/* $DIR_CONF
 	fi
 
+	# doc
+	_mkdir $DIR_DOC
+	_cp doc/* $DIR_DOC
+
 	# lib
 	_mkdir $DIR_LIB
 	_cp base.sh $DIR_LIB
 
-	# bin
-	_cp bin/hue* $DIR_BIN
-	_cp install.sh $DIR_BIN/hue-manager
+	# log
+	_sudo touch $FILE_LOG
+	_sudo chmod 666 $FILE_LOG
 
+	# run
 	# By Hue-shell generated run files that should "survive" reboot.
 	_mkdir $DIR_RUN_PERM
 	_sudo chmod 777 $DIR_RUN_PERM
 	_sudo touch $FILE_RANDOM_SEED
 	_sudo chmod 666 $FILE_RANDOM_SEED
-
-	# doc
-	_mkdir $DIR_DOC
-	_cp doc/* $DIR_DOC
-
-	# log
-	_sudo touch $FILE_LOG
-	_sudo chmod 666 $FILE_LOG
 }
 
 _install_services() {

@@ -1,5 +1,89 @@
 #!/usr/bin/env bats
 
+
+@test "Installation: files are in the right place" {
+	# bin
+	# install.sh -> hue-manager
+	run test -f /usr/bin/hue-manager
+	[ "${status}" -eq 0 ]
+	run test -f /usr/bin/hue
+	[ "${status}" -eq 0 ]
+	run test -f /usr/bin/huecolor-basic
+	[ "${status}" -eq 0 ]
+	run test -f /usr/bin/huecolor-recipe
+	[ "${status}" -eq 0 ]
+	run test -f /usr/bin/hueload-default
+	[ "${status}" -eq 0 ]
+	run test -f /usr/bin/hueload-random
+	[ "${status}" -eq 0 ]
+	run test -f /usr/bin/hueload-scene
+	[ "${status}" -eq 0 ]
+	run test -f /usr/bin/huescene-breath
+	[ "${status}" -eq 0 ]
+	run test -f /usr/bin/huescene-pendulum
+	[ "${status}" -eq 0 ]
+	run test -f /usr/bin/huescene-sequence
+	[ "${status}" -eq 0 ]
+	run test -f /usr/bin/hueservice-detect-bridge
+	[ "${status}" -eq 0 ]
+	run test -f /usr/bin/hueservice-detect-lights
+	[ "${status}" -eq 0 ]
+
+	# conf
+	run test -d /etc/hue-shell
+	[ "${status}" -eq 0 ]
+	run test -f /etc/hue-shell/hue-shell.conf
+	[ "${status}" -eq 0 ]
+	run test -f /etc/hue-shell/random-scenes.conf
+	[ "${status}" -eq 0 ]
+	run test -f /etc/hue-shell/scenes/default.scene
+	[ "${status}" -eq 0 ]
+
+	# doc
+	run test -d /usr/share/doc/hue-shell
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/hue-manager.txt
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/hue.txt
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/huecolor-basic.txt
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/huecolor-recipe.txt
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/hueload-default.txt
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/hueload-random.txt
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/hueload-scene.txt
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/huescene-breath.txt
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/huescene-pendulum.txt
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/huescene-sequence.txt
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/hueservice-detect-bridge.txt
+	[ "${status}" -eq 0 ]
+	run test -f /usr/share/doc/hue-shell/hueservice-detect-lights.txt
+	[ "${status}" -eq 0 ]
+
+	# lib
+	run test -d /usr/lib/hue-shell
+	[ "${status}" -eq 0 ]
+	run test -f /usr/lib/hue-shell/base.sh
+	[ "${status}" -eq 0 ]
+
+	# log
+	run test -f /var/log/hue-shell.log
+	[ "${status}" -eq 0 ]
+
+	# run
+	run test -d $HOME/.config/hue-shell
+	[ "${status}" -eq 0 ]
+	run test -f $HOME/.config/hue-shell/hue-shell-random-seed
+	[ "${status}" -eq 0 ]
+}
+
 @test "execute: hue-manager" {
 	run hue-manager
 	[ "${lines[1]}" = '# hue-manager' ]
