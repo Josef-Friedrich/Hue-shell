@@ -112,14 +112,9 @@ _hue_set() {
 	while true ; do
 		case "$1" in
 
-			--on)
-				JSON="$JSON,\"on\":true"
-				shift 1
-				;;
-
-			--off)
-				JSON="$JSON,\"on\":false"
-				shift 1
+			-a|--alert)
+				JSON="$JSON,\"alert\":\"$2\""
+				shift 2
 				;;
 
 			-b|--bri|--brightness)
@@ -127,9 +122,34 @@ _hue_set() {
 				shift 2
 				;;
 
+			-c|--ct)
+				JSON="$JSON,\"ct\":$2"
+				shift 2
+				;;
+
+			-e|--effect)
+				JSON="$JSON,\"effect\":\"$2\""
+				shift 2
+				;;
+
+			-H|--help)
+				_hue_usage
+				break
+				;;
+
 			-h|--hue)
 				JSON="$JSON,\"hue\":$2"
 				shift 2
+				;;
+
+			--off)
+				JSON="$JSON,\"on\":false"
+				shift 1
+				;;
+
+			--on)
+				JSON="$JSON,\"on\":true"
+				shift 1
 				;;
 
 			-s|--sat|--saturation)
@@ -147,29 +167,9 @@ _hue_set() {
 				shift 2
 				;;
 
-			-c|--ct)
-				JSON="$JSON,\"ct\":$2"
-				shift 2
-				;;
-
-			-a|--alert)
-				JSON="$JSON,\"alert\":\"$2\""
-				shift 2
-				;;
-
-			-e|--effect)
-				JSON="$JSON,\"effect\":\"$2\""
-				shift 2
-				;;
-
 			-t|--transitiontime)
 				JSON="$JSON,\"transitiontime\":$2"
 				shift 2
-				;;
-
-			-H|--help)
-				_hue_usage
-				break
 				;;
 
 			*)
