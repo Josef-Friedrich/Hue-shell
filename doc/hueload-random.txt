@@ -9,9 +9,12 @@ OPTIONS
 	-a, --all
 		Execute all scenes line by line without random.
 
-	-d, --debug
+	-D, --debug
 		Enable debug mode, which puts out the executed scene
 		command.
+
+	-d, --detached
+		Put in detached mode.
 
 	-e, --edit
 		Edit the random scenes file in the default text editor.
