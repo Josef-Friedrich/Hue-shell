@@ -2,31 +2,36 @@
 
 
 @test "Installation: files are in the right place" {
-	# bin
+	if [ $(uname) = 'Darwin' ]; then
+		PREFIX=/usr/local
+	else
+		PREFIX=/usr
+	fi
+	# bins
 	# install.sh -> hue-manager
-	run test -f /usr/bin/hue-manager
+	run test -f ${PREFIX}/bin/hue-manager
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/hue
+	run test -f ${PREFIX}/bin/hue
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/huecolor-basic
+	run test -f ${PREFIX}/bin/huecolor-basic
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/huecolor-recipe
+	run test -f ${PREFIX}/bin/huecolor-recipe
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/hueload-default
+	run test -f ${PREFIX}/bin/hueload-default
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/hueload-random
+	run test -f ${PREFIX}/bin/hueload-random
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/hueload-scene
+	run test -f ${PREFIX}/bin/hueload-scene
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/huescene-breath
+	run test -f ${PREFIX}/bin/huescene-breath
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/huescene-pendulum
+	run test -f ${PREFIX}/bin/huescene-pendulum
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/huescene-sequence
+	run test -f ${PREFIX}/bin/huescene-sequence
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/hueservice-detect-bridge
+	run test -f ${PREFIX}/bin/hueservice-detect-bridge
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/hueservice-detect-lights
+	run test -f ${PREFIX}/bin/hueservice-detect-lights
 	[ "${status}" -eq 0 ]
 
 	# conf
@@ -40,37 +45,37 @@
 	[ "${status}" -eq 0 ]
 
 	# doc
-	run test -d /usr/share/doc/hue-shell
+	run test -d ${PREFIX}/share/doc/hue-shell
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/hue-manager.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/hue-manager.txt
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/hue.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/hue.txt
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/huecolor-basic.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/huecolor-basic.txt
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/huecolor-recipe.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/huecolor-recipe.txt
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/hueload-default.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/hueload-default.txt
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/hueload-random.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/hueload-random.txt
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/hueload-scene.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/hueload-scene.txt
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/huescene-breath.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/huescene-breath.txt
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/huescene-pendulum.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/huescene-pendulum.txt
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/huescene-sequence.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/huescene-sequence.txt
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/hueservice-detect-bridge.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/hueservice-detect-bridge.txt
 	[ "${status}" -eq 0 ]
-	run test -f /usr/share/doc/hue-shell/hueservice-detect-lights.txt
+	run test -f ${PREFIX}/share/doc/hue-shell/hueservice-detect-lights.txt
 	[ "${status}" -eq 0 ]
 
 	# lib
-	run test -d /usr/lib/hue-shell
+	run test -d ${PREFIX}/lib/hue-shell
 	[ "${status}" -eq 0 ]
-	run test -f /usr/lib/hue-shell/base.sh
+	run test -f ${PREFIX}/lib/hue-shell/base.sh
 	[ "${status}" -eq 0 ]
 
 	# log
