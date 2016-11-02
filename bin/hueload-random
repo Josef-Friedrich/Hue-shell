@@ -83,10 +83,10 @@ while true ; do
 			exit 0
 			;;
 
-		-m|--master-pid)
-			MASTER_PID=$2
-			shift 2
-			;;
+		# -m|--master-pid)
+		# 	MASTER_PID=$2
+		# 	shift 2
+		# 	;;
 
 		-s|--show)
 			_show
@@ -105,21 +105,26 @@ RANDOM_SCENE=$(_get_random)
 
 _hue_log 1 "$RANDOM_SCENE"
 
-SCENE="$RANDOM_SCENE --master-pid"
+SCENE="$RANDOM_SCENE"
 
-if [ -z "$MASTER_PID" ]; then
-	_hue_write_to_master_pid $$
-	SCENE="$SCENE $$"
-else
-	_hue_write_to_master_pid $MASTER_PID $$
-	SCENE="$SCENE $MASTER_PID"
-fi
+# if [ -z "$MASTER_PID" ]; then
+# 	_hue_write_to_master_pid $$
+# 	SCENE="$SCENE $$"
+# else
+# 	_hue_write_to_master_pid $MASTER_PID $$
+# 	SCENE="$SCENE $MASTER_PID"
+# fi
 
 if [ "$DETACHED" = 1 ]; then
-	SCENE="$SCENE $MASTER_PID &"
+	#SCENE="$SCENE $MASTER_PID &"
+	SCENE="$SCENE &"
 fi
 
-eval "$SCENE"
+if [ "$TEST" = 1 ]; then
+	echo $SCENE
+else
+	eval "$SCENE"
+fi
 
 # vim: set ts=8 sw=8 sts=8 et :
 # sublime: tab_size 8;

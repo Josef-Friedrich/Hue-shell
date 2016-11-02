@@ -1,6 +1,5 @@
 #! /bin/sh
 
-PIDFILE="$HOME/.config/hue-shell/hue-shell.pids"
 OLD_IFS="$IFS"
 BASENAME=$(basename $0)
 
@@ -12,7 +11,7 @@ _hue_loop() {
 			eval "$*"
 		done
 	) &
-	echo $! >> $PIDFILE
+	echo $! >> $FILE_PIDS
 }
 
 # Random range function.
@@ -68,11 +67,11 @@ _hue_call() {
 # Stop all hue processes.
 _hue_stop() {
 
-	for PID in $(cat $PIDFILE); do
+	for PID in $(cat $FILE_PIDS); do
 		kill $PID > /dev/null 2>&1
 	done
 
-	> $PIDFILE
+	> $FILE_PIDS
 }
 
 # Kill all hue processes.

@@ -97,6 +97,8 @@ _install_base() {
 	_sudo chmod 777 $DIR_RUN_PERM
 	_sudo touch $FILE_RANDOM_SEED
 	_sudo chmod 666 $FILE_RANDOM_SEED
+	_sudo touch $FILE_PIDS
+	_sudo chmod 666 $FILE_PIDS
 }
 
 _install_services() {

@@ -71,9 +71,9 @@ _kill_all() {
 _hue_trap "_kill_all; _hue_reset; echo; exit"
 _hue_stop
 
-if [ -n "$MASTER_PID" ]; then
-	_hue_write_to_master_pid $MASTER_PID $$
-fi
+# if [ -n "$MASTER_PID" ]; then
+# 	_hue_write_to_master_pid $MASTER_PID $$
+# fi
 
 # Helper function.
 #	$1: LIGHT
