@@ -159,7 +159,7 @@ _install() {
 
 _restore_configuration() {
 	_replace() {
-		_sudo sed -i bak "s;$1;$2;" /etc/hue-shell/hue-shell.conf
+		_sudo sed -i.test.bak "s;$1;$2;" /etc/hue-shell/hue-shell.conf
 	}
 
 	while true ; do
