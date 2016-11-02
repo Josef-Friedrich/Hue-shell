@@ -4,6 +4,14 @@ setup() {
 	hue-manager install --test 1 > /dev/null 2>&1
 }
 
+@test "execute: hue" {
+	run hue
+	[ "${lines[1]}" = '# hue' ]
+	[ "${status}" -eq 1 ]
+	run hue help
+	[ "${status}" -eq 0 ]
+}
+
 # Test all options of hue set in order of doc
 
 @test "execute: hue set 1 --on" {
