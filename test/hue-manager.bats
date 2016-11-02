@@ -157,5 +157,5 @@
 	[ "${status}" -eq 0 ]
 	run test -f /usr/bin/hue
 	[ "${status}" -eq 1 ]
-	./install.sh install
+	./install.sh install --test 1
 }
