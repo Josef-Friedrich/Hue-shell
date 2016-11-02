@@ -8,4 +8,4 @@ EXIT=$?
 
 sudo ./install.sh uninstall -y > /dev/null 2>&1
 
-exit $?
+exit $EXIT
