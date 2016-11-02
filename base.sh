@@ -105,6 +105,9 @@ _hue_reset() {
 #	$1: LIGHTS
 #	$@: LIGHT_ATTRIBUTES
 _hue_set() {
+	if [ -z "${1}" ]; then
+		_hue_usage error
+	fi
 	local LIGHTS="$1"
 	shift
 	local JSON=""

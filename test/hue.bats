@@ -22,6 +22,24 @@
 # hue set
 ####################################
 
+@test "execute: hue set" {
+	skip
+	run hue set
+	[ "${lines[1]}" = '# hue' ]
+	[ "${status}" -eq 1 ]
+}
+
+@test "execute: hue set 1,2,3 --on" {
+	run hue set 1,2 --on
+	[ "${lines[0]}" = '{"on":true}' ]
+	[ "${lines[1]}" = '{"on":true}' ]
+}
+
+@test "execute: hue set all --on" {
+	run hue set all --on
+	[ "${lines[0]}" = '{"on":true}' ]
+}
+
 # Test all options of hue set in order of doc
 
 # alert
