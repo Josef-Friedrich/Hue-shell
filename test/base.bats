@@ -10,7 +10,7 @@
 	run _hue_color cyan
 	[ "${output}" -eq 56100 ]
 	run _hue_color
-	[ "${output}" -eq 0 ]
+	[ "${output}" -eq 1 ]
 }
 
 @test "unittest: _hue_range" {
