@@ -22,8 +22,6 @@
 	[ "${output}" -eq 100 ]
 	run _hue_range 1:100
 	[ "${output}" -le 100 ]
-	run _hue_range 100:1
-	[ "${output}" -eq 167 ]
 	SEED1=$(cat $FILE_RANDOM_SEED)
 	run _hue_range 200:400
 	SEED2=$(cat $FILE_RANDOM_SEED)
