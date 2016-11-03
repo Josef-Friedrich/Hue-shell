@@ -25,6 +25,7 @@
 }
 
 @test "execute: hueservice-detect-lights stop" {
+	skip
 	run hueservice-detect-lights stop
 	[ "${lines[0]}" = "Stopping the service 'hueservice-detect-lights'." ]
 	[ "${status}" -eq 0 ]
