@@ -266,7 +266,11 @@ _hue_get_on() {
 # This funtion checks if there reachable lights and returns it.
 # Otherwise it returns the value of the $ALL_LIGHTS variable.
 _hue_get_lights_reachable() {
-	echo $(cat $FILE_LIGHTS_REACHABLE)
+	if [ -f "$FILE_LIGHTS_REACHABLE" ]; then
+		echo $(cat "$FILE_LIGHTS_REACHABLE")
+	else
+		echo "$ALL_LIGHTS"
+	fi
 }
 
 # Perform one breathe cycle.

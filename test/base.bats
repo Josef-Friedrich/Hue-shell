@@ -1,5 +1,10 @@
 #!/usr/bin/env bats
 
+# setup() {
+# 	sudo ./install.sh uninstall -y > /dev/null 2>&1
+# 	sudo ./install.sh install --test 1 > /dev/null 2>&1
+# }
+
 @test "unittest: _hue_color" {
 	. /etc/hue-shell/hue-shell.conf
 
@@ -26,4 +31,10 @@
 	run _hue_range 200:400
 	SEED2=$(cat $FILE_RANDOM_SEED)
 	[ "${SEED1}" != "${SEED2}" ]
+}
+
+@test "unittest: _hue_get_lights_reachable" {
+	. /etc/hue-shell/hue-shell.conf
+	result=$(_hue_get_lights_reachable)
+	[ "${result}" = '1,2,3' ]
 }

@@ -44,6 +44,7 @@ _stop() {
 		kill $(cat $PID) > /dev/null 2>&1
 		echo > $PID
 		echo "Stopping the service '${BASENAME}'."
+		rm -f "$FILE_LIGHTS_REACHABLE"
 }
 
 case "$1" in

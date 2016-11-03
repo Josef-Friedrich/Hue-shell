@@ -227,6 +227,9 @@ _uninstall() {
 	_rm $DIR_RUN_PERM
 	_rm $DIR_DOC
 	_rm /etc/triggerhappy/triggers.d/hue-shell.conf
+	_rm "$DIR_RUN_TMP/$NAME-lights-reachable"
+	_rm "$DIR_RUN_TMP/$NAME-lights-all"
+	_rm "$DIR_LOG/$NAME.log"
 
 	# OpenWrt
 	if [ -f /etc/openwrt_version ]; then
