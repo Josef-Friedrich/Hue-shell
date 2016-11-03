@@ -5,13 +5,17 @@
 PID=$DIR_RUN_TMP/${BASENAME}.pid
 
 _is_running() {
-	kill -0 $(cat $PID) > /dev/null 2>&1
-	echo $?
+	if [ -f $PID ]; then
+		kill -0 $(cat $PID) > /dev/null 2>&1
+		echo $?
+	else
+		echo 1
+	fi
 }
 
 _start() {
 	if [ "$(_is_running)" = 0 ]; then
-		echo "The service is alreading running."
+		echo "The service is already running."
 	else
 		(
 		while true; do
@@ -40,7 +44,6 @@ _stop() {
 		kill $(cat $PID) > /dev/null 2>&1
 		echo > $PID
 		echo "Stopping the service '${BASENAME}'."
-
 }
 
 case "$1" in
@@ -48,7 +51,7 @@ case "$1" in
 	status) _status ;;
 	stop) _stop ;;
 	-h|--help) _hue_usage ;;
-	*) _hue_usage ;;
+	*) _hue_usage error;;
 esac
 
 exit 0
