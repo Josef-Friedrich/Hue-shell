@@ -87,6 +87,8 @@
 	[ "${status}" -eq 0 ]
 	run test -f $HOME/.config/hue-shell/hue-shell-random-seed
 	[ "${status}" -eq 0 ]
+	run test -f $HOME/.config/hue-shell/hue-shell.pids
+	[ "${status}" -eq 0 ]
 }
 
 @test "execute: hue-manager" {
