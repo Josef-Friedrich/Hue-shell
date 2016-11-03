@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 
-@test "Installation: files are in the right place" {
+@test "File status: install" {
 	if [ $(uname) = 'Darwin' ]; then
 		PREFIX=/usr/local
 	else
@@ -91,6 +91,75 @@
 	[ "${status}" -eq 0 ]
 }
 
+@test "File status: uninstall" {
+	if [ $(uname) = 'Darwin' ]; then
+		PREFIX=/usr/local
+	else
+		PREFIX=/usr
+	fi
+	./install.sh uninstall -y
+
+	# bins
+	# install.sh -> hue-manager
+	run test -f ${PREFIX}/bin/hue-manager
+	[ "${status}" -eq 1 ]
+	run test -f ${PREFIX}/bin/hue
+	[ "${status}" -eq 1 ]
+	run test -f ${PREFIX}/bin/huecolor-basic
+	[ "${status}" -eq 1 ]
+	run test -f ${PREFIX}/bin/huecolor-recipe
+	[ "${status}" -eq 1 ]
+	run test -f ${PREFIX}/bin/hueload-default
+	[ "${status}" -eq 1 ]
+	run test -f ${PREFIX}/bin/hueload-random
+	[ "${status}" -eq 1 ]
+	run test -f ${PREFIX}/bin/hueload-scene
+	[ "${status}" -eq 1 ]
+	run test -f ${PREFIX}/bin/huescene-breath
+	[ "${status}" -eq 1 ]
+	run test -f ${PREFIX}/bin/huescene-pendulum
+	[ "${status}" -eq 1 ]
+	run test -f ${PREFIX}/bin/huescene-sequence
+	[ "${status}" -eq 1 ]
+	run test -f ${PREFIX}/bin/hueservice-detect-bridge
+	[ "${status}" -eq 1 ]
+	run test -f ${PREFIX}/bin/hueservice-detect-lights
+	[ "${status}" -eq 1 ]
+
+	# conf
+	run test -d /etc/hue-shell
+	[ "${status}" -eq 0 ]
+	run test -f /etc/hue-shell/hue-shell.conf
+	[ "${status}" -eq 0 ]
+	run test -f /etc/hue-shell/random-scenes.conf
+	[ "${status}" -eq 0 ]
+	run test -f /etc/hue-shell/scenes/default.scene
+	[ "${status}" -eq 0 ]
+
+	./install.sh install --test 1
+}
+
+@test "File status: purge" {
+	if [ $(uname) = 'Darwin' ]; then
+		PREFIX=/usr/local
+	else
+		PREFIX=/usr
+	fi
+	./install.sh purge -y
+
+	# conf
+	run test -d /etc/hue-shell
+	[ "${status}" -eq 1 ]
+	run test -f /etc/hue-shell/hue-shell.conf
+	[ "${status}" -eq 1 ]
+	run test -f /etc/hue-shell/random-scenes.conf
+	[ "${status}" -eq 1 ]
+	run test -f /etc/hue-shell/scenes/default.scene
+	[ "${status}" -eq 1 ]
+
+	./install.sh install --test 1
+}
+
 @test "execute: hue-manager" {
 	run hue-manager
 	[ "${lines[1]}" = '# hue-manager' ]
@@ -162,7 +231,11 @@
 @test "execute: hue-manager uninstall" {
 	run hue-manager uninstall -y
 	[ "${status}" -eq 0 ]
-	run test -f /usr/bin/hue
-	[ "${status}" -eq 1 ]
+	./install.sh install --test 1
+}
+
+@test "execute: hue-manager purge" {
+	run hue-manager purge -y
+	[ "${status}" -eq 0 ]
 	./install.sh install --test 1
 }

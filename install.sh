@@ -211,6 +211,11 @@ _restore_configuration() {
 }
 
 _uninstall() {
+	if [ "$1" = '--purge' ]; then
+		local PURGE=1
+		shift
+	fi
+
 	if [ ! "$@" = '-y' ]; then
 		echo 'Uninstall hue-shell? (y|n): '
 
@@ -221,15 +226,18 @@ _uninstall() {
 		fi
 	fi
 
-	_rm $DIR_CONF
 	_rm $DIR_LIB
 	_rm $DIR_BIN/hue*
-	_rm $DIR_RUN_PERM
 	_rm $DIR_DOC
-	_rm /etc/triggerhappy/triggers.d/hue-shell.conf
-	_rm "$DIR_RUN_TMP/$NAME-lights-reachable"
-	_rm "$DIR_RUN_TMP/$NAME-lights-all"
-	_rm "$DIR_LOG/$NAME.log"
+
+	if [ "$PURGE" = 1 ]; then
+		_rm $DIR_CONF
+		_rm $DIR_RUN_PERM
+		_rm "$DIR_RUN_TMP/$NAME-lights-reachable"
+		_rm "$DIR_RUN_TMP/$NAME-lights-all"
+		_rm "$DIR_LOG/$NAME.log"
+		_rm /etc/triggerhappy/triggers.d/hue-shell.conf
+	fi
 
 	# OpenWrt
 	if [ -f /etc/openwrt_version ]; then
@@ -265,6 +273,11 @@ case "$OPT" in
 		_install
 		shift
 		_restore_configuration $@
+		break
+		;;
+
+	purge)
+		_uninstall --purge $@
 		break
 		;;
 
