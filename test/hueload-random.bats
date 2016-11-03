@@ -20,7 +20,7 @@
 
 @test "execute: hueload-random --list" {
 	run hueload-random --list
-	[ "${lines[0]}" = 'huescene-sequence -H 4000,12750,6000,14500 -s 3 -t 1 -b 255' ]
+	[ "${lines[0]}" = 'huecolor-basic --yellow' ]
 	[ "${status}" -eq 0 ]
 }
 
