@@ -99,7 +99,8 @@ while true ; do
 	esac
 done
 
-_hue_stop
+#_hue_stop
+_hue_kill
 
 RANDOM_SCENE=$(_get_random)
 

@@ -82,11 +82,11 @@ _hue_kill() {
 	# - pkill (not on openwrt, busybox)
 	# - ps -w | grep "hue" | awk '{print $1}'
 
+	# hueload-random is not killed. _hue_kill is needed inside hueload-random
 	killall -9 \
 		hue \
 		huecolor-basic \
 		huecolor-recipe \
-		hueload-random \
 		hueload-scene \
 		huescene-breath \
 		huescene-pendulum \
