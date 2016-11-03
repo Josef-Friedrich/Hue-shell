@@ -242,7 +242,12 @@ _hue_get() {
 _hue_get_on() {
 	local JSON IS_LIGHT IS_REACHABLE OUTPUT LINE
 
-	JSON=$(curl --silent --request GET http://$IP/api/$USERNAME/lights | sed 's/"\([0-9]*\)":{"state":/%\1%/g')
+	if [ -n "$1" ]; then
+		JSON=$(cat "$1")
+	else
+		JSON=$(curl --silent --request GET http://$IP/api/$USERNAME/lights)
+	fi
+	JSON=$(echo $JSON | sed 's/"\([0-9]*\)":{"state":/%\1%/g')
 
 	IFS="%"
 	IS_LIGHT=0

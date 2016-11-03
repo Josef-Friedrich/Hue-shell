@@ -38,3 +38,9 @@
 	result=$(_hue_get_lights_reachable)
 	[ "${result}" = '1,2,3' ]
 }
+
+@test "unittest: _hue_get_on" {
+	. /etc/hue-shell/hue-shell.conf
+	result=$(_hue_get_on test/json/get_lightsNormalized.json)
+	[ "${result}" = '2' ]
+}
