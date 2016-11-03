@@ -44,9 +44,8 @@
 
 # alert
 @test "execute: hue set 1 --alert none" {
-	skip
 	result=$(hue set 1 --alert none | jq '.alert')
-	[ "${result}" = 'none' ]
+	[ "${result}" = '"none"' ]
 }
 
 # brightness
@@ -63,9 +62,8 @@
 
 # effect
 @test "execute: hue set 1 --effect colorloop" {
-	skip
 	result=$(hue set 1 --effect colorloop | jq '.effect')
-	[ "${result}" = 'colorloop' ]
+	[ "${result}" = '"colorloop"' ]
 }
 
 # help
