@@ -271,7 +271,9 @@ case "$OPT" in
 
 	install)
 		_install
-		shift
+		if [ -n "$@" ]; then
+			shift
+		fi
 		_restore_configuration $@
 		break
 		;;
@@ -284,7 +286,9 @@ case "$OPT" in
 	reinstall)
 		_uninstall -y
 		_install
-		shift
+		if [ -n "$@" ]; then
+			shift
+		fi
 		_restore_configuration $@
 		break
 		;;
