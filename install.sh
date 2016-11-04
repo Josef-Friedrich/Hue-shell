@@ -153,6 +153,10 @@ _install() {
 	if [ ! -f ./bin/hue ]; then
 		_download
 	fi
+
+	if [ "$NO_CONFIG" = 1 ]; then
+		. ./config/hue-shell.conf
+	fi
 	_install_base
 	_install_services
 	_install_triggerhappy
