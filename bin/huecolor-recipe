@@ -4,7 +4,7 @@
 
 _recipe() {
 	_hue_stop
-	_hue_set all $@
+	_hue_set all "$@"
 	exit 0
 }
 

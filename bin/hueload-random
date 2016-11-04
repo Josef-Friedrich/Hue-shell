@@ -9,7 +9,7 @@ _edit() {
 		EDITOR='vi'
 	fi
 
-	$EDITOR $RANDOM_FILE
+	"$EDITOR" "$RANDOM_FILE"
 }
 
 # Print out the contents of the random config file to standard output.

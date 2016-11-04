@@ -5,7 +5,7 @@
 # 	$1: HUE
 _all() {
 	_hue_stop
-	_hue_set all --hue $1 --sat 255 --bri 255
+	_hue_set all --hue "$1" --sat 255 --bri 255
 	exit 0
 }
 
@@ -41,7 +41,7 @@ while true ; do
 
 		*)
 			if [ -n "$1" ]; then
-				_all $1
+				_all "$1"
 			else
 				_hue_usage
 			fi

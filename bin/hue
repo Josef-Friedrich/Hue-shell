@@ -10,22 +10,19 @@ case "$1" in
 		if [ -n "$2" ]; then
 			shift
 		fi
-		_hue_set $@
-		break
+		_hue_set "$@"
 		;;
 
 	transit)
 		shift
-		_hue_set_transit $@
-		break
+		_hue_set_transit "$@"
 		;;
 
 	# Info
 
 	alert)
 		shift
-		_hue_alert $@
-		break
+		_hue_alert "$@"
 		;;
 
 	config)
@@ -36,46 +33,38 @@ case "$1" in
 
 	get)
 		shift
-		_hue_get $@
-		break
+		_hue_get "$@"
 		;;
 
 	help)
 		_hue_usage
-		break
 		;;
 
 	log)
 		shift
-		tail $@ $FILE_LOG
-		break
+		tail "$@" "$FILE_LOG"
 		;;
 
 	ps)
 		ps w | grep hue | grep -v grep | grep -v ps
-		break
 		;;
 
 	# Stop
 
 	kill)
 		_hue_kill
-		break
 		;;
 
 	reset)
 		_hue_reset
-		break
 		;;
 
 	stop)
 		_hue_stop
-		break
 		;;
 
 	*)
 		_hue_usage error
-		break
 		;;
 
 esac
