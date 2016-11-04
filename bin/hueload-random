@@ -19,8 +19,8 @@ _get() {
 
 # Send one random light scene to standard output.
 _get_random() {
-	local LINES=$(_list | wc -l)
-	local RANDOM=$(_hue_range 1:"$LINES")
+	LINES=$(_list | wc -l)
+	RANDOM=$(_hue_range 1:"$LINES")
 
 	_list | sed -n "$RANDOM"p
 }

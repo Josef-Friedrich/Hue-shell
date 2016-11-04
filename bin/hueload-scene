@@ -8,7 +8,7 @@ SCENES_PATH="/etc/hue-shell/scenes"
 _info() {
 	echo "Available scenes:"
 	for SCENE in $(find $SCENES_PATH -name "*.scene"); do
-	local TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
+	TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
 	echo " -> $TOKEN"
 	done
 }
@@ -16,7 +16,7 @@ _info() {
 # Execute a scene.
 #	$1: SCENE_TOKEN
 _execute() {
-	local SCENE="$SCENES_PATH/$1.scene"
+	SCENE="$SCENES_PATH/$1.scene"
 
 	_hue_stop
 	if [ -f "$SCENE" ]; then
