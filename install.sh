@@ -212,7 +212,7 @@ _restore_configuration() {
 
 _uninstall() {
 	if [ "$1" = '--purge' ]; then
-		local PURGE=1
+		PURGE=1
 		shift
 	fi
 

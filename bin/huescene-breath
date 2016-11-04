@@ -81,9 +81,9 @@ _hue_stop
 #	$3: TIME_RANGE
 #	$4: BRI_RANGE
 _breath() {
-	local TRANSTIME=$(_hue_range $3)
-	local BRI_START=${4%%:*}
-	local BRI_END=${4#*:}
+	TRANSTIME=$(_hue_range $3)
+	BRI_START=${4%%:*}
+	BRI_END=${4#*:}
 
 	_hue_set_transit $1 $TRANSTIME --hue $(_hue_range $2) --bri $BRI_END --sat 255
 	_hue_set_transit $1 $TRANSTIME --bri $BRI_START
@@ -140,7 +140,6 @@ _detect_lights() {
 		eval "REACHABLE${LIGHT}=1"
 	done
 
-	local LOOP_LIGHTS
 	if [ -n "$ARG_LIGHTS" ]; then
 		LOOP_LIGHTS="$ARG_LIGHTS"
 	else

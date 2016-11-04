@@ -21,11 +21,11 @@ _hue_loop() {
 #	RANDOM=$(tr -cd 0-9 < /dev/urandom | head -c 6)
 #	RANDOM="1$RANDOM"
 _hue_range() {
-	local START=${1%%:*}
-	local END=${1#*:}
+	START=${1%%:*}
+	END=${1#*:}
 
 	END=$((END + 1))
-	local RANGE=$((END - START))
+	RANGE=$((END - START))
 
 	# http://rosettacode.org/wiki/Linear_congruential_generator
 
@@ -35,7 +35,7 @@ _hue_range() {
 
 	RANDOM=$((SEED / 2))
 
-	local NUMBER_IN_RANGE=$((RANDOM % RANGE))
+	NUMBER_IN_RANGE=$((RANDOM % RANGE))
 
 	echo $((NUMBER_IN_RANGE + START))
 }
@@ -51,7 +51,7 @@ _hue_test() {
 #	$3: JSON
 _hue_call() {
 	if [ -n "$3" ]; then
-		local DATA="--data $3"
+		DATA="--data $3"
 	fi
 	_hue_log 2 "HTTP_REQUEST: $1 PATH: $2 DATA: $3"
 	if [ "$TEST" = 1 ]; then
@@ -107,9 +107,9 @@ _hue_set() {
 	if [ -z "${1}" ]; then
 		_hue_usage error
 	fi
-	local LIGHTS="$1"
+	LIGHTS="$1"
 	shift
-	local JSON=""
+	JSON=""
 
 	while true ; do
 		case "$1" in
@@ -160,12 +160,12 @@ _hue_set() {
 				;;
 
 			-x)
-				local X=$2
+				X=$2
 				shift 2
 				;;
 
 			-y)
-				local Y=$2
+				Y=$2
 				shift 2
 				;;
 
@@ -209,8 +209,8 @@ _hue_set() {
 #	$1: LIGHTS
 #	$2: TRANSITIONTIME
 _hue_set_transit() {
-	local LIGHTS="$1"
-	local TRANSITIONTIME="$2"
+	LIGHTS="$1"
+	TRANSITIONTIME="$2"
 	shift 2
 
 	_hue_set "$LIGHTS" --transitiontime $((TRANSITIONTIME * 10)) "$@"
@@ -220,7 +220,7 @@ _hue_set_transit() {
 # Get the state of the lights.
 #	$1: LIGHTS
 _hue_get() {
-	local LIGHTS="$1"
+	LIGHTS="$1"
 	shift
 
 	DEBUG=1
@@ -240,8 +240,6 @@ _hue_get() {
 
 # Queries for lights, which are online.
 _hue_get_on() {
-	local JSON IS_LIGHT IS_REACHABLE OUTPUT LINE
-
 	if [ -n "$1" ]; then
 		JSON=$(cat "$1")
 	else
@@ -281,7 +279,7 @@ _hue_get_lights_reachable() {
 # Perform one breathe cycle.
 #	$1: LIGHTS
 _hue_alert() {
-	local LIGHTS="$1"
+	LIGHTS="$1"
 	shift
 
 	if [ "$LIGHTS" = "all" ]; then
@@ -298,7 +296,7 @@ _hue_alert() {
 # Trap function for scene scripts. If you hit Ctrl+c, the light scence
 # will be interrupted and all lights will be reset to the default color.
 _hue_trap() {
-	local TRAP
+	TRAP
 	if [ -z "$1" ]; then
 		TRAP="_hue_reset; echo; exit"
 	else
@@ -312,7 +310,6 @@ _hue_trap() {
 #	$1: MASTER_PID
 #	$2: PID
 _hue_write_to_master_pid() {
-	local MASTER
 	if [ -z "$2" ]; then
 		MASTER=$1
 	else
@@ -325,7 +322,6 @@ _hue_write_to_master_pid() {
 #	$1: MASTER_PID
 _hue_kill_by_master_pid() {
 	if [ -n "$1" ]; then
-		local PROCESS_ID
 		_hue_log 1 "kill MASTER_PID: $1"
 		for PROCESS_ID in $(cat "$DIR_RUN_TMP/hue-shell_master-pid_$1"); do
 			_hue_log 2 "kill PROCESS_ID: $PROCESS_ID"
