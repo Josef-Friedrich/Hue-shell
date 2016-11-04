@@ -2,11 +2,11 @@
 
 . /etc/hue-shell/hue-shell.conf
 
-PID=$DIR_RUN_TMP/${BASENAME}.pid
+PID="$DIR_RUN_TMP/${BASENAME}.pid"
 
 _is_running() {
-	if [ -f $PID ]; then
-		kill -0 $(cat $PID) > /dev/null 2>&1
+	if [ -f "$PID" ]; then
+		kill -0 "$(cat "$PID")" > /dev/null 2>&1
 		echo $?
 	else
 		echo 1
@@ -19,12 +19,12 @@ _start() {
 	else
 		(
 		while true; do
-			_hue_get_on > $FILE_LIGHTS_REACHABLE
-			sleep $REFRESH_INTERVAL
+			_hue_get_on > "$FILE_LIGHTS_REACHABLE"
+			sleep "$REFRESH_INTERVAL"
 		done
 		) &
 
-		echo $! > $PID
+		echo $! > "$PID"
 		echo "Starting the service '${BASENAME}'."
 		_hue_log 1 "Starting"
 	fi
@@ -33,7 +33,7 @@ _start() {
 _status() {
 	if [ "$(_is_running)" = 0 ]; then
 		echo "The service '${BASENAME})' is running."
-		echo "The reachable lights are: "$(_hue_get_lights_reachable)
+		echo "The reachable lights are: $(_hue_get_lights_reachable)"
 	else
 		echo "The service '${BASENAME}' is not running."
 	fi
@@ -41,8 +41,8 @@ _status() {
 
 _stop() {
 		_hue_log 1 "Stopping"
-		kill $(cat $PID) > /dev/null 2>&1
-		echo > $PID
+		kill "$(cat "$PID")" > /dev/null 2>&1
+		echo > "$PID"
 		echo "Stopping the service '${BASENAME}'."
 		rm -f "$FILE_LIGHTS_REACHABLE"
 }
