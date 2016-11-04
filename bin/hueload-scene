@@ -8,7 +8,7 @@ SCENES_PATH="/etc/hue-shell/scenes"
 _info() {
 	echo "Available scenes:"
 	for SCENE in $(find $SCENES_PATH -name "*.scene"); do
-	TOKEN=$(echo $SCENE | sed 's:.*/\(.*\).scene:\1:')
+	TOKEN=$(echo "$SCENE" | sed 's:.*/\(.*\).scene:\1:')
 	echo " -> $TOKEN"
 	done
 }
@@ -20,7 +20,7 @@ _execute() {
 
 	_hue_stop
 	if [ -f "$SCENE" ]; then
-		$SCENE
+		"$SCENE"
 	else
 		_info
 	fi
@@ -29,7 +29,7 @@ _execute() {
 case "$1" in
 
 	-e|--execute)
-		_execute $2
+		_execute "$2"
 		;;
 
 	-h|--help)

@@ -72,12 +72,12 @@ _hue_stop
 #	$3: TIME_RANGE
 #	$4: BRI_RANGE
 _breath() {
-	TRANSTIME=$(_hue_range $3)
+	TRANSTIME="$(_hue_range "$3")"
 	BRI_START=${4%%:*}
 	BRI_END=${4#*:}
 
-	_hue_set_transit $1 $TRANSTIME --hue $(_hue_range $2) --bri $BRI_END --sat 255
-	_hue_set_transit $1 $TRANSTIME --bri $BRI_START
+	_hue_set_transit "$1" "$TRANSTIME" --hue "$(_hue_range "$2")" --bri "$BRI_END" --sat 255
+	_hue_set_transit "$1" "$TRANSTIME" --bri "$BRI_START"
 }
 
 _loop_breath() {
@@ -95,7 +95,7 @@ _loop_breath() {
 		_hue_log 2 "SET L: $LIGHT H: $HUE_RANGE T: $TIME_RANGE B: $BRI_RANGE"
 		(
 			while true; do
-				_breath $LIGHT $HUE_RANGE $TIME_RANGE $BRI_RANGE
+				_breath "$LIGHT" "$HUE_RANGE" "$TIME_RANGE" "$BRI_RANGE"
 			done
 		) &
 		eval "PID${LIGHT}=$!"
@@ -149,7 +149,7 @@ LIGHTS: $LIGHTS"
 
 while true; do
 	_detect_lights
-	sleep $REFRESH_INTERVAL
+	sleep "$REFRESH_INTERVAL"
 done
 
 

@@ -14,15 +14,15 @@ _edit() {
 
 # Print out the contents of the random config file to standard output.
 _get() {
-	cat $RANDOM_FILE
+	cat "$RANDOM_FILE"
 }
 
 # Send one random light scene to standard output.
 _get_random() {
 	LINES=$(_list | wc -l)
-	RANDOM=$(_hue_range 1:"$LINES")
+	COMMAND=$(_hue_range 1:"$LINES")
 
-	_list | sed -n "$RANDOM"p
+	_list | sed -n "$COMMAND"p
 }
 
 # List all light scenes without empty lines and comments.
@@ -108,7 +108,7 @@ if [ "$DETACHED" = 1 ]; then
 fi
 
 if [ "$TEST" = 1 ]; then
-	echo $SCENE
+	echo "$SCENE"
 else
 	eval "$SCENE"
 fi

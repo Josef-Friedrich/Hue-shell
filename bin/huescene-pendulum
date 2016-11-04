@@ -45,50 +45,50 @@ _calculate_lights() {
 #	$5: SWITCH_TIME
 #	$6: TRANSITION_TIME
 _pendulum() {
-	[ "$1" = 0 ] || _hue_set $1 --hue $3 -t $6 --sat 255 --bri 255
-	[ "$2" = 0 ] || _hue_set $2 --hue $4 -t $6 --sat 255 --bri 255
-	sleep $5
+	[ "$1" = 0 ] || _hue_set "$1" --hue "$3" -t "$6" --sat 255 --bri 255
+	[ "$2" = 0 ] || _hue_set "$2" --hue "$4" -t "$6" --sat 255 --bri 255
+	sleep "$5"
 
-	[ "$2" = 0 ] || _hue_set $2 --hue $3 -t $6 --sat 255 --bri 255
-	[ "$1" = 0 ] || _hue_set $1 --hue $4 -t $6 --sat 255 --bri 255
-	sleep $5
+	[ "$2" = 0 ] || _hue_set "$2" --hue "$3" -t "$6" --sat 255 --bri 255
+	[ "$1" = 0 ] || _hue_set "$1" --hue "$4" -t "$6" --sat 255 --bri 255
+	sleep "$5"
 }
 
 while true ; do
 	case "$1" in
 
 		-c1|--color1)
-			ARG_COLOR1=$2
+			ARG_COLOR1="$2"
 			shift 2
 			;;
 
 		-c2|--color2)
-			ARG_COLOR2=$2
+			ARG_COLOR2="$2"
 			shift 2
 			;;
 
 		-h|--help)
-			_hue_usage $BASENAME
+			_hue_usage
 			break
 			;;
 
 		-l1|--lights1)
-			ARG_LIGHTS1=$2
+			ARG_LIGHTS1="$2"
 			shift 2
 			;;
 
 		-l2|--lights2)
-			ARG_LIGHTS2=$2
+			ARG_LIGHTS2="$2"
 			shift 2
 			;;
 
 		-s|--switchtime)
-			ARG_SWITCH_TIME=$2
+			ARG_SWITCH_TIME="$2"
 			shift 2
 			;;
 
 		-t|--transitiontime)
-			ARG_TRANSITION_TIME=$2
+			ARG_TRANSITION_TIME="$2"
 			shift 2
 			;;
 
@@ -100,27 +100,27 @@ done
 
 # Defaults
 if [ -z "$ARG_COLOR1" ]; then
-	COLOR1=$(_hue_range 0:65535)
+	COLOR1="$(_hue_range 0:65535)"
 else
-	COLOR1=$ARG_COLOR1
+	COLOR1="$ARG_COLOR1"
 fi
 
 if [ -z "$ARG_COLOR2" ]; then
-	COLOR2=$(_hue_range 0:65535)
+	COLOR2="$(_hue_range 0:65535)"
 else
-	COLOR2=$ARG_COLOR2
+	COLOR2="$ARG_COLOR2"
 fi
 
 if [ -z "$ARG_SWITCH_TIME" ]; then
 	SWITCH_TIME=$(_hue_range 1:10)
 else
-	SWITCH_TIME=$ARG_SWITCH_TIME
+	SWITCH_TIME="$ARG_SWITCH_TIME"
 fi
 
 if [ -z "$ARG_TRANSITION_TIME" ]; then
-	TRANSITION_TIME=$(_hue_range 5:50)
+	TRANSITION_TIME="$(_hue_range 5:50)"
 else
-	TRANSITION_TIME=$ARG_TRANSITION_TIME
+	TRANSITION_TIME="$ARG_TRANSITION_TIME"
 fi
 
 _hue_trap
@@ -134,7 +134,7 @@ TRANSITION_TIME: ${TRANSITION_TIME}"
 while true; do
 	_calculate_lights
 	_hue_log 2 "LIGHTS1: $LIGHTS1 LIGHTS2: $LIGHTS2"
-	_pendulum $LIGHTS1 $LIGHTS2 $COLOR1 $COLOR2 $SWITCH_TIME $TRANSITION_TIME
+	_pendulum "$LIGHTS1" "$LIGHTS2" "$COLOR1" "$COLOR2" "$SWITCH_TIME" "$TRANSITION_TIME"
 done
 
 # vim: set ts=8 sw=8 sts=8 et :
