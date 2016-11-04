@@ -1,9 +1,12 @@
 #!/usr/bin/env bats
 
-# setup() {
-# 	sudo ./install.sh uninstall -y > /dev/null 2>&1
-# 	sudo ./install.sh install --test 1 > /dev/null 2>&1
-# }
+setup() {
+	sudo ./install.sh install --test 1 > /dev/null 2>&1
+}
+
+teardown() {
+	sudo ./install.sh purge -y > /dev/null 2>&1
+}
 
 @test "execute: hueservice-detect-lights" {
 	run hueservice-detect-lights

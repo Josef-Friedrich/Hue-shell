@@ -1,9 +1,12 @@
 #!/usr/bin/env bats
 
-# setup() {
-# 	sudo ./install.sh uninstall -y > /dev/null 2>&1
-# 	sudo ./install.sh install --test 1 > /dev/null 2>&1
-# }
+setup() {
+	sudo ./install.sh install --test 1 > /dev/null 2>&1
+}
+
+teardown() {
+	sudo ./install.sh purge -y > /dev/null 2>&1
+}
 
 @test "unittest: _hue_color" {
 	. /etc/hue-shell/hue-shell.conf
@@ -43,4 +46,25 @@
 	. /etc/hue-shell/hue-shell.conf
 	result=$(_hue_get_on test/json/get_lightsNormalized.json)
 	[ "${result}" = '2' ]
+}
+
+@test "unittest: _hue_log" {
+	. /etc/hue-shell/hue-shell.conf
+	_hue_log 1 'Log level 1'
+	run test -f $FILE_LOG
+	[ "${status}" -eq 0 ]
+	run tail -n 1 $FILE_LOG
+	[ "${output}" = ''  ]
+
+	LOG=1
+	_hue_log 1 'Log level 1'
+	run tail -n 1 $FILE_LOG
+	output=$(echo $output | sed 's/.*\] //')
+	[ "${output}" = 'Log level 1'  ]
+
+	_hue_log 2 'no logging'
+	run tail -n 1 $FILE_LOG
+	output=$(echo $output | sed 's/.*\] //')
+	[ "${output}" = 'Log level 1'  ]
+
 }

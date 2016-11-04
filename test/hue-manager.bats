@@ -1,5 +1,12 @@
 #!/usr/bin/env bats
 
+setup() {
+	sudo ./install.sh install --test 1 > /dev/null 2>&1
+}
+
+teardown() {
+	sudo ./install.sh purge -y > /dev/null 2>&1
+}
 
 @test "File status: install" {
 	if [ $(uname) = 'Darwin' ]; then

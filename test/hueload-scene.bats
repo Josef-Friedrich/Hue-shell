@@ -1,5 +1,13 @@
 #!/usr/bin/env bats
 
+setup() {
+	sudo ./install.sh install --test 1 > /dev/null 2>&1
+}
+
+teardown() {
+	sudo ./install.sh purge -y > /dev/null 2>&1
+}
+
 @test "execute: hueload-scene --execute default" {
 	run hueload-scene --execute default
 	[ "${status}" -eq 0 ]
