@@ -82,11 +82,6 @@ while true ; do
 			shift 2
 			;;
 
-		-m|--master-pid)
-			MASTER_PID=$2
-			shift 2
-			;;
-
 		-s|--switchtime)
 			ARG_SWITCH_TIME=$2
 			shift 2
@@ -130,10 +125,6 @@ fi
 
 _hue_trap
 _hue_stop
-
-if [ -n "$MASTER_PID" ]; then
-	_hue_write_to_master_pid $MASTER_PID $$
-fi
 
 _hue_log 1 "COLOR1: ${COLOR1} \
 COLOR2: ${COLOR2} \

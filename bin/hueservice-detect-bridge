@@ -5,7 +5,6 @@
 COMMAND="$DEFAULT_SCENE"
 TRIGGERED=0
 FILE_PID=$DIR_RUN_TMP/${BASENAME}.pid
-FILE_MASTER_PID=$DIR_RUN_TMP/${BASENAME}_master.pid
 
 _detect_bridge() {
 	ping -c 1 -W 1 -w 1 $IP > /dev/null 2>&1
@@ -14,13 +13,12 @@ _detect_bridge() {
 		if [ "$TRIGGERED" = 0 ]; then
 			TRIGGERED=1
 			_hue_log 1 "Starting: $COMMAND"
-			eval "$COMMAND --master-pid $MASTER_PID &"
+			eval "$COMMAND &"
 		fi
 	else
 		if [ "$TRIGGERED" = 1 ]; then
 			_hue_log 1 "Stopping: $COMMAND"
-			_hue_kill_by_master_pid $MASTER_PID
-			#_hue_kill
+			_hue_kill
 		fi
 		TRIGGERED=0
 	fi
@@ -35,8 +33,6 @@ _start() {
 	if [ "$(_is_running)" = 0 ]; then
 		echo "The service is already running."
 	else
-		MASTER_PID=$$
-		echo $MASTER_PID > $FILE_MASTER_PID
 		(
 		while true; do
 			_detect_bridge
@@ -61,9 +57,8 @@ _stop() {
 		kill $(cat $FILE_PID) > /dev/null 2>&1
 		echo > $FILE_PID
 		echo "Stopping the service '${BASENAME}'."
-		_hue_kill_by_master_pid $(cat $FILE_MASTER_PID)
 		_hue_reset
-		#_hue_kill
+		_hue_kill
 }
 
 while true ; do

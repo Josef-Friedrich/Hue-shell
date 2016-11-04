@@ -83,11 +83,6 @@ while true ; do
 			exit 0
 			;;
 
-		# -m|--master-pid)
-		# 	MASTER_PID=$2
-		# 	shift 2
-		# 	;;
-
 		-s|--show)
 			_show
 			exit 0

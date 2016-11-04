@@ -305,32 +305,6 @@ _hue_trap() {
 	trap "$TRAP" $DEFAULT_TRAP_SIGNALS
 }
 
-# Append a PID (Process ID) to a text file which collects all PIDs
-# corresponding to a master PID.
-#	$1: MASTER_PID
-#	$2: PID
-_hue_write_to_master_pid() {
-	if [ -z "$2" ]; then
-		MASTER=$1
-	else
-		MASTER=$2
-	fi
-	echo "$MASTER" >> "$DIR_RUN_TMP/hue-shell_master-pid_$1"
-}
-
-# Stop all hue processes.
-#	$1: MASTER_PID
-_hue_kill_by_master_pid() {
-	if [ -n "$1" ]; then
-		_hue_log 1 "kill MASTER_PID: $1"
-		for PROCESS_ID in $(cat "$DIR_RUN_TMP/hue-shell_master-pid_$1"); do
-			_hue_log 2 "kill PROCESS_ID: $PROCESS_ID"
-			kill -9 "$PROCESS_ID" > /dev/null 2>&1
-		done
-		rm -f "$DIR_RUN_TMP/hue-shell_master-pid_$1"
-	fi
-}
-
 # Print out debug output in three modes.
 _hue_output() {
 	read -r OUTPUT
