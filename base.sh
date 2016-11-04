@@ -60,7 +60,7 @@ _hue_call() {
 		curl \
 			--max-time 1 \
 			--silent \
-			--request "$1" "$DATA" "http://$IP/api/$USERNAME/$2" | _hue_output
+			--request "$1" $DATA "http://$IP/api/$USERNAME/$2" | _hue_output
 	fi
 }
 
@@ -296,7 +296,6 @@ _hue_alert() {
 # Trap function for scene scripts. If you hit Ctrl+c, the light scence
 # will be interrupted and all lights will be reset to the default color.
 _hue_trap() {
-	TRAP
 	if [ -z "$1" ]; then
 		TRAP="_hue_reset; echo; exit"
 	else
