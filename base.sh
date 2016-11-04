@@ -1,7 +1,7 @@
 #! /bin/sh
 
 OLD_IFS="$IFS"
-BASENAME=$(basename $0)
+BASENAME="$(basename "$0")"
 
 # Execute hue commands and put them in a while loop.
 #	$*: HUE_COMMANDS
@@ -11,7 +11,7 @@ _hue_loop() {
 			eval "$*"
 		done
 	) &
-	echo $! >> $FILE_PIDS
+	echo $! >> "$FILE_PIDS"
 }
 
 # Random range function.
@@ -29,11 +29,11 @@ _hue_range() {
 
 	# http://rosettacode.org/wiki/Linear_congruential_generator
 
-	SEED=$(cat $FILE_RANDOM_SEED | head -n 1)
-	SEED=$(((123 * $SEED + 23456) % 345678))
-	echo $SEED > $FILE_RANDOM_SEED
+	SEED=$(cat "$FILE_RANDOM_SEED" | head -n 1)
+	SEED=$(((123 * SEED + 23456) % 345678))
+	echo "$SEED" > "$FILE_RANDOM_SEED"
 
-	RANDOM=$(($SEED / 2))
+	RANDOM=$((SEED / 2))
 
 	local NUMBER_IN_RANGE=$((RANDOM % RANGE))
 
@@ -42,7 +42,7 @@ _hue_range() {
 
 # Print to Stdout for bats tests
 _hue_test() {
-	echo $3
+	echo "$3"
 }
 
 # Execute the http call over curl.
@@ -55,23 +55,23 @@ _hue_call() {
 	fi
 	_hue_log 2 "HTTP_REQUEST: $1 PATH: $2 DATA: $3"
 	if [ "$TEST" = 1 ]; then
-		_hue_test $@
+		_hue_test "$@"
 	else
 		curl \
 			--max-time 1 \
 			--silent \
-			--request $1 $DATA http://$IP/api/$USERNAME/$2 | _hue_output
+			--request "$1" "$DATA" "http://$IP/api/$USERNAME/$2" | _hue_output
 	fi
 }
 
 # Stop all hue processes.
 _hue_stop() {
 
-	for PID in $(cat $FILE_PIDS); do
-		kill $PID > /dev/null 2>&1
+	for PID in $(cat "$FILE_PIDS"); do
+		kill "$PID" > /dev/null 2>&1
 	done
 
-	> $FILE_PIDS
+	> "$FILE_PIDS"
 }
 
 # Kill all hue processes.
@@ -183,7 +183,7 @@ _hue_set() {
 		esac
 	done
 
-	if [ $X ] && [ $Y ]; then
+	if [ "$X" ] && [ "$Y" ]; then
 		JSON="$JSON,\"xy\":[$X,$Y]"
 	fi
 
@@ -191,16 +191,16 @@ _hue_set() {
 	JSON="{$JSON}"
 
 	if [ "$DEBUG" -ge 2 ]; then
-		echo $JSON
+		echo "$JSON"
 	fi
 
 	if [ "$LIGHTS" = "all" ]; then
-		_hue_call PUT groups/0/action $JSON
+		_hue_call PUT groups/0/action "$JSON"
 	else
 		IFS=","
 		for LIGHT in $LIGHTS; do
 			IFS="$OLD_IFS"
-			_hue_call PUT lights/$LIGHT/state "$JSON"
+			_hue_call PUT "lights/$LIGHT/state" "$JSON"
 		done
 	fi
 }
@@ -213,8 +213,8 @@ _hue_set_transit() {
 	local TRANSITIONTIME="$2"
 	shift 2
 
-	_hue_set $LIGHTS --transitiontime $(($TRANSITIONTIME * 10)) $@
-	sleep $TRANSITIONTIME
+	_hue_set "$LIGHTS" --transitiontime $((TRANSITIONTIME * 10)) "$@"
+	sleep "$TRANSITIONTIME"
 }
 
 # Get the state of the lights.
@@ -233,7 +233,7 @@ _hue_get() {
 		IFS=","
 		for LIGHT in $LIGHTS; do
 			IFS="$OLD_IFS"
-			_hue_call GET lights/$LIGHT
+			_hue_call GET "lights/$LIGHT"
 		done
 	fi
 }
@@ -245,9 +245,9 @@ _hue_get_on() {
 	if [ -n "$1" ]; then
 		JSON=$(cat "$1")
 	else
-		JSON=$(curl --silent --request GET http://$IP/api/$USERNAME/lights)
+		JSON=$(curl --silent --request GET "http://$IP/api/$USERNAME/lights")
 	fi
-	JSON=$(echo $JSON | sed 's/"\([0-9]*\)":{"state":/%\1%/g')
+	JSON=$(echo "$JSON" | sed 's/"\([0-9]*\)":{"state":/%\1%/g')
 
 	IFS="%"
 	IS_LIGHT=0
@@ -255,7 +255,7 @@ _hue_get_on() {
 		IFS="$OLD_IFS"
 		if [ "$IS_LIGHT" = 0 ]; then
 			IS_LIGHT=1
-			IS_REACHABLE=$(echo $LINE | grep '"reachable":true')
+			IS_REACHABLE=$(echo "$LINE" | grep '"reachable":true')
 			if [ -n "$IS_REACHABLE" ]; then
 				OUTPUT="$OUTPUT,$LIGHT"
 			fi
@@ -265,14 +265,14 @@ _hue_get_on() {
 		fi
 	done
 
-	echo $OUTPUT | sed 's/^,//'
+	echo "$OUTPUT" | sed 's/^,//'
 }
 
 # This funtion checks if there reachable lights and returns it.
 # Otherwise it returns the value of the $ALL_LIGHTS variable.
 _hue_get_lights_reachable() {
 	if [ -f "$FILE_LIGHTS_REACHABLE" ]; then
-		echo $(cat "$FILE_LIGHTS_REACHABLE")
+		cat "$FILE_LIGHTS_REACHABLE"
 	else
 		echo "$ALL_LIGHTS"
 	fi
@@ -290,7 +290,7 @@ _hue_alert() {
 		IFS=","
 		for LIGHT in $LIGHTS; do
 			IFS="$OLD_IFS"
-			_hue_call PUT lights/$LIGHT/state '{"alert":"select"}'
+			_hue_call PUT "lights/$LIGHT/state" '{"alert":"select"}'
 		done
 	fi
 }
@@ -318,7 +318,7 @@ _hue_write_to_master_pid() {
 	else
 		MASTER=$2
 	fi
-	echo $MASTER >> $DIR_RUN_TMP/hue-shell_master-pid_$1
+	echo "$MASTER" >> "$DIR_RUN_TMP/hue-shell_master-pid_$1"
 }
 
 # Stop all hue processes.
@@ -327,20 +327,20 @@ _hue_kill_by_master_pid() {
 	if [ -n "$1" ]; then
 		local PROCESS_ID
 		_hue_log 1 "kill MASTER_PID: $1"
-		for PROCESS_ID in $(cat $DIR_RUN_TMP/hue-shell_master-pid_$1); do
+		for PROCESS_ID in $(cat "$DIR_RUN_TMP/hue-shell_master-pid_$1"); do
 			_hue_log 2 "kill PROCESS_ID: $PROCESS_ID"
-			kill -9 $PROCESS_ID > /dev/null 2>&1
+			kill -9 "$PROCESS_ID" > /dev/null 2>&1
 		done
-		rm -f $DIR_RUN_TMP/hue-shell_master-pid_$1
+		rm -f "$DIR_RUN_TMP/hue-shell_master-pid_$1"
 	fi
 }
 
 # Print out debug output in three modes.
 _hue_output() {
-	read OUTPUT
+	read -r OUTPUT
 
 	if [ "$DEBUG" -ge 1 ]; then
-		echo $OUTPUT | tr ',' '\n'
+		echo "$OUTPUT" | tr ',' '\n'
 	fi
 }
 
@@ -349,7 +349,7 @@ _hue_output() {
 #	$2: LOG_MESSAGE
 _hue_log() {
 	if [ "$LOG" -ge "$1" ]; then
-		echo "$(date) [$BASENAME] $2" >> $FILE_LOG
+		echo "$(date) [$BASENAME] $2" >> "$FILE_LOG"
 	fi
 
 	if [ "$DEBUG" -ge "$1" ]; then
@@ -359,7 +359,7 @@ _hue_log() {
 
 # Show help messages.
 _hue_usage() {
-	cat ${PREFIX}/share/doc/hue-shell/${BASENAME}.txt
+	cat "${PREFIX}/share/doc/hue-shell/${BASENAME}.txt"
 	echo ''
 	if [ "$1" = 'error' ]; then
 		exit 1
