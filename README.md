@@ -31,7 +31,7 @@ Raspberry Pi, Cubieboard, BeagleBone etc.
 # Installation
 
 ```sh
-sh -c "OPT=install; $(curl -fksSkL http://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
+sudo sh -c "OPT=install; $(curl -fksSkL http://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
 ```
 
 To install `Hue shell` manually please read the [documentation on the project page](http://josef-friedrich.github.io/Hue-shell/installation.html).
@@ -43,7 +43,7 @@ To install `Hue shell` manually please read the [documentation on the project pa
            ___|  _  _  _  _  |_________________
           /   |  || || || ||_|___             /;      Hue-shell runs on
          /.--------------.      /|___        //     many single-board computer
-        / |  _  _  _  _  |     / ___ \      //     like Raspberry Pi,        
+        / |  _  _  _  _  |     / ___ \      //     like Raspberry Pi,
        /  |  || || || || |____/ ___ \(\)   //     Cubieboard, BeagleBone etc.
       /   |  || || || || |    | /  \(\)   //
      /    |______________|____|/   (\)   //
