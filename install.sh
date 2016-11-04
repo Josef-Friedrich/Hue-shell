@@ -43,62 +43,62 @@ _rm() {
 }
 
 _usage() {
-	if [ -f ${PREFIX}/share/doc/hue-shell/hue-manager.txt ] ; then
-		cat ${PREFIX}/share/doc/hue-shell/hue-manager.txt
+	if [ -f "${PREFIX}/share/doc/hue-shell/hue-manager.txt" ] ; then
+		cat "${PREFIX}/share/doc/hue-shell/hue-manager.txt"
 	else
-		echo "Usage: $(basename $0) (help|install|reinstall|upgrade|uninstall)"
+		echo "Usage: $(basename "$0") (help|install|reinstall|upgrade|uninstall)"
 	fi
-	exit $1
+	exit "$1"
 }
 
 _download() {
-	cd /tmp
+	cd /tmp || exit
 	curl -fsSkL -o Hue-shell.tar.gz http://github.com/Josef-Friedrich/Hue-shell/archive/master.tar.gz
 	tar -xzvf Hue-shell.tar.gz
-	cd Hue-shell-master
+	cd Hue-shell-master || exit
 }
 
 _install_base() {
 	# bin
-	_cp bin/hue* $DIR_BIN
-	_cp install.sh $DIR_BIN/hue-manager
+	_cp bin/hue* "$DIR_BIN"
+	_cp install.sh "$DIR_BIN/hue-manager"
 
 	# conf
-	_sudo mkdir -p $DIR_CONF
+	_sudo mkdir -p "$DIR_CONF"
 	if [ -n "$UPGRADE" ]; then
 		_new_conf() {
-			_cp $DIR_CONF/$1 $DIR_CONF/$1.new
+			_cp "$DIR_CONF/$1" "$DIR_CONF/$1.new"
 		}
 		_new_conf hue-shell.conf
 		_new_conf random-scenes.conf
 		_new_conf scenes/default.scene
 	else
-		if [ -f $DIR_CONF/hue-shell.conf ]; then
-			_cp $DIR_CONF/hue-shell.conf $DIR_CONF/hue-shell.conf.bak
+		if [ -f "$DIR_CONF/hue-shell.conf" ]; then
+			_cp "$DIR_CONF/hue-shell.conf" "$DIR_CONF/hue-shell.conf.bak"
 		fi
-		_cp -r config/* $DIR_CONF
+		_cp -r config/* "$DIR_CONF"
 	fi
 
 	# doc
-	_mkdir $DIR_DOC
-	_cp doc/* $DIR_DOC
+	_mkdir "$DIR_DOC"
+	_cp doc/* "$DIR_DOC"
 
 	# lib
-	_mkdir $DIR_LIB
-	_cp base.sh $DIR_LIB
+	_mkdir "$DIR_LIB"
+	_cp base.sh "$DIR_LIB"
 
 	# log
-	_sudo touch $FILE_LOG
-	_sudo chmod 666 $FILE_LOG
+	_sudo touch "$FILE_LOG"
+	_sudo chmod 666 "$FILE_LOG"
 
 	# run
 	# By Hue-shell generated run files that should "survive" reboot.
-	_mkdir $DIR_RUN_PERM
-	_sudo chmod 777 $DIR_RUN_PERM
-	_sudo touch $FILE_RANDOM_SEED
-	_sudo chmod 666 $FILE_RANDOM_SEED
-	_sudo touch $FILE_PIDS
-	_sudo chmod 666 $FILE_PIDS
+	_mkdir "$DIR_RUN_PERM"
+	_sudo chmod 777 "$DIR_RUN_PERM"
+	_sudo touch "$FILE_RANDOM_SEED"
+	_sudo chmod 666 "$FILE_RANDOM_SEED"
+	_sudo touch "$FILE_PIDS"
+	_sudo chmod 666 "$FILE_PIDS"
 }
 
 _install_services() {
@@ -106,9 +106,9 @@ _install_services() {
 	if [ -f /etc/openwrt_version ]; then
 		echo "Installing init.d services ..."
 		_install() {
-			_cp service/openwrt.initd/$1 /etc/init.d/hue-$1
+			_cp "service/openwrt.initd/$1" "/etc/init.d/hue-$1"
 			if [ -z "$UPGRADE" ]; then
-				/etc/init.d/hue-$1 enable
+				"/etc/init.d/hue-$1" enable
 			fi
 		}
 		_install load-default
@@ -119,9 +119,9 @@ _install_services() {
 	elif command -v systemctl > /dev/null 2>&1; then
 		echo "Installing systemd services ..."
 		_install() {
-			_cp service/systemd/$1 /lib/systemd/system/hue-$1.service
+			_cp "service/systemd/$1" "/lib/systemd/system/hue-$1.service"
 			if [ -z "$UPGRADE" ]; then
-				_sudo systemctl enable /lib/systemd/system/hue-$1.service
+				_sudo systemctl enable "/lib/systemd/system/hue-$1.service"
 			fi
 		}
 		_install load-default
@@ -132,7 +132,7 @@ _install_services() {
 	elif [ -d '/etc/init.d' ]; then
 		echo "Installing SysVinit services ..."
 		_install() {
-			_cp service/SysVinit/$1 /etc/init.d/$1
+			_cp "service/SysVinit/$1" "/etc/init.d/$1"
 		}
 		_install load-default
 	fi
@@ -219,20 +219,20 @@ _uninstall() {
 	if [ ! "$@" = '-y' ]; then
 		echo 'Uninstall hue-shell? (y|n): '
 
-		read COMFIRMATION
+		read -r COMFIRMATION
 
 		if [ ! "$COMFIRMATION" = 'y' ]; then
 			exit 1
 		fi
 	fi
 
-	_rm $DIR_LIB
-	_rm $DIR_BIN/hue*
-	_rm $DIR_DOC
+	_rm "$DIR_LIB"
+	_rm "$DIR_BIN"/hue*
+	_rm "$DIR_DOC"
 
 	if [ "$PURGE" = 1 ]; then
-		_rm $DIR_CONF
-		_rm $DIR_RUN_PERM
+		_rm "$DIR_CONF"
+		_rm "$DIR_RUN_PERM"
 		_rm "$DIR_RUN_TMP/$NAME-lights-reachable"
 		_rm "$DIR_RUN_TMP/$NAME-lights-all"
 		_rm "$DIR_LOG/$NAME.log"
@@ -242,7 +242,7 @@ _uninstall() {
 	# OpenWrt
 	if [ -f /etc/openwrt_version ]; then
 		_disable() {
-			/etc/init.d/hue-$1 disable
+			"/etc/init.d/hue-$1" disable
 		}
 		_disable load-default
 		_disable detect-lights
@@ -251,7 +251,7 @@ _uninstall() {
 	elif command -v systemctl > /dev/null 2>&1; then
 		echo "Uninstall systemd services ..."
 		_disable() {
-			_sudo systemctl disable hue-$1.service
+			_sudo systemctl disable "hue-$1.service"
 		}
 		_disable load-default
 		_disable detect-lights
@@ -266,7 +266,6 @@ case "$OPT" in
 
 	help)
 		_usage
-		break
 		;;
 
 	install)
@@ -275,12 +274,10 @@ case "$OPT" in
 			shift
 		fi
 		_restore_configuration $@
-		break
 		;;
 
 	purge)
 		_uninstall --purge $@
-		break
 		;;
 
 	reinstall)
@@ -290,23 +287,19 @@ case "$OPT" in
 			shift
 		fi
 		_restore_configuration $@
-		break
 		;;
 
 	upgrade)
 		UPGRADE=1
 		_install
-		break
 		;;
 
 	uninstall)
 		_uninstall $@
-		break
 		;;
 
 	*)
 		_usage 1
-		break
 		;;
 
 esac
