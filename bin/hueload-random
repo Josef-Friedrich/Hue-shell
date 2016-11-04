@@ -103,16 +103,7 @@ _hue_log 1 "$RANDOM_SCENE"
 
 SCENE="$RANDOM_SCENE"
 
-# if [ -z "$MASTER_PID" ]; then
-# 	_hue_write_to_master_pid $$
-# 	SCENE="$SCENE $$"
-# else
-# 	_hue_write_to_master_pid $MASTER_PID $$
-# 	SCENE="$SCENE $MASTER_PID"
-# fi
-
 if [ "$DETACHED" = 1 ]; then
-	#SCENE="$SCENE $MASTER_PID &"
 	SCENE="$SCENE &"
 fi
 
