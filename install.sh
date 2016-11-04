@@ -48,7 +48,7 @@ _usage() {
 	else
 		echo "Usage: $(basename "$0") (help|install|reinstall|upgrade|uninstall)"
 	fi
-	exit "$1"
+	exit $1
 }
 
 _download() {
@@ -270,9 +270,7 @@ case "$OPT" in
 
 	install)
 		_install
-		if [ -n "$@" ]; then
-			shift
-		fi
+		shift
 		_restore_configuration $@
 		;;
 
@@ -283,9 +281,7 @@ case "$OPT" in
 	reinstall)
 		_uninstall -y
 		_install
-		if [ -n "$@" ]; then
-			shift
-		fi
+		shift
 		_restore_configuration $@
 		;;
 
