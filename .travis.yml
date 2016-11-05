@@ -1,8 +1,16 @@
 language: bash
 sudo: required
+
+addons:
+  apt:
+    sources:
+    - debian-sid
+    packages:
+    - shellcheck
+
 before_install:
   - sudo add-apt-repository ppa:duggan/bats -y
   - sudo apt-get -qq update
-  - sudo apt-get install -y bats jq shellcheck
+  - sudo apt-get install -y bats jq
 script:
   - ./test.sh
