@@ -57,6 +57,7 @@ fi
 
 _kill_all() {
 	IFS=","
+	# shellcheck disable=SC2153
 	for LIGHT in $ALL_LIGHTS ; do
 		IFS="$OLD_IFS"
 		eval "kill \$PID${LIGHT} > /dev/null 2>&1"
@@ -142,6 +143,7 @@ _detect_lights() {
 	done
 }
 
+# shellcheck disable=SC2153
 _hue_log 1 "HUE_RANGE: $HUE_RANGE \
 TIME_RANGE: $TIME_RANGE \
 BRI_RANGE: $BRI_RANGE \

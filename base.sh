@@ -67,6 +67,7 @@ _hue_call() {
 
 # Stop all hue processes.
 _hue_stop() {
+	# shellcheck disable=SC2013
 	for PID in $(cat "$FILE_PIDS"); do
 		kill "$PID" > /dev/null 2>&1
 	done
@@ -227,6 +228,7 @@ _hue_get() {
 	if [ "$LIGHTS" = "all" ]; then
 		_hue_call GET lights
 	elif [ "$LIGHTS" = "on" ]; then
+		# shellcheck disable=SC2119
 		_hue_get_on
 	else
 		IFS=","
@@ -238,6 +240,7 @@ _hue_get() {
 }
 
 # Queries for lights, which are online.
+# shellcheck disable=SC2120
 _hue_get_on() {
 	if [ -n "$1" ]; then
 		JSON=$(cat "$1")
@@ -300,7 +303,7 @@ _hue_trap() {
 	else
 		TRAP="$1"
 	fi
-	trap "$TRAP" $DEFAULT_TRAP_SIGNALS
+	trap '$TRAP' $DEFAULT_TRAP_SIGNALS
 }
 
 # Print out debug output in three modes.

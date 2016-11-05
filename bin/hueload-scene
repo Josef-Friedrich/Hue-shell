@@ -8,9 +8,9 @@ SCENES_PATH="/etc/hue-shell/scenes"
 # Show available scenes.
 _info() {
 	echo "Available scenes:"
-	for SCENE in $(find $SCENES_PATH -name "*.scene"); do
-	TOKEN=$(echo "$SCENE" | sed 's:.*/\(.*\).scene:\1:')
-	echo " -> $TOKEN"
+	for SCENE in "$SCENES_PATH"/*.scene ; do
+		TOKEN=$(echo "$SCENE" | sed 's:.*/\(.*\).scene:\1:')
+		echo " -> $TOKEN"
 	done
 }
 
