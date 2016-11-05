@@ -8,7 +8,7 @@ title: hue-manager
 ########################################################################
 
 USAGE
-	hue-manager (help|install|reinstall|upgrade|uninstall) <options>
+	hue-manager (help|install|reinstall|purge|upgrade|uninstall) <options>
 
 SUBCOMMANDS
 
@@ -18,6 +18,9 @@ SUBCOMMANDS
 	install
 		Install Hue-shell.
 
+	purge
+		Delete all Hue-shell files including configurations.
+
 	reinstall
 		First uninstall Hue-shell and then install again.
 
@@ -25,7 +28,7 @@ SUBCOMMANDS
 		Upgrade Hue-shell.
 
 	uninstall
-		Uninstall Hue-shell.
+		Uninstall Hue-shell. Configuration files are not deleted.
 
 OPTIONS
 
