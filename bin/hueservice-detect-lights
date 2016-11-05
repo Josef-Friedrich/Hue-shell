@@ -1,5 +1,6 @@
 #! /bin/sh
 
+# shellcheck disable=SC1091
 . /etc/hue-shell/hue-shell.conf
 
 PID="$DIR_RUN_TMP/${BASENAME}.pid"

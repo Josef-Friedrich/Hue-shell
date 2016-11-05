@@ -1,5 +1,3 @@
 #! /bin/bash
 
-shellcheck bin/*
-shellcheck base.sh
-shellcheck install.sh
+shellcheck bin/* base.sh install.sh
