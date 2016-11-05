@@ -167,13 +167,11 @@ teardown() {
 	./install.sh install --test 1
 }
 
-@test "execute: hue-manager" {
+@test "hue-manager: Usage" {
 	run hue-manager
 	[ "${lines[1]}" = '# hue-manager' ]
 	[ "${status}" -eq 1 ]
-}
 
-@test "execute: hue-manager help" {
 	run hue-manager help
 	[ "${lines[1]}" = '# hue-manager' ]
 	[ "${status}" -eq 0 ]

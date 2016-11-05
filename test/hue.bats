@@ -8,13 +8,11 @@ teardown() {
 	sudo ./install.sh purge -y > /dev/null 2>&1
 }
 
-@test "execute: hue" {
+@test "hue: Usage" {
 	run hue
 	[ "${lines[1]}" = '# hue' ]
 	[ "${status}" -eq 1 ]
-}
 
-@test "execute: hue help" {
 	run hue help
 	[ "${lines[1]}" = '# hue' ]
 	[ "${status}" -eq 0 ]

@@ -8,14 +8,14 @@ teardown() {
 	sudo ./install.sh purge -y > /dev/null 2>&1
 }
 
-@test "execute: hueload-scene --execute default" {
-	run hueload-scene --execute default
+@test "hueload-scene: Usage" {
+	run hueload-scene --help
+	[ "${lines[1]}" = '# hueload-scene' ]
 	[ "${status}" -eq 0 ]
 }
 
-@test "execute: hueload-scene --help" {
-	run hueload-scene --help
-	[ "${lines[1]}" = '# hueload-scene' ]
+@test "execute: hueload-scene --execute default" {
+	run hueload-scene --execute default
 	[ "${status}" -eq 0 ]
 }
 

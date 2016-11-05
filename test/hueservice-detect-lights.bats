@@ -8,10 +8,14 @@ teardown() {
 	sudo ./install.sh purge -y > /dev/null 2>&1
 }
 
-@test "execute: hueservice-detect-lights" {
+@test "hueservice-detect-lights: Usage" {
 	run hueservice-detect-lights
 	[ "${lines[1]}" = '# hueservice-detect-lights' ]
 	[ "${status}" -eq 1 ]
+
+	run hueservice-detect-lights --help
+	[ "${lines[1]}" = '# hueservice-detect-lights' ]
+	[ "${status}" -eq 0 ]
 }
 
 @test "execute: hueservice-detect-lights status" {
@@ -31,11 +35,5 @@ teardown() {
 	skip
 	run hueservice-detect-lights stop
 	[ "${lines[0]}" = "Stopping the service 'hueservice-detect-lights'." ]
-	[ "${status}" -eq 0 ]
-}
-
-@test "execute: hueservice-detect-lights --help" {
-	run hueservice-detect-lights --help
-	[ "${lines[1]}" = '# hueservice-detect-lights' ]
 	[ "${status}" -eq 0 ]
 }
