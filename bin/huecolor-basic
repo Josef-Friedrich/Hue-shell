@@ -43,7 +43,7 @@ while true ; do
 			if [ -n "$1" ]; then
 				_all "$1"
 			else
-				_hue_usage
+				_hue_usage error
 			fi
 			;;
 
