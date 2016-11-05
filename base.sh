@@ -29,13 +29,13 @@ _hue_range() {
 
 	# http://rosettacode.org/wiki/Linear_congruential_generator
 
-	SEED=$(cat "$FILE_RANDOM_SEED" | head -n 1)
+	SEED=$(head -n 1 < "$FILE_RANDOM_SEED")
 	SEED=$(((123 * SEED + 23456) % 345678))
 	echo "$SEED" > "$FILE_RANDOM_SEED"
 
-	RANDOM=$((SEED / 2))
+	RAND=$((SEED / 2))
 
-	NUMBER_IN_RANGE=$((RANDOM % RANGE))
+	NUMBER_IN_RANGE=$((RAND % RANGE))
 
 	echo $((NUMBER_IN_RANGE + START))
 }
@@ -57,6 +57,7 @@ _hue_call() {
 	if [ "$TEST" = 1 ]; then
 		_hue_test "$@"
 	else
+		# shellcheck disable=SC2086
 		curl \
 			--max-time 1 \
 			--silent \
@@ -66,11 +67,9 @@ _hue_call() {
 
 # Stop all hue processes.
 _hue_stop() {
-
 	for PID in $(cat "$FILE_PIDS"); do
 		kill "$PID" > /dev/null 2>&1
 	done
-
 	> "$FILE_PIDS"
 }
 

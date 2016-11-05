@@ -6,8 +6,10 @@
 # sh -c "OPT=install;R_IP=192.168.2.31;R_USERNAME=joseffriedrich;R_ALL_LIGHTS=1,2,3,4,5,6,7,8,9;R_DEBUG=0;R_LOG=0; $(curl -fsSkL http://raw.github.com/Josef-Friedrich/Hue-shell/master/install.sh)"
 
 if [ -f /etc/hue-shell/hue-shell.conf ]; then
+	# shellcheck disable=SC1091
 	. /etc/hue-shell/hue-shell.conf
 elif [ -f ./config/hue-shell.conf ]; then
+	# shellcheck disable=SC1091
 	. ./config/hue-shell.conf
 else
 	NO_CONFIG=1
@@ -17,29 +19,30 @@ if [ -z "$OPT" ]; then
 	OPT=$1
 fi
 
+# shellcheck disable=SC2039
 if type sudo > /dev/null ; then
 	_sudo() {
-		sudo $@
+		sudo "$@"
 	}
 else
 	_sudo() {
-		$@
+		"$@"
 	}
 fi
 
 _cp() {
-	echo "install: $@"
-	_sudo cp -f $@
+	echo "install: $*"
+	_sudo cp -f "$@"
 }
 
 _mkdir() {
-	echo "mkdir: $@"
-	_sudo mkdir -p $@
+	echo "mkdir: $*"
+	_sudo mkdir -p "$@"
 }
 
 _rm() {
-	echo "uninstall: $@"
-	_sudo rm -rf $@
+	echo "uninstall: $*"
+	_sudo rm -rf "$@"
 }
 
 _usage() {
@@ -48,6 +51,7 @@ _usage() {
 	else
 		echo "Usage: $(basename "$0") (help|install|reinstall|upgrade|uninstall)"
 	fi
+	# shellcheck disable=SC2086
 	exit $1
 }
 
@@ -155,6 +159,7 @@ _install() {
 	fi
 
 	if [ "$NO_CONFIG" = 1 ]; then
+		# shellcheck disable=SC1091
 		. ./config/hue-shell.conf
 	fi
 	_install_base
@@ -275,10 +280,12 @@ case "$OPT" in
 	install)
 		_install
 		if [ "$#" -gt 0 ]; then shift; fi
+		# shellcheck disable=SC2068
 		_restore_configuration $@
 		;;
 
 	purge)
+		# shellcheck disable=SC2068
 		_uninstall --purge $@
 		;;
 
@@ -286,6 +293,7 @@ case "$OPT" in
 		_uninstall -y
 		_install
 		if [ "$#" -gt 0 ]; then shift; fi
+		# shellcheck disable=SC2068
 		_restore_configuration $@
 		;;
 
@@ -295,6 +303,7 @@ case "$OPT" in
 		;;
 
 	uninstall)
+		# shellcheck disable=SC2068
 		_uninstall $@
 		;;
 
