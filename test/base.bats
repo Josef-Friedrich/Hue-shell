@@ -11,14 +11,16 @@ teardown() {
 @test "unittest: _hue_color" {
 	. /etc/hue-shell/hue-shell.conf
 
-	run _hue_color green
-	[ "${output}" -eq 25500 ]
-	run _hue_color blue
-	[ "${output}" -eq 46920 ]
-	run _hue_color cyan
-	[ "${output}" -eq 56100 ]
+	run _hue_color alice-blue
+	[ "${output}" = '-x 0.3088 -y 0.3212' ]
+	run _hue_color alice-blue A
+	[ "${output}" = '-x 0.3088 -y 0.3212' ]
+	run _hue_color alice-blue B
+	[ "${output}" = '-x 0.3092 -y 0.321' ]
+	run _hue_color alice-blue C
+	[ "${output}" = '-x 0.3088 -y 0.3212' ]
 	run _hue_color
-	[ "${output}" -eq 0 ]
+	[ "${output}" = '' ]
 }
 
 @test "unittest: _hue_range" {
