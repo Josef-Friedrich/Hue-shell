@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 
+#http://www.developers.meethue.com/documentation/hue-xy-values
+
 import csv
 import re
 
