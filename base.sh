@@ -341,8 +341,13 @@ _hue_usage() {
 
 # Convert color strings to hue values.
 _hue_color() {
+	if [ -z "$2" ] && [ -n "$GAMUT" ]; then
+		COLOR_GAMUT="$GAMUT"
+	elif [ -n "$2" ]; then
+		COLOR_GAMUT="$2"
+	fi
 	# Gamut B
-	if [ "$2" = 'B' ]; then
+	if [ "$COLOR_GAMUT" = 'B' ]; then
 		case "$1" in
 			alice-blue) COLOR='-x 0.3092 -y 0.321' ;;
 			antique-white) COLOR='-x 0.3548 -y 0.3489' ;;
@@ -493,7 +498,7 @@ _hue_color() {
 		esac
 
 	# Gamut C
-	elif [ "$2" = 'C' ]; then
+	elif [ "$COLOR_GAMUT" = 'C' ]; then
 		case "$1" in
 			alice-blue) COLOR='-x 0.3088 -y 0.3212' ;;
 			antique-white) COLOR='-x 0.3548 -y 0.3489' ;;

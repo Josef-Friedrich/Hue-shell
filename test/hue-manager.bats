@@ -194,6 +194,12 @@ teardown() {
 	[ "${DEBUG}" -eq 1 ]
 }
 
+@test "execute: hue-manager install --gamut A" {
+	run hue-manager install --gamut A
+	. /etc/hue-shell/hue-shell.conf
+	[ "${GAMUT}" = 'A' ]
+}
+
 @test "execute: hue-manager install --ip 10.69.69.69" {
 	run hue-manager install --ip 10.69.69.69
 	. /etc/hue-shell/hue-shell.conf

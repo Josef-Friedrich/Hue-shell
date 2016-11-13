@@ -12,7 +12,7 @@ teardown() {
 	. /etc/hue-shell/hue-shell.conf
 
 	run _hue_color alice-blue
-	[ "${output}" = '-x 0.3088 -y 0.3212' ]
+	[ "${output}" = '-x 0.3092 -y 0.321' ]
 	run _hue_color alice-blue A
 	[ "${output}" = '-x 0.3088 -y 0.3212' ]
 	run _hue_color alice-blue B
@@ -21,6 +21,17 @@ teardown() {
 	[ "${output}" = '-x 0.3088 -y 0.3212' ]
 	run _hue_color
 	[ "${output}" = '--alert select' ]
+
+	export GAMUT=A
+	run _hue_color chartreuse
+	[ "${output}" = '-x 0.2682 -y 0.6632' ]
+	export GAMUT=B
+	run _hue_color chartreuse
+	[ "${output}" = '-x 0.408 -y 0.517'  ]
+	export GAMUT=C
+	run _hue_color chartreuse
+	[ "${output}" = '-x 0.2505 -y 0.6395' ]
+
 }
 
 @test "unittest: _hue_range" {

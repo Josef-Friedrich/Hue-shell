@@ -33,21 +33,20 @@ teardown() {
 	}
 
 # One dash options
-	_test_color -r 0.7 0.2986
-	_test_color -c 0.17 0.3403
-	_test_color -g 0.214 0.709
+	_test_color -c 0.2858 0.2747
+	_test_color -g 0.408 0.517
+	_test_color -r 0.674 0.322
 	_test_color -w 0.3227 0.329
-	_test_color -y 0.4432 0.5154
+	_test_color -y 0.4317 0.4996
 
 # Two dash options
-	_test_color --red 0.7 0.2986
-	_test_color --spring-green 0.1994 0.5864
+	_test_color --red 0.674 0.322
+	_test_color --spring-green 0.3882 0.4777
 
 # Wrong option
 	run huecolor-basic --lol
 	[ "${status}" -eq 0 ]
 	result=$(echo ${lines[0]} | jq '.alert')
-	echo $result > log
 	[ "${result}" = '"select"' ]
 
 }
