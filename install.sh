@@ -71,7 +71,7 @@ _install_base() {
 	_sudo mkdir -p "$DIR_CONF"
 	if [ -n "$UPGRADE" ]; then
 		_new_conf() {
-			_cp "$DIR_CONF/$1" "$DIR_CONF/$1.new"
+			_cp "./config/$1" "$DIR_CONF/$1.new"
 		}
 		_new_conf hue-shell.conf
 		_new_conf random-scenes.conf

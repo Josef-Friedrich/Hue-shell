@@ -232,6 +232,9 @@ teardown() {
 @test "execute: hue-manager upgrade" {
 	run hue-manager upgrade
 	[ "${status}" -eq 0 ]
+	[ -f /etc/hue-shell/hue-shell.conf.new ]
+	[ -f /etc/hue-shell/random-scenes.conf.new ]
+	[ -f /etc/hue-shell/scenes/default.scene.new ]
 }
 
 @test "execute: hue-manager upgrde (wrong option)" {
