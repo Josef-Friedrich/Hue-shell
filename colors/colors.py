@@ -26,4 +26,5 @@ with open('colors.csv', 'r') as csvfile:
 
 		gamut_C = color[4]
 		cx, cy = grab_xy(gamut_C)
-		print(name + ') echo \'-x ' + cx + ' -y ' + cy + '\' ;;')
+		#print(name + ') echo \'-x ' + cx + ' -y ' + cy + '\' ;;')
+		print('--' + name + ': ' + color[0])

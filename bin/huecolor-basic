@@ -8,8 +8,7 @@ _all() {
 	_hue_stop
 
 	# shellcheck disable=SC2046
-	_hue_set all $(_hue_color "$(echo "$1" | sed 's/^..//g')")
-	#--sat 255 --bri 255
+	_hue_set all $(_hue_color "$(echo "$1" | sed 's/^..//g')") --sat 255 --bri 255
 	exit 0
 }
 
@@ -44,11 +43,7 @@ while true ; do
 			;;
 
 		*)
-			if [ -n "$1" ]; then
-				_all "$1"
-			else
-				_hue_usage error
-			fi
+			_hue_usage error
 			;;
 
 	esac
