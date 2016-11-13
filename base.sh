@@ -489,7 +489,7 @@ _hue_color() {
 			white-smoke) COLOR='-x 0.3227 -y 0.329' ;;
 			yellow) COLOR='-x 0.4317 -y 0.4996' ;;
 			yellow-green) COLOR='-x 0.408 -y 0.517' ;;
-			*) COLOR='' ;;
+			*) COLOR='--alert select' ;;
 		esac
 
 	# Gamut C
@@ -640,7 +640,7 @@ _hue_color() {
 			white-smoke) COLOR='-x 0.3227 -y 0.329' ;;
 			yellow) COLOR='-x 0.4334 -y 0.5022' ;;
 			yellow-green) COLOR='-x 0.3517 -y 0.5618' ;;
-			*) COLOR='' ;;
+			*) COLOR='--alert select' ;;
 		esac
 
 	# Gamut A
@@ -791,7 +791,7 @@ _hue_color() {
 			white-smoke) COLOR='-x 0.3227 -y 0.329' ;;
 			yellow) COLOR='-x 0.4432 -y 0.5154' ;;
 			yellow-green) COLOR='-x 0.3517 -y 0.5618' ;;
-			*) COLOR='' ;;
+			*) COLOR='--alert select' ;;
 		esac
 	fi
 	echo "$COLOR"

@@ -6,38 +6,41 @@
 # 	$1: HUE
 _all() {
 	_hue_stop
-	_hue_set all --hue "$1" --sat 255 --bri 255
+
+	# shellcheck disable=SC2046
+	_hue_set all $(_hue_color "$(echo "$1" | sed 's/^..//g')")
+	#--sat 255 --bri 255
 	exit 0
 }
 
 while true ; do
 	case "$1" in
-		-b|--blue)
-			_all 46920
+		-c)
+			_all --cyan
 			;;
 
-		-c|--cyan)
-			_all 56100
-			;;
-
-		-g|--green)
-			_all 25500
+		-g)
+			_all --green
 			;;
 
 		-h|--help)
 			_hue_usage
 			;;
 
-		-r|--red)
-			_all 0
+		-r)
+			_all --red
 			;;
 
-		-w|--white)
-			_all 36210
+		-w)
+			_all --white
 			;;
 
-		-y|--yellow)
-			_all 12750
+		-y)
+			_all --yellow
+			;;
+
+		--*)
+			_all "$1"
 			;;
 
 		*)

@@ -20,7 +20,7 @@ teardown() {
 	run _hue_color alice-blue C
 	[ "${output}" = '-x 0.3088 -y 0.3212' ]
 	run _hue_color
-	[ "${output}" = '' ]
+	[ "${output}" = '--alert select' ]
 }
 
 @test "unittest: _hue_range" {
