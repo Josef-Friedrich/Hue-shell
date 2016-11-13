@@ -8,38 +8,171 @@ title: huecolor-basic
 ########################################################################
 
 USAGE
-	huecolor-basic <option> or <hue-color-value>
+	huecolor-basic <option>
 
-OPTIONS
-	-b, --blue
-		All lights shine blue.
+SHORT OPTIONS
+	-b: Blue
+	-c: Cyan
+	-g: Green
+	-h: Show this help message
+	-r: Red
+	-w: White
+	-y: Yellow
 
-	-c, --cyan
-		All lights shine cyan.
-
-	-g, --green
-		All lights shine green.
-
-	-h, --help
-		Show this help message.
-
-	-r, --red
-		All lights shine red.
-
-	-w, --white
-		All lights shine white.
-
-	-y, --yellow
-		All lights shine yellow.
+LONG OPTIONS
+	--alice-blue: Alice Blue
+	--antique-white: Antique White
+	--aqua: Aqua
+	--aquamarine: Aquamarine
+	--azure: Azure
+	--beige: Beige
+	--bisque: Bisque
+	--black: Black
+	--blanched-almond: Blanched Almond
+	--blue: Blue
+	--blue-violet: Blue Violet
+	--brown: Brown
+	--burlywood: Burlywood
+	--cadet-blue: Cadet Blue
+	--chartreuse: Chartreuse
+	--chocolate: Chocolate
+	--coral: Coral
+	--cornflower: Cornflower
+	--cornsilk: Cornsilk
+	--crimson: Crimson
+	--cyan: Cyan
+	--dark-blue: Dark Blue
+	--dark-cyan: Dark Cyan
+	--dark-goldenrod: Dark Goldenrod
+	--dark-gray: Dark Gray
+	--dark-green: Dark Green
+	--dark-khaki: Dark Khaki
+	--dark-magenta: Dark Magenta
+	--dark-olive-green: Dark Olive Green
+	--dark-orange: Dark Orange
+	--dark-orchid: Dark Orchid
+	--dark-red: Dark Red
+	--dark-salmon: Dark Salmon
+	--dark-sea-green: Dark Sea Green
+	--dark-slate-blue: Dark Slate Blue
+	--dark-slate-gray: Dark Slate Gray
+	--dark-turquoise: Dark Turquoise
+	--dark-violet: Dark Violet
+	--deep-pink: Deep Pink
+	--deep-sky-blue: Deep Sky Blue
+	--dim-gray: Dim Gray
+	--dodger-blue: Dodger Blue
+	--firebrick: Firebrick
+	--floral-white: Floral White
+	--forest-green: Forest Green
+	--fuchsia: Fuchsia
+	--gainsboro: Gainsboro
+	--ghost-white: Ghost White
+	--gold: Gold
+	--goldenrod: Goldenrod
+	--gray: Gray
+	--web-gray: Web Gray
+	--green: Green
+	--web-green: Web Green
+	--green-yellow: Green Yellow
+	--help: Show this help message
+	--honeydew: Honeydew
+	--hot-pink: Hot Pink
+	--indian-red: Indian Red
+	--indigo: Indigo
+	--ivory: Ivory
+	--khaki: Khaki
+	--lavender: Lavender
+	--lavender-blush: Lavender Blush
+	--lawn-green: Lawn Green
+	--lemon-chiffon: Lemon Chiffon
+	--light-blue: Light Blue
+	--light-coral: Light Coral
+	--light-cyan: Light Cyan
+	--light-goldenrod: Light Goldenrod
+	--light-gray: Light Gray
+	--light-green: Light Green
+	--light-pink: Light Pink
+	--light-salmon: Light Salmon
+	--light-sea-green: Light Sea Green
+	--light-sky-blue: Light Sky Blue
+	--light-slate-gray: Light Slate Gray
+	--light-steel-blue: Light Steel Blue
+	--light-yellow: Light Yellow
+	--lime: Lime
+	--lime-green: Lime Green
+	--linen: Linen
+	--magenta: Magenta
+	--maroon: Maroon
+	--web-maroon: Web Maroon
+	--medium-aquamarine: Medium Aquamarine
+	--medium-blue: Medium Blue
+	--medium-orchid: Medium Orchid
+	--medium-purple: Medium Purple
+	--medium-sea-green: Medium Sea Green
+	--medium-slate-blue: Medium Slate Blue
+	--medium-spring-green: Medium Spring Green
+	--medium-turquoise: Medium Turquoise
+	--medium-violet-red: Medium Violet Red
+	--midnight-blue: Midnight Blue
+	--mint-cream: Mint Cream
+	--misty-rose: Misty Rose
+	--moccasin: Moccasin
+	--navajo-white: Navajo White
+	--navy-blue: Navy Blue
+	--old-lace: Old Lace
+	--olive: Olive
+	--olive-drab: Olive Drab
+	--orange: Orange
+	--orange-red: Orange Red
+	--orchid: Orchid
+	--pale-goldenrod: Pale Goldenrod
+	--pale-green: Pale Green
+	--pale-turquoise: Pale Turquoise
+	--pale-violet-red: Pale Violet Red
+	--papaya-whip: Papaya Whip
+	--peach-puff: Peach Puff
+	--peru: Peru
+	--pink: Pink
+	--plum: Plum
+	--powder-blue: Powder Blue
+	--purple: Purple
+	--web-purple: Web Purple
+	--rebecca-purple: Rebecca Purple
+	--red: Red
+	--rosy-brown: Rosy Brown
+	--royal-blue: Royal Blue
+	--saddle-brown: Saddle Brown
+	--salmon: Salmon
+	--sandy-brown: Sandy Brown
+	--sea-green: Sea Green
+	--seashell: Seashell
+	--sienna: Sienna
+	--silver: Silver
+	--sky-blue: Sky Blue
+	--slate-blue: Slate Blue
+	--slate-gray: Slate Gray
+	--snow: Snow
+	--spring-green: Spring Green
+	--steel-blue: Steel Blue
+	--tan: Tan
+	--teal: Teal
+	--thistle: Thistle
+	--tomato: Tomato
+	--turquoise: Turquoise
+	--violet: Violet
+	--wheat: Wheat
+	--white: White
+	--white-smoke: White Smoke
+	--yellow: Yellow
+	--yellow-green: Yellow Green
 
 DESCRIPTION
 	If you use the 'huecolor-basic' command, all lights will shine
-	in the same color. Either use the options for predefined colors
-	or use hue color values (0-65535) directly.
+	in the same color.
 
 EXAMPLES
 	huecolor-basic -b
 	huecolor-basic --green
-	huecolor-basic 65535
 ```
 
