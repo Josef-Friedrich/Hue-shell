@@ -25,6 +25,8 @@ teardown() {
 	export GAMUT=A
 	run _hue_color chartreuse
 	[ "${output}" = '-x 0.2682 -y 0.6632' ]
+	run _hue_color chartreuse B
+	[ "${output}" = '-x 0.408 -y 0.517' ]
 	export GAMUT=B
 	run _hue_color chartreuse
 	[ "${output}" = '-x 0.408 -y 0.517'  ]

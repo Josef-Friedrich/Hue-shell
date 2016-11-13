@@ -341,11 +341,12 @@ _hue_usage() {
 
 # Convert color strings to hue values.
 _hue_color() {
-	if [ -z "$2" ] && [ -n "$GAMUT" ]; then
-		COLOR_GAMUT="$GAMUT"
-	elif [ -n "$2" ]; then
+	if [ -n "$2" ]; then
 		COLOR_GAMUT="$2"
+	elif [ -z "$2" ] && [ -n "$GAMUT" ]; then
+		COLOR_GAMUT="$GAMUT"
 	fi
+
 	# Gamut B
 	if [ "$COLOR_GAMUT" = 'B' ]; then
 		case "$1" in
