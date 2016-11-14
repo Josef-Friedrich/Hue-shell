@@ -340,6 +340,8 @@ _hue_usage() {
 }
 
 # Convert color strings to hue values.
+#	$1: COLOR_NAME
+#	$2: GAMUT
 _hue_color() {
 	if [ -n "$2" ]; then
 		COLOR_GAMUT="$2"

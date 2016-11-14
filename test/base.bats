@@ -33,7 +33,6 @@ teardown() {
 	export GAMUT=C
 	run _hue_color chartreuse
 	[ "${output}" = '-x 0.2505 -y 0.6395' ]
-
 }
 
 @test "unittest: _hue_range" {
@@ -81,5 +80,4 @@ teardown() {
 	run tail -n 1 $FILE_LOG
 	output=$(echo $output | sed 's/.*\] //')
 	[ "${output}" = 'Log level 1'  ]
-
 }
