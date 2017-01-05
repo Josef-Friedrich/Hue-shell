@@ -299,7 +299,7 @@ _hue_alert() {
 # will be interrupted and all lights will be reset to the default color.
 _hue_trap() {
 	if [ -z "$1" ]; then
-		TRAP="_hue_reset; echo; exit"
+		TRAP="_hue_reset ; echo ; exit"
 	else
 		TRAP="$1"
 	fi

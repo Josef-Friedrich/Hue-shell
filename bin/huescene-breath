@@ -64,8 +64,7 @@ _kill_all() {
 	done
 }
 
-# We can not use the _hue_trap function from the library
-_hue_trap "_kill_all; _hue_reset; echo; exit"
+_hue_trap "_kill_all ; _hue_reset ; echo ; exit"
 _hue_stop
 
 # Helper function.
