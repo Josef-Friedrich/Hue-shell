@@ -239,9 +239,10 @@ _hue_get() {
 	fi
 }
 
-# Queries for lights, which are online.
+# Query for online lights.
 # shellcheck disable=SC2120
 _hue_get_on() {
+	OUTPUT=
 	if [ -n "$1" ]; then
 		JSON=$(cat "$1")
 	else
