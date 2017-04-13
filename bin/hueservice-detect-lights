@@ -33,7 +33,7 @@ _start() {
 
 _status() {
 	if [ "$(_is_running)" = 0 ]; then
-		echo "The service '${BASENAME})' is running."
+		echo "The service '${BASENAME}' is running."
 		echo "The reachable lights are: $(_hue_get_lights_reachable)"
 	else
 		echo "The service '${BASENAME}' is not running."
