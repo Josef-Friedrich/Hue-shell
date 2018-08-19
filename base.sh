@@ -312,7 +312,7 @@ _hue_output() {
 	read -r OUTPUT
 
 	if [ "$DEBUG" -ge 1 ]; then
-		echo "$OUTPUT" | tr ',' '\n'
+		echo "$OUTPUT" | tr ',' ',\n'
 	fi
 }
 
