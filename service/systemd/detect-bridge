@@ -6,6 +6,7 @@ Type=forking
 ExecStart=/usr/bin/hueservice-detect-bridge start
 ExecStop=/usr/bin/hueservice-detect-bridge stop
 Restart=always
+Environment=HOME=%h
 
 [Install]
 WantedBy=multi-user.target
